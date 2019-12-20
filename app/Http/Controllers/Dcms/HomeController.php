@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Dsms;
+namespace App\Http\Controllers\Dcms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
+use App\User;
 
 class HomeController extends DM_BaseController
 {
     protected $panel = 'Home';
     protected $base_route ='';
-    protected $view_path = 'dsms.';
+    protected $view_path = 'dcms.';
 
-    public function __construct(Request $request, User $user, Post $post, Tracker $tracker, DM_Post $dm_post){
+    public function __construct(Request $request, User $user){
         $this->user = $user;
-        $this->post = $post;
-        $this->dm_post = $dm_post;
-        $this->lang_id = $dm_post::setLanguage();
-        $this->tracker = $tracker::hit();
     }
 
     /**
@@ -26,7 +23,7 @@ class HomeController extends DM_BaseController
      */
     public function index()
     {
-        //
+        return view($this->loadView($this->view_path.'index'));
     }
 
     /**

@@ -17,12 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['as'=> 'dcms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'status', ]], function(){
+Route::group(['as'=> 'dcms.', 'namespace'=>'Dcms', 'middleware'=>['auth', 'status', ]], function(){
 
-    Route::get('/',                  ['as' => 'home',          'uses' => 'HomeController@index']);
+    Route::get('/',                 function() {
+        return redirect('/dashboard');
+    });
 
     Route::group(['prefix' => 'dashboard'], function(){
-
+        Route::get('/',                     ['as'=>'dashboard',         'uses' => 'HomeController@index']);
 
     });
 });
