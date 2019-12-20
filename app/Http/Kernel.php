@@ -60,6 +60,13 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+          /**
+         * Custom User Status Check for DCMS
+         */
+        'status' => \App\Http\Middleware\DM_CheckUserStatus::class,
+        'role'   => \App\Http\Middleware\DM_CheckRole::class,
+        'permission' => \App\Http\Middleware\DM_CheckPermission::class,
     ];
 
     /**

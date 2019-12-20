@@ -17,4 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['as'=> 'dcms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'status', ]], function(){
+
+    Route::get('/',                  ['as' => 'home',          'uses' => 'HomeController@index']);
+
+    Route::group(['prefix' => 'dashboard'], function(){
+
+
+    });
+});
