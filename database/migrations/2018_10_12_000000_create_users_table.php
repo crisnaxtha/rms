@@ -27,6 +27,16 @@ class CreateUsersTable extends Migration
             $table->string('type')->nullable();
             $table->boolean('role_super')->nullable();
             $table->unsignedInteger('role_id')->nullable();
+            $table->integer('school_id')->nullable();
+            $table->integer('code')->nullable();//school code Auto generated
+            $table->integer('student_code')->unique()->nullable();//Auto generated
+            $table->string('gender')->default('');
+            $table->string('blood_group')->default('');
+            $table->string('nationality')->default('');
+            $table->string('phone_number')->unique()->default('');
+            $table->string('address')->default('');
+            $table->text('bio')->nullable();
+            $table->integer('section_id')->unsigned()->nullable();
             $table->integer('forgotten_password_time')->nullable();
             $table->boolean('status')->default(1);
             $table->softDeletes();

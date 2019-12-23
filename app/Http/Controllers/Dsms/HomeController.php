@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dcms;
+namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
@@ -10,7 +10,7 @@ class HomeController extends DM_BaseController
 {
     protected $panel = 'Home';
     protected $base_route ='';
-    protected $view_path = 'dcms.';
+    protected $view_path = 'dsms.';
 
     public function __construct(Request $request, User $user){
         $this->user = $user;

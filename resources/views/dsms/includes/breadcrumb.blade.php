@@ -1,6 +1,6 @@
 <ol class="breadcrumb" style="padding: 3px 15px;">
-        <li><a href="{{ URL::route('dcms.dashboard') }}"><i class="fa fa-home">&nbsp;</i></a> </li>               
-  
+        <li><a href="{{ URL::route('dsms.dashboard') }}"><i class="fa fa-home">&nbsp;</i></a> </li>
+
         @php $link = "" @endphp
         @for($i = 1; $i <= count(Request::segments()); $i++)
             @if($i < count(Request::segments()) & $i > 0)
