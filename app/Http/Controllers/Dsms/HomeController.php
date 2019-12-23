@@ -10,7 +10,7 @@ class HomeController extends DM_BaseController
 {
     protected $panel = 'Home';
     protected $base_route ='';
-    protected $view_path = 'dsms.';
+    protected $view_path = 'dsms';
 
     public function __construct(Request $request, User $user){
         $this->user = $user;
@@ -23,7 +23,7 @@ class HomeController extends DM_BaseController
      */
     public function index()
     {
-        return view($this->loadView($this->view_path.'index'));
+        return view($this->loadView($this->view_path.'.index'));
     }
 
     /**

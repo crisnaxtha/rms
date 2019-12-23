@@ -16,7 +16,7 @@ class CreateClassSectionsTable extends Migration
         Schema::create('class_sections', function (Blueprint $table) {
             $table->integer('class_id')->unsigned();
             $table->integer('section_id')->unsigned();
-            $table->foreign('class_id')->references('id')->on('classes')
+            $table->foreign('class_id')->references('id')->on('my_classes')
                 ->onDelete('cascade');
             $table->foreign('section_id')->references('id')->on('sections')
                 ->onDelete('cascade');

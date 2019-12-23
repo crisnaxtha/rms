@@ -175,6 +175,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+         // Custom Service Provider ( Krishna )
+
+        App\Providers\DM_HelperServiceProvider::class,
+        // App\Providers\DM_BladeServiceProvider::class,
+
     ],
 
     /*
