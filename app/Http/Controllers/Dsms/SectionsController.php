@@ -48,7 +48,7 @@ class SectionsController extends DM_BaseController
     {
         $row = $this->model;
         $row->title = $request->title;
-        $row->room_number = $request->room_number;
+        // $row->room_number = $request->room_number;
         $row->save();
 
         if($row->save()){
@@ -94,7 +94,7 @@ class SectionsController extends DM_BaseController
     {
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
-        $row->room_number = $request->room_number;
+        // $row->room_number = $request->room_number;
         $row->save();
 
         if($row->save()){

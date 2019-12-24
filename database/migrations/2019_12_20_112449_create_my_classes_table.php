@@ -29,6 +29,6 @@ class CreateMyClassesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes');
+        Schema::dropIfExists('my_classes');
     }
 }

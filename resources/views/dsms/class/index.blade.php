@@ -41,7 +41,7 @@
                       <tr>
                          <th>#</th>
                          <th>Class Number/ Name</th>
-                         <th>Class Group</th>
+                         {{-- <th>Class Group</th> --}}
                          <th>Action</th>
                       </tr>
                    </thead>
@@ -51,7 +51,7 @@
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $row->title }}</td>
-                           <td>{{ $row->group }}</td>
+                           {{-- <td>{{ $row->group }}</td> --}}
                            <td>
                               @include('dsms.class.includes.buttons.edit-assign')
                               @include('dsms.includes.buttons.button-edit')

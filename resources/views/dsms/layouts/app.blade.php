@@ -27,7 +27,6 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/dsms/css/owl.carousel.css') }}" type="text/css"> --}}
     <link href="{{ asset('assets/dsms/assets/gritter/css/jquery.gritter.css') }}" rel="stylesheet" />
 
-
     <!--right slidebar-->
     {{-- <link href="{{ asset('assets/dsms/css/slidebars.css') }}" rel="stylesheet"> --}}
 
@@ -39,7 +38,7 @@
     <link href="{{ asset('assets/dsms/css/style.css') }}" rel="stylesheet">
     {{-- <link href="{{ asset('assets/dsms/css/custom.css') }}" rel="stylesheet"> --}}
     <link href="{{ asset('assets/dsms/css/style-responsive.css') }}" rel="stylesheet" />
-    {{-- <link href="{{ asset('assets/dsms/assets/chart-jsjs/Chart.min.css') }}" rel="stylesheet" /> --}}
+    <link href="{{ asset('assets/dsms/dm_css/app.css') }}" rel="stylesheet" />
 
     @yield('css')
 
@@ -50,29 +49,29 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
-  </head>
-
-  <body>
-  <section id="container">
+</head>
+<body>
+    <div class="se-pre-con"></div>
+    <section id="container">
 
       <!--header start-->
         @include('dsms.includes.header')
       <!--header end-->
 
-      <!--sidebar start-->
-      @if(Auth::user()->role == "affiliated")
+        <!--sidebar start-->
+        @if(Auth::user()->role == "affiliated")
         @include('dsms.includes.affiliated.sidebar')
-      @else
+        @else
         @include('dsms.includes.sidebar')
-      @endif
-      <!--sidebar end-->
+        @endif
+        <!--sidebar end-->
 
       <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-            @yield('content')
-          </section>
-      </section>
+    <section id="main-content">
+        <section class="wrapper">
+        @yield('content')
+        </section>
+    </section>
       <!--main content end-->
 
       <!-- Right Slidebar start -->
@@ -83,7 +82,7 @@
         @include('dsms.includes.footer')
       <!--footer end-->
 
-  </section>
+    </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="{{ asset('assets/dsms/js/jquery.js') }}"></script>
@@ -115,7 +114,7 @@
     {{-- chart js --}}
     <script src="{{ asset('assets/dsms/assets/chart-js/Chart.min.js') }}"></script>
     <script src="{{ asset('assets/dsms/assets/chart-js/utils.js') }}"></script>
-@include('dsms.includes.flash-message')
+    @include('dsms.includes.flash-message')
 
   {{-- <script>
 
@@ -173,6 +172,12 @@
       });
 </script>
 <script src="{{ asset('assets/dsms/dm_js/app.js') }}"></script>
-  </body>
+<script>
+    $(window).load(function() {
+    // Animate loader off screen
+    $(".se-pre-con").fadeOut("slow");
+	});
+</script>
+</body>
   <!-- THIS dsms Content Managment System is Dedicated To Deepmala Ranabhat -->
 </html>

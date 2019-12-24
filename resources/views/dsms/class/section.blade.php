@@ -23,11 +23,12 @@
                         @else
                         @php $selected_checked_modules = ""; @endphp
                         @endif
-                        <div class="">
-                            <label for="" class="control-label col-lg-2 col-sm-3">{{ $row['title'] }}</label>
-                            <div class="col-lg-10 col-sm-9">
+                        <div class="" style="display:flex;">
+                            {{-- <div class="col-lg-10 col-sm-9"> --}}
                                 <input name="sections[]" type="checkbox" style="width: 20px" class="checkbox form-control" id="" value="{{ $row['id'] }}" {{ $selected_checked_modules }}/>
-                            </div>
+                            {{-- </div> --}}
+                            <label for="" class="control-label col-lg-2 col-sm-3">{{ $row['title'] }}</label>
+
                         </div>
                         @endforeach
                         @endif
