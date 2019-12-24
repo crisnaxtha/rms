@@ -621,3 +621,15 @@ if(!function_exists('dm_branch_dropdown')){
     <?php
     }
 }
+
+if(!function_exists('dm_radio')){
+    function dm_radio($name="",$caption="",$data="", $old_data="" ){
+    ?>
+    <div class="radio-inline">
+        <label>
+    <input type="radio" name="<?= $name ?>" id="<?= $name. $data ?>" value="<?= $data ?>"  <?php if($old_data != "") { ?>checked <?php }?> ><?= $caption ?>
+        </label>
+    </div>
+    <?php
+    }
+}

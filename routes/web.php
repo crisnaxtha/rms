@@ -26,21 +26,29 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::get('',                                      ['as'=>'index',              'uses'=>'ClassesController@index']);
             Route::get('create',                                ['as'=>'create',              'uses'=>'ClassesController@create']);
             Route::post('',                                     ['as'=>'store',              'uses'=>'ClassesController@store']);
-            Route::get('{class}/edit',                       ['as'=>'edit',              'uses'=>'ClassesController@edit']);
-            Route::put('{class}',                            ['as'=>'update',              'uses'=>'ClassesController@update']);
-            Route::delete('{class}',                         ['as'=>'destroy',              'uses'=>'ClassesController@destroy']);
-            Route::get('assign_section/{id}',                 ['as'=>'assign',                'uses'=>'ClassesController@assignSection']);
-            Route::post('assign_section/update/{id}',          ['as'=>'assign.update',        'uses'=>'ClassesController@updateAssignSection']);
+            Route::get('{class}/edit',                          ['as'=>'edit',              'uses'=>'ClassesController@edit']);
+            Route::put('{class}',                               ['as'=>'update',              'uses'=>'ClassesController@update']);
+            Route::delete('{class}',                            ['as'=>'destroy',              'uses'=>'ClassesController@destroy']);
+            Route::get('assign_section/{id}',                   ['as'=>'assign',                'uses'=>'ClassesController@assignSection']);
+            Route::post('assign_section/update/{id}',           ['as'=>'assign.update',        'uses'=>'ClassesController@updateAssignSection']);
         });
 
         Route::group(['as'=> 'section.', 'prefix' => 'section'], function(){
             Route::get('',                                      ['as'=>'index',              'uses'=>'SectionsController@index']);
             Route::get('create',                                ['as'=>'create',              'uses'=>'SectionsController@create']);
             Route::post('',                                     ['as'=>'store',              'uses'=>'SectionsController@store']);
-            Route::get('{class}/edit',                       ['as'=>'edit',              'uses'=>'SectionsController@edit']);
-            Route::put('{class}',                            ['as'=>'update',              'uses'=>'SectionsController@update']);
-            Route::delete('{class}',                         ['as'=>'destroy',              'uses'=>'SectionsController@destroy']);
+            Route::get('{subject}/edit',                        ['as'=>'edit',              'uses'=>'SectionsController@edit']);
+            Route::put('{subject}',                             ['as'=>'update',              'uses'=>'SectionsController@update']);
+            Route::delete('{subject}',                          ['as'=>'destroy',              'uses'=>'SectionsController@destroy']);
+        });
 
+        Route::group(['as'=> 'subject.', 'prefix' => 'subject'], function(){
+            Route::get('',                                      ['as'=>'index',              'uses'=>'SubjectsController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'SubjectsController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'SubjectsController@store']);
+            Route::get('{subject}/edit',                        ['as'=>'edit',              'uses'=>'SubjectsController@edit']);
+            Route::put('{subject}',                             ['as'=>'update',              'uses'=>'SubjectsController@update']);
+            Route::delete('{subject}',                          ['as'=>'destroy',              'uses'=>'SubjectsController@destroy']);
         });
 
     });

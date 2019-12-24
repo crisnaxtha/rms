@@ -8,16 +8,19 @@
             @endif
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == "Pages" || $_panel == "File") ? 'active' : '' }}">
-                    <i class="fa fa-mortar-board"></i>
+                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' ) ? 'active' : '' }}">
+                    <i class="fa fa-sitemap"></i>
                     <span>{{ __('Academics') }}</span>
                 </a>
                 <ul class="sub">
                     @if(Route::has('dsms.class.index'))
-                    <li><a class="{{ ($_panel == 'Class') ? 'active' : '' }}" href="{{ URL::route('dsms.class.index') }}"><i class="fa fa-dashboard"></i><span>{{__('Classes')}}</span></a></li>
+                    <li><a class="{{ ($_panel == 'Class') ? 'active' : '' }}" href="{{ URL::route('dsms.class.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Classes')}}</span></a></li>
                     @endif
                     @if(Route::has('dsms.section.index'))
-                    <li><a class="{{ ($_panel == 'Section') ? 'active' : '' }}" href="{{ URL::route('dsms.section.index') }}"><i class="fa fa-dashboard"></i><span>{{__('Section')}}</span></a></li>
+                    <li><a class="{{ ($_panel == 'Section') ? 'active' : '' }}" href="{{ URL::route('dsms.section.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Section')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.subject.index'))
+                    <li><a class="{{ ($_panel == 'Subject') ? 'active' : '' }}" href="{{ URL::route('dsms.subject.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Subject')}}</span></a></li>
                     @endif
 
                 </ul>

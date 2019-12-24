@@ -8,9 +8,9 @@
             <div class="panel-heading">
                 Assign sections
                 @include('dsms.includes.buttons.button-back')
-                <button class="btn btn-success"><a rel="group_1" href="#select_all">Select All</a></button>
-                 <button class="btn btn-danger"><a rel="group_1" href="#select_none">Select None</a></button>
-                 <button class="btn btn-warning"><a rel="group_1" href="#invert_selection">Invert Selection</a></button>
+                <a rel="group_1" href="#select_all" class="btn btn-success btn-xs">Select All</a>
+                <a rel="group_1" href="#select_none" class="btn btn-danger btn-xs">Select None</a>
+                <a rel="group_1" href="#invert_selection" class="btn btn-warning btn-xs">Invert Selection</a>
             </div>
             <div class="panel-body">
                 <div class="form" id="group_1">
