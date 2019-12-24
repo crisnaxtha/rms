@@ -15,7 +15,8 @@ class CreateExamsTable extends Migration
     {
         Schema::create('exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
+            $table->unsignedInteger('school_id')->nullable();
+            $table->string('title')->nullable();
             $table->unsignedInteger('session_id')->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->default(1);

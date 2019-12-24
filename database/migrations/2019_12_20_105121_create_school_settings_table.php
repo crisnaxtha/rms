@@ -15,7 +15,7 @@ class CreateSchoolSettingsTable extends Migration
     {
         Schema::create('school_settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->unsignedInteger('user_id')->nullable();
             $table->string('name')->nullable();
             $table->string('established')->default('');
             $table->text('image')->nullable();

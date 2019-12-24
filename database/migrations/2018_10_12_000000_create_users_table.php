@@ -16,18 +16,17 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('school_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
             $table->string('username')->nullable()->unique();
             $table->string('avatar')->nullable();
             $table->string('phone')->nullable();
             $table->string('type')->nullable();
             $table->boolean('role_super')->nullable();
             $table->unsignedInteger('role_id')->nullable();
-            $table->integer('school_id')->nullable();
             $table->integer('code')->nullable();//school code Auto generated
             $table->integer('student_code')->unique()->nullable();//Auto generated
             $table->string('gender')->default('');
@@ -41,6 +40,7 @@ class CreateUsersTable extends Migration
             $table->boolean('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
+            $table->rememberToken();
             $table->foreign('role_id')
                     ->references('id')->on('roles')
                     ->onDelete('cascade');
