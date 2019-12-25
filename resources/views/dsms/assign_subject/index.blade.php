@@ -9,7 +9,7 @@
                 Select Criteria
             </header>
             <div class="panel-body">
-                <form action="#" class="">
+                <form class="assign_teacher_form" action="{{ route('dsms.assign_subject.getSubject')}}" method="post" enctype="multipart/form-data">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Class</label>
@@ -29,15 +29,15 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-success btn-xs pull-right" id="subject_search" type="button"><i class="fa fa-search"></i> &nbsp; Search</button>
+                    <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button>
                 </form>
             </div>
         </section>
     </div>
 </div>
 <!--select2 end-->
- <!--select2 start-->
-{{-- <div class="row" id="subject-div" style="visibility:hidden">
+ <!--Assign Subject block-->
+<div class="row" id="box_display" style="display:none">
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
@@ -66,8 +66,8 @@
             </div>
         </section>
     </div>
-</div> --}}
-<!--select2 end-->
+</div>
+<!--Assign Subject block end-->
 @endsection
 
 @section('js')
@@ -79,7 +79,61 @@
         });
     </script>
 
-    <script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".assign_teacher_form").submit(function (e)
+        {
+            $("#TextBoxContainer").html("");
+            $("input[class$='_error']").html("");
+            var class_id = $('#class_id').val();
+            var section_id = $('#section_id').val();
+            var postData = $(this).serializeArray();
+            var formURL = $(this).attr("action");
+            $.ajax({
+                        url: formURL,
+                        type: "POST",
+                        data: postData,
+                        dataType: 'json',
+                        success: function (data, textStatus, jqXHR)
+                        {
+                            if (data.st === 1) {
+                                $.each(data.msg, function (key, value) {
+                                    $('.' + key + "_error").html(value);
+                                });
+                            } else {
+                                var response = data.msg;
+                                if (response && response.length > 0) {
+                                    for (i = 0; i < response.length; ++i) {
+                                        var subject_id = response[i].subject_id;
+                                        var teacher_id = response[i].teacher_id;
+                                        var row_id = response[i].id;
+                                        appendRow(subject_id, teacher_id, row_id);
+                                    }
+                                } else {
+                                    $('#box_display').html(" <div class='box-header with-border'><div class='alert alert-info'>No Subject assigned.</div></div>");
+
+                                    //appendRow(0, 0, 0);
+                                }
+                                $('#post_class_id').val(class_id);
+                                $('#post_section_id').val(section_id);
+                                //  $('#btnAdd').show();
+                                $('#box_display').show();
+                                // $('.save_button').show();
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown)
+                        {
+                            console.log(jqXHR.responseJSON);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        }
+                    });
+
+            e.preventDefault();
+
+        });
+    });
+
     $(document).on('change', '#class_id', function (e) {
             $('#section_id').html("");
             // resetForm();
@@ -101,38 +155,5 @@
                 }
             });
         });
-    </script>
-
-    <script>
-    function getSubject(obj) {
-        var section_id = obj.vale;
-        var url = '';
-        if(section_id != '') {
-            $.ajax({
-                type: 'POST',
-                url: url,
-                dataType: 'html',
-                data: {
-                    section_id: section_id,
-                },
-                success: function(response) {
-
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseTest);
-                }
-            });
-        }
-    }
-
-    </script>
-
-<script>
-    $('#subject_search').click(function() {
-        $('#subject-div').css('visibility', 'visible');
-    })
 </script>
-
-
-
 @endsection

@@ -107,4 +107,16 @@ class AssignSubjectsController extends DM_BaseController
         }
 
     }
+
+    public function getSubject(Request $request) {
+        if($request->ajax()){
+            $data = $request->postData;
+            if(isset($data)) {
+                $class_id = $request->class_id;
+                $section_id = $request->section_id;
+                var_dump($class_id);
+                var_dump($section_id);
+            }
+        }
+    }
 }
