@@ -52,12 +52,15 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
         });
 
         Route::group(['as'=> 'assign_subject.', 'prefix' => 'assign_subject'], function(){
-            Route::get('',                                      ['as'=>'index',              'uses'=>'SubjectsController@index']);
-            Route::get('create',                                ['as'=>'create',              'uses'=>'SubjectsController@create']);
-            Route::post('',                                     ['as'=>'store',              'uses'=>'SubjectsController@store']);
-            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'SubjectsController@edit']);
-            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'SubjectsController@update']);
-            Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'SubjectsController@destroy']);
+            Route::get('',                                      ['as'=>'index',              'uses'=>'AssignSubjectsController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'AssignSubjectsController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'AssignSubjectsController@store']);
+            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'AssignSubjectsController@edit']);
+            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'AssignSubjectsController@update']);
+            Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'AssignSubjectsController@destroy']);
+
+            /** Ajax Route */
+            Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getSection']);
         });
 
     });

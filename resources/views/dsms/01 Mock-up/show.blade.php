@@ -1,4 +1,4 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 
 @section('content')
 

@@ -4,26 +4,32 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
+use App\Model\Dsms\MyClass;
+use App\Model\Dsms\Section;
 use App\Model\Dsms\Subject;
+use App\Model\Dsms\Eloquent\DM_General;
 
-class SubjectsController extends DM_BaseController
+class AssignSubjectsController extends DM_BaseController
 {
-    protected $panel = 'Subject';
-    protected $base_route ='dsms.subject';
-    protected $view_path = 'dsms.subject';
+    protected $panel = 'Assign Subject';
+    protected $base_route ='dsms.assign_subject';
+    protected $view_path = 'dsms.assign_subject';
 
-    public function __construct(Request $request, Subject $model){
+    public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, DM_General $model_g){
         $this->model = $model;
+        $this->model_1 = $model_1;
+        $this->model_g = $model_g;
     }
 
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $data['rows'] = $this->model::all();
+        $data['class'] = $this->model::where('status', '=', 1)->get();
+        $data['subject'] = $this->model_1::where('status', '=', 1)->get();
         return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
@@ -45,18 +51,7 @@ class SubjectsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        $row = $this->model;
-        $row->title = $request->title;
-        $row->code = $request->code;
-        $row->type = $request->type;
-        $row->save();
-
-        if($row->save()){
-            session()->flash('alert-success', $this->panel.' Successfully Store');
-        }else {
-            session()->flash('alert-danger', $this->panel.' can not be Store');
-        }
-        return redirect()->route($this->base_route.'.index');
+        //
     }
 
     /**
@@ -78,9 +73,7 @@ class SubjectsController extends DM_BaseController
      */
     public function edit($id)
     {
-        $data['rows'] = $this->model::all();
-        $data['single'] = $this->model::findOrFail($id);
-        return view($this->loadView($this->view_path.'.index'), compact('data'));
+        //
     }
 
     /**
@@ -92,18 +85,7 @@ class SubjectsController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
-        $row = $this->model::findOrFail($id);
-        $row->title = $request->title;
-        $row->code = $request->code;
-        $row->type = $request->type;
-        $row->save();
-
-        if($row->save()){
-            session()->flash('alert-success', $this->panel.' Successfully Updated');
-        }else {
-            session()->flash('alert-danger', $this->panel.' can not be Updated');
-        }
-        return redirect()->route($this->base_route.'.index');
+        //
     }
 
     /**
@@ -114,11 +96,15 @@ class SubjectsController extends DM_BaseController
      */
     public function destroy($id)
     {
-        $this->model::destroy($id);
+        //
     }
 
-
-    public function assignAssSubject() {
+    public function getSection(Request $request) {
+        if($request->ajax()){
+            $class_id = $request->class_id;
+            $sections = $this->model_g::getSections($class_id);
+           return $sections;
+        }
 
     }
 }

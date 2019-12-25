@@ -22,6 +22,9 @@
                     @if(Route::has('dsms.subject.index'))
                     <li><a class="{{ ($_panel == 'Subject') ? 'active' : '' }}" href="{{ URL::route('dsms.subject.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Subject')}}</span></a></li>
                     @endif
+                    @if(Route::has('dsms.assign_subject.index'))
+                    <li><a class="{{ ($_panel == 'Assign Subject') ? 'active' : '' }}" href="{{ URL::route('dsms.assign_subject.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Assign Subject')}}</span></a></li>
+                    @endif
 
                 </ul>
             </li>

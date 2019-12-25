@@ -26,6 +26,7 @@
     {{-- <link href="{{ asset('assets/dsms/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css') }}" rel="stylesheet" type="text/css" media="screen"/> --}}
     {{-- <link rel="stylesheet" href="{{ asset('assets/dsms/css/owl.carousel.css') }}" type="text/css"> --}}
     <link href="{{ asset('assets/dsms/assets/gritter/css/jquery.gritter.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/dsms/assets/select2/css/select2.min.css') }}" rel="stylesheet" />
 
     <!--right slidebar-->
     {{-- <link href="{{ asset('assets/dsms/css/slidebars.css') }}" rel="stylesheet"> --}}
@@ -102,18 +103,19 @@
 
     <!--right slidebar-->
     <script src="{{ asset('assets/dsms/js/slidebars.min.js') }}"></script>
+    <script src="{{ asset('assets/dsms/assets/select2/js/select2.min.js') }}"></script>
    <!--toastr-->
    <script src="{{ asset('assets/dsms/assets/toastr-master/toastr.js') }}"></script>
     <!--common script for all pages-->
     <script src="{{ asset('assets/dsms/js/common-scripts.js') }}"></script>
     <!--script for this page-->
-    <script src="{{ asset('assets/dsms/js/sparkline-chart.js') }}"></script>
+    {{-- <script src="{{ asset('assets/dsms/js/sparkline-chart.js') }}"></script> --}}
     {{-- <script src="{{ asset('assets/dsms/js/easy-pie-chart.js') }}"></script> --}}
     {{-- <script src="{{ asset('assets/dsms/js/count.js') }}"></script> --}}
 
     {{-- chart js --}}
-    <script src="{{ asset('assets/dsms/assets/chart-js/Chart.min.js') }}"></script>
-    <script src="{{ asset('assets/dsms/assets/chart-js/utils.js') }}"></script>
+    {{-- <script src="{{ asset('assets/dsms/assets/chart-js/Chart.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/dsms/assets/chart-js/utils.js') }}"></script> --}}
     @include('dsms.includes.flash-message')
 
   {{-- <script>
