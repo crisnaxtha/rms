@@ -113,7 +113,7 @@ class AssignSubjectsController extends DM_BaseController
             $class_id = $request->class_id;
             $section_id = $request->section_id;
             $subjects = $this->model_g::getSubjects($class_id, $section_id);
-            return $subjects;
+            var_dump($subjects);
         }
     }
 }

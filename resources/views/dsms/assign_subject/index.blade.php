@@ -84,7 +84,7 @@
         $(".assign_teacher_form").submit(function (e)
         {
             $("#TextBoxContainer").html("");
-            $("input[class$='_error']").html("");
+            // $("input[class$='_error']").html("");
             // var class_id = $('#class_id').val();
             // var section_id = $('#section_id').val();
             var postData = $(this).serializeArray();
