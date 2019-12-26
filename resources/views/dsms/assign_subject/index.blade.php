@@ -13,7 +13,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Class</label>
-                            <select class="dropdown-class" id="class_id">
+                            <select class="dropdown-class" name="class_id" id="class_id">
                                 <option value="">Select</option>
                                 @foreach($data['class'] as $row)
                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
@@ -24,7 +24,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Section</label>
-                            <select class="dropdown-section" id="section_id">
+                            <select class="dropdown-section" name="section_id" id="section_id">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -85,9 +85,10 @@
         {
             $("#TextBoxContainer").html("");
             $("input[class$='_error']").html("");
-            var class_id = $('#class_id').val();
-            var section_id = $('#section_id').val();
+            // var class_id = $('#class_id').val();
+            // var section_id = $('#section_id').val();
             var postData = $(this).serializeArray();
+            console.log(postData);
             var formURL = $(this).attr("action");
             $.ajax({
                         url: formURL,
@@ -96,24 +97,14 @@
                         dataType: 'json',
                         success: function (data, textStatus, jqXHR)
                         {
-                            if (data.st === 1) {
-                                $.each(data.msg, function (key, value) {
-                                    $('.' + key + "_error").html(value);
-                                });
-                            } else {
-                                var response = data.msg;
+                            console.log(data);
+                                var response = data;
                                 if (response && response.length > 0) {
                                     for (i = 0; i < response.length; ++i) {
                                         var subject_id = response[i].subject_id;
-                                        var teacher_id = response[i].teacher_id;
                                         var row_id = response[i].id;
-                                        appendRow(subject_id, teacher_id, row_id);
+                                        appendRow(subject_id, row_id);
                                     }
-                                } else {
-                                    $('#box_display').html(" <div class='box-header with-border'><div class='alert alert-info'>No Subject assigned.</div></div>");
-
-                                    //appendRow(0, 0, 0);
-                                }
                                 $('#post_class_id').val(class_id);
                                 $('#post_section_id').val(section_id);
                                 //  $('#btnAdd').show();
@@ -123,9 +114,9 @@
                         },
                         error: function (jqXHR, textStatus, errorThrown)
                         {
-                            console.log(jqXHR.responseJSON);
-                            console.log(textStatus);
-                            console.log(errorThrown);
+                            console.log(jqXHR.responseText);
+                            // console.log(textStatus);
+                            // console.log(errorThrown);
                         }
                     });
 
@@ -146,7 +137,7 @@
                 data: {class_id: class_id},
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $.each(data, function (i, obj)
                     {
                         div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
@@ -155,5 +146,70 @@
                 }
             });
         });
+
+
+
+        function appendRow(subject_id, teacher_id, row_id) {
+        var value = $('#TextBoxContainer .app').length;
+        var row = "";
+        row += '<div class="form-group app">';
+        row += '<input type="hidden" name="i[]" value="' + value + '"/>';
+        row += '<input type="hidden" name="row_id_' + value + '" value="' + row_id + '"/>';
+        row += '<div class="col-md-12">';
+        row += '<div class="form-group row">';
+        row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
+        row += '<div class="col-md-4">';
+        row += '<select  disabled id="subject_id_' + value + '" name="subject_id_' + value + '" class="form-control" >';
+        row += '<option value="">Select</option>';
+            var selected = "";
+            if (subject_id === '1') {
+                selected = "selected";
+            }
+            row += '<option value="1" ' + selected + '>English (Theory)</option>';
+
+                var selected = "";
+            if (subject_id === '2') {
+                selected = "selected";
+            }
+            row += '<option value="2" ' + selected + '>Hindi (Theory)</option>';
+
+                var selected = "";
+            if (subject_id === '3') {
+                selected = "selected";
+            }
+            row += '<option value="3" ' + selected + '>Mathematics (Theory)</option>';
+
+                var selected = "";
+            if (subject_id === '4') {
+                selected = "selected";
+            }
+            row += '<option value="4" ' + selected + '>Science (Theory)</option>';
+
+                var selected = "";
+            if (subject_id === '5') {
+                selected = "selected";
+            }
+            row += '<option value="5" ' + selected + '>Social Studies (Theory)</option>';
+
+                var selected = "";
+            if (subject_id === '6') {
+                selected = "selected";
+            }
+            row += '<option value="6" ' + selected + '>French (Theory)</option>';
+
+                var selected = "";
+            if (subject_id === '7') {
+                selected = "selected";
+            }
+            row += '<option value="7" ' + selected + '>Drawing (Practical)</option>';
+
+            row += '</select>';
+        row += '</div>';
+
+        row += '</div>';
+        row += '</div>';
+        row += '</div>';
+        $("#TextBoxContainer").append(row);
+    }
 </script>
 @endsection
