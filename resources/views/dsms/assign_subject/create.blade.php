@@ -52,8 +52,8 @@
             <div class="panel-body">
                 <form action="{{ route('dsms.assign_subject.store') }}" class="" method="POST">
                     @csrf
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
-                    <input type="hidden" value="0" id="post_section_id" name="section_id">
+                    <input type="hidden" value="" id="post_class_id" name="class_id">
+                    <input type="hidden" value="" id="post_section_id" name="section_id">
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
                     <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
@@ -137,7 +137,7 @@ function GetDynamicTextBox(value) {
                             }
                         }
                         else {
-                            appendRow(0, 0, 0);
+                            appendRow('', '', '');
                         }
                         $('#post_class_id').val(class_id);
                         $('#post_section_id').val(section_id);
@@ -217,7 +217,7 @@ function GetDynamicTextBox(value) {
     });
     $(document).on('click', '#btnDelete', function() {
         var id = $(this).data('id');
-        alert(id);
+        // alert(id);
         $.ajax({
             type: 'DELETE',
             url: '{{ route('dsms.assign_subject.destroy')}}',

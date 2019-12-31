@@ -56,12 +56,15 @@ class AssignSubjectsController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        // dd('hello');
         $class_id = $request->class_id;
         $section_id = $request->section_id;
-        $subject_id[] = $request->subject_id;
-        $row_id[] = $request->row_id;
+        $subject_id = $request->subject_id;
+        $row_id = $request->row_id;
         $array_map = array_map(null, $row_id, $subject_id);
+        // dd($array_map);
         $class_section_id = $this->model_g::getClassSectionId($class_id, $section_id);
+        // dd($class_section_id);
         foreach($array_map as $row) {
             if($row[0] != null){
                 $css_data = $this->model_3::findOrFail($row[0]);
@@ -76,6 +79,7 @@ class AssignSubjectsController extends DM_BaseController
                 $css_data->save();
             }
         }
+        session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.create');
     }
 

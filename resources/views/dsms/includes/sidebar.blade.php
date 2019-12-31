@@ -8,7 +8,7 @@
             @endif
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' ) ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' || $_panel == 'Assign Subject' ) ? 'active' : '' }}">
                     <i class="fa fa-sitemap"></i>
                     <span>{{ __('Academics') }}</span>
                 </a>
