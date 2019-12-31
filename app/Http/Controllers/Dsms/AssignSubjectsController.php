@@ -56,24 +56,27 @@ class AssignSubjectsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        $subject_id = array_filter($request->subject_id);
-        // $class_section_id = array_filter($request->class_section_id);
-        $row_id = array_filter($request->row_id);
+        $class_id = $request->class_id;
+        $section_id = $request->section_id;
+        $subject_id[] = $request->subject_id;
+        $row_id[] = $request->row_id;
         $array_map = array_map(null, $row_id, $subject_id);
-        // dd($array_map);
+        $class_section_id = $this->model_g::getClassSectionId($class_id, $section_id);
         foreach($array_map as $row) {
-            var_dump($row[1]);
-            if($row[0] != ""){
-                $row = $this->model_3::findOrFail($row[0]);
+            if($row[0] != null){
+                $css_data = $this->model_3::findOrFail($row[0]);
+                $css_data->class_section_id = $class_section_id;
+                $css_data->subject_id = (int)$row[1];
+                $css_data->save();
             }
             else {
-                $row = $this->model_3;
+                $css_data = $this->model_3;
+                $css_data->class_section_id = $class_section_id;
+                $css_data->subject_id = (int)$row[1];
+                $css_data->save();
             }
-            $row->class_section_id = $request->class_section_id;
-            $row->subject_id = $row[1];
-            $row->save();
         }
-        die;
+        return redirect()->route($this->base_route.'.create');
     }
 
     /**
@@ -116,9 +119,9 @@ class AssignSubjectsController extends DM_BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $this->model_3::destroy($request->id);
     }
 
     public function getClassSection(Request $request) {

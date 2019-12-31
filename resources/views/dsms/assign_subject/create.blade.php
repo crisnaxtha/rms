@@ -52,9 +52,8 @@
             <div class="panel-body">
                 <form action="{{ route('dsms.assign_subject.store') }}" class="" method="POST">
                     @csrf
-                    <input type="text" value="0" id="post_class_id" name="class_id">
-                    <input type="text" value="0" id="post_section_id" name="section_id">
-                    <input type="text" value="0" id="class_section_id" name="class_section_id">
+                    <input type="hidden" value="0" id="post_class_id" name="class_id">
+                    <input type="hidden" value="0" id="post_section_id" name="section_id">
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
                     <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
@@ -88,8 +87,8 @@
 function GetDynamicTextBox(value) {
         var row = "";
         row += '<div class="form-group app">';
-        row += '<input type="text" name="i[]" value="' + value + '"/>';
-        row += '<input type="text" name="row_id[]" value=""/>';
+        row += '<input type="hidden" name="i[]" value="' + value + '"/>';
+        row += '<input type="hidden" name="row_id[]" value=""/>';
         row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
@@ -132,7 +131,6 @@ function GetDynamicTextBox(value) {
                             for (i = 0; i < response.length; ++i) {
                                 var subject_id = response[i].subject_id;
                                 var row_id = response[i].id;
-                                var class_section_id = response[i].class_section_id;
                                 console.log(response[i].id);
                                 console.log(response[i].subject_id);
                                 appendRow(subject_id, row_id, i);
@@ -143,7 +141,6 @@ function GetDynamicTextBox(value) {
                         }
                         $('#post_class_id').val(class_id);
                         $('#post_section_id').val(section_id);
-                        $('#class_section_id').val(class_section_id);
                         $('#box_display').show();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -177,14 +174,12 @@ function GetDynamicTextBox(value) {
         });
     });
 
-
-
     function appendRow(subject_id, row_id, i) {
         var value = $('#TextBoxContainer .app').length;
         var row = "";
         row += '<div class="form-group app">';
-        row += '<input type="text" name="i[]" value="' + value + '"/>';
-        row += '<input type="text" name="row_id[]" value="' + row_id + '"/>';
+        row += '<input type="hidden" name="i[]" value="' + value + '"/>';
+        row += '<input type="hidden" name="row_id[]" value="' + row_id + '"/>';
         row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
@@ -202,7 +197,7 @@ function GetDynamicTextBox(value) {
         row += '</div>';
         row += '</div>';
         row += '</div>';
-        row += '<div class="col-md-2"><button id="btnRemove" style="" class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus-square"></i></button></div>';
+        row += '<div class="col-md-2"><button id="btnDelete" style="" class="btn btn-xs btn-danger" type="button" data-id='+ row_id +' ><i class="fa fa-minus-square"></i></button></div>';
         row += '</div>';
         $("#TextBoxContainer").append(row);
     }
@@ -216,5 +211,29 @@ function GetDynamicTextBox(value) {
         // $('#btnAdd').hide();
         $('.save_button').hide();
     }
+
+    $(document).on('click', '#btnRemove', function () {
+        $(this).parents('.form-group').remove();
+    });
+    $(document).on('click', '#btnDelete', function() {
+        var id = $(this).data('id');
+        alert(id);
+        $.ajax({
+            type: 'DELETE',
+            url: '{{ route('dsms.assign_subject.destroy')}}',
+            dataType: 'json',
+            data: {
+                id : id,
+            },
+            success: function(response){
+                console.log(response);
+                $(this).parents('.form-group').remove();
+
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.log(jqXHR.responseText);
+            }
+        })
+    });
 </script>
 @endsection
