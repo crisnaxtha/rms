@@ -7,8 +7,9 @@ use App\Http\Controllers\DM_BaseController;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Subject;
-use App\Model\Dsms\ClassSectionSubject;
+// use App\Model\Dsms\ClassSectionSubject;
 use App\Model\Dsms\Eloquent\DM_General;
+use DB;
 
 class AssignSubjectsController extends DM_BaseController
 {
@@ -16,11 +17,10 @@ class AssignSubjectsController extends DM_BaseController
     protected $base_route ='dsms.assign_subject';
     protected $view_path = 'dsms.assign_subject';
 
-    public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, ClassSectionSubject $model_3, DM_General $model_g){
+    public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, DM_General $model_g){
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
-        $this->model_3 = $model_3;
         $this->model_g = $model_g;
     }
 
@@ -66,17 +66,17 @@ class AssignSubjectsController extends DM_BaseController
         $class_section_id = $this->model_g::getClassSectionId($class_id, $section_id);
         // dd($class_section_id);
         foreach($array_map as $row) {
-            if($row[0] != null){
-                $css_data = $this->model_3::findOrFail($row[0]);
-                $css_data->class_section_id = $class_section_id;
-                $css_data->subject_id = (int)$row[1];
-                $css_data->save();
+            if(isset($row[0])){
+                DB::table('class_section_subjects')->where('id', '=', $row[0])->update([
+                    'class_section_id' => $class_section_id,
+                    'subject_id' => (int)$row[1],
+                ]);
             }
-            else {
-                $css_data = $this->model_3;
-                $css_data->class_section_id = $class_section_id;
-                $css_data->subject_id = (int)$row[1];
-                $css_data->save();
+            else{
+                DB::table('class_section_subjects')->insert([
+                    'class_section_id' => $class_section_id,
+                    'subject_id' => (int)$row[1],
+                ]);
             }
         }
         session()->flash('alert-success', $this->panel.' Successfully Store');
