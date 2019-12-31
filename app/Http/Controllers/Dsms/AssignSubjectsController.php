@@ -125,7 +125,7 @@ class AssignSubjectsController extends DM_BaseController
      */
     public function destroy(Request $request)
     {
-        $this->model_3::destroy($request->id);
+        DB::table('class_section_subjects')->where('id', '=', $request->id)->delete();
     }
 
     public function getClassSection(Request $request) {

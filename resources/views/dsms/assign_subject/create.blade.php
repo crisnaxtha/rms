@@ -226,7 +226,7 @@ function GetDynamicTextBox(value) {
                 id : id,
             },
             success: function(response){
-                console.log(response);
+                // console.log(response);
                 $(this).parents('.form-group').remove();
 
             },
