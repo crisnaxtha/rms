@@ -60,8 +60,8 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'AssignSubjectsController@destroy']);
 
             /** Ajax Route */
-            Route::post('getSection',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getSection']);
-            Route::post('getSubject',                               ['as'=>'getSubject',              'uses'=>'AssignSubjectsController@getSubject']);
+            Route::post('getSection',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getClassSection']);
+            Route::post('getSubject',                               ['as'=>'getSubject',              'uses'=>'AssignSubjectsController@getClassSectionSubjects']);
         });
 
     });

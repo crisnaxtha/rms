@@ -7,7 +7,7 @@ use DB;
 
 class DM_General extends Model
 {
-    public static function getSections($class_id) {
+    public static function getClassSections($class_id) {
         $data = DB::table('class_sections')
         ->join('sections', 'class_sections.section_id', '=', 'sections.id')
         ->where('class_sections.class_id', '=', $class_id)
@@ -16,14 +16,18 @@ class DM_General extends Model
         return $data;
     }
 
-    public static function getSubjects($class_id, $section_id) {
+    public static function getClassSectionSubjects($class_id, $section_id) {
+        $id = DB::table('class_sections')
+            ->where('class_sections.class_id', '=', $class_id)
+            ->where('class_sections.section_id', '=', $section_id)
+            ->select('class_sections.id')
+            ->first();
         $data = DB::table('class_section_subjects')
-        ->join('subjects', 'class_section_subjects.subject_id', '=', 'subjects.id')
-        ->where('class_section_subjects.class_id', '=', $class_id)
-        ->where('class_section_subjects.section_id', '=', $section_id)
-        ->where('class_section_subjects.status', '=', 1)
-        ->select('class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', )
-        ->get();
+                ->join('subjects', 'class_section_subjects.subject_id', '=', 'subjects.id')
+                ->where('class_section_subjects.class_section_id', '=', $id->id)
+                ->where('class_section_subjects.status', '=', 1)
+                ->select('class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', )
+                ->get();
         return $data;
     }
 }

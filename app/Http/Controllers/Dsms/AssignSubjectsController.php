@@ -18,6 +18,7 @@ class AssignSubjectsController extends DM_BaseController
     public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, DM_General $model_g){
         $this->model = $model;
         $this->model_1 = $model_1;
+        $this->model_2 = $model_2;
         $this->model_g = $model_g;
     }
 
@@ -29,7 +30,7 @@ class AssignSubjectsController extends DM_BaseController
     public function index()
     {
         $data['class'] = $this->model::where('status', '=', 1)->get();
-        $data['subject'] = $this->model_1::where('status', '=', 1)->get();
+        $data['subject'] = $this->model_2::where('status', '=', 1)->get();
         return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
@@ -40,7 +41,9 @@ class AssignSubjectsController extends DM_BaseController
      */
     public function create()
     {
-        //
+        $data['class'] = $this->model::where('status', '=', 1)->get();
+        $data['subject'] = $this->model_2::where('status', '=', 1)->get();
+        return view($this->loadView($this->view_path.'.create'), compact('data'));
     }
 
     /**
@@ -99,21 +102,21 @@ class AssignSubjectsController extends DM_BaseController
         //
     }
 
-    public function getSection(Request $request) {
+    public function getClassSection(Request $request) {
         if($request->ajax()){
             $class_id = $request->class_id;
-            $sections = $this->model_g::getSections($class_id);
+            $sections = $this->model_g::getClassSections($class_id);
            return $sections;
         }
 
     }
 
-    public function getSubject(Request $request) {
+    public function getClassSectionSubjects(Request $request) {
         if($request->ajax()){
             $class_id = $request->class_id;
             $section_id = $request->section_id;
-            $subjects = $this->model_g::getSubjects($class_id, $section_id);
-            var_dump($subjects);
+            $subjects = $this->model_g::getClassSectionSubjects($class_id, $section_id);
+            return $subjects;
         }
     }
 }
