@@ -28,6 +28,19 @@
 
                 </ul>
             </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="{{ ($_panel == 'Exam' ) ? 'active' : '' }}">
+                    <i class="fa fa-sitemap"></i>
+                    <span>{{ __('Examination') }}</span>
+                </a>
+                <ul class="sub">
+                    @if(Route::has('dsms.exam.index'))
+                    <li><a class="{{ ($_panel == 'Exam') ? 'active' : '' }}" href="{{ URL::route('dsms.exam.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Exam List')}}</span></a></li>
+                    @endif
+
+                </ul>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>
