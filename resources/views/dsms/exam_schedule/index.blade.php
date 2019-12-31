@@ -14,7 +14,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.getSubject')}}" method="post" enctype="multipart/form-data">
+                <form class="assign_teacher_form" action="" method="post" enctype="multipart/form-data">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Class</label>
@@ -74,45 +74,6 @@
     </script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $(".assign_teacher_form").submit(function (e)
-        {
-            $("#TextBoxContainer").html("");
-            var postData = $(this).serializeArray();
-            var class_id = $('#class_id').val();
-            var section_id = $('#section_id').val();
-            console.log(postData);
-            var formURL = $(this).attr("action");
-            $.ajax({
-                url: formURL,
-                type: "POST",
-                data: postData,
-                dataType: 'json',
-                success: function (data, textStatus, jqXHR)
-                {
-                    console.log(data);
-                        var response = data;
-                        if (response && response.length > 0) {
-                            for (i = 0; i < response.length; ++i) {
-                                var subject_id = response[i].subject_id;
-                                console.log(response[i].subject_id);
-                                var row_id = response[i].id;
-                                console.log(response[i].id);
-                                appendRow(subject_id, row_id, i);
-                            }
-                        $('#post_class_id').val(class_id);
-                        $('#post_section_id').val(section_id);
-                        $('#box_display').show();
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown)
-                {
-                    console.log(jqXHR.responseText);
-                }
-            });
-            e.preventDefault();
-        });
-    });
 
     $(document).on('change', '#class_id', function (e) {
         $('#section_id').html("");
@@ -138,29 +99,6 @@
 
 
 
-    function appendRow(subject_id, row_id, i) {
-        var row = "";
-        row += '<div class="form-group app">';
-        row += '<div class="col-md-12">';
-        row += '<div class="form-group row">';
-        row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
-        row += '<div class="col-md-4">';
-        row += '<select disabled id="subject_id_' + i + '" name="subject_id_' + i + '" class="form-control" >';
-        row += '<option value="">Select</option>';
-        @foreach($data['subject'] as $row)
-            var selected = "";
-            if (subject_id === {{ $row->id }}) {
-                selected = "selected";
-            }
-            row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}( {{ $row->type }} )</option>';
-        @endforeach
-        row += '</select>';
-        row += '</div>';
 
-        row += '</div>';
-        row += '</div>';
-        row += '</div>';
-        $("#TextBoxContainer").append(row);
-    }
 </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
+use App\Http\Dm_Traits\DM_General as Dm_TraitsDM_General;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Subject;
@@ -13,6 +14,8 @@ use DB;
 
 class AssignSubjectsController extends DM_BaseController
 {
+    use Dm_TraitsDM_General;
+
     protected $panel = 'Assign Subject';
     protected $base_route ='dsms.assign_subject';
     protected $view_path = 'dsms.assign_subject';
@@ -128,14 +131,14 @@ class AssignSubjectsController extends DM_BaseController
         DB::table('class_section_subjects')->where('id', '=', $request->id)->delete();
     }
 
-    public function getClassSection(Request $request) {
-        if($request->ajax()){
-            $class_id = $request->class_id;
-            $sections = $this->model_g::getClassSections($class_id);
-           return $sections;
-        }
+    // public function getClassSection(Request $request) {
+    //     if($request->ajax()){
+    //         $class_id = $request->class_id;
+    //         $sections = $this->model_g::getClassSections($class_id);
+    //        return $sections;
+    //     }
 
-    }
+    // }
 
     public function getClassSectionSubjects(Request $request) {
         if($request->ajax()){

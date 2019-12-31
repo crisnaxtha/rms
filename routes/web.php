@@ -73,6 +73,15 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamListController@destroy']);
         });
 
+        Route::group(['as'=> 'exam_schedule.', 'prefix' => 'exam_schedule'], function(){
+            Route::get('',                                      ['as'=>'index',              'uses'=>'ExamScheduleController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'ExamScheduleController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'ExamScheduleController@store']);
+            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'ExamScheduleController@edit']);
+            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'ExamScheduleController@update']);
+            Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamScheduleController@destroy']);
+        });
+
     });
 
 });
