@@ -9,7 +9,7 @@
                 Select Criteria
                 <div class="pull-right">
                     @if(Route::has('dsms.assign_subject.create'))
-                    <a class="btn btn-success btn-xs" href="{{ route('dsms.assign_subject.create') }}">Add</a>
+                    {{-- <a class="btn btn-success btn-xs" href="{{ route('dsms.assign_subject.create') }}">Add</a> --}}
                     @endif
                 </div>
             </header>
@@ -47,15 +47,17 @@
         <section class="panel">
             <header class="panel-heading">
                 Assign Subject
+                <button id="btnAdd" class="btn btn-primary btn-xs pull-right" type="button" style="display: block;"><i class="fa fa-plus"></i> Add</button>
             </header>
             <div class="panel-body">
-                <form action="#" class="">
+                <form action="{{ route('dsms.assign_subject.store') }}" class="" method="POST">
                     @csrf
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
-                    <input type="hidden" value="0" id="post_section_id" name="section_id">
+                    <input type="text" value="0" id="post_class_id" name="class_id">
+                    <input type="text" value="0" id="post_section_id" name="section_id">
+                    <input type="text" value="0" id="class_section_id" name="class_section_id">
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
-                    {{-- <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button> --}}
+                    <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
                 </form>
             </div>
         </section>
@@ -65,14 +67,48 @@
 @endsection
 
 @section('js')
-    <!--select2-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".dropdown-class").select2();
-            $(".dropdown-section").select2();
-        });
-    </script>
+<!--select2-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".dropdown-class").select2();
+        $(".dropdown-section").select2();
+    });
+</script>
+<script>
+ $(function () {
+    $(document).on("click", "#btnAdd", function () {
+        var lenght_div = $('#TextBoxContainer .app').length;
+        var div = GetDynamicTextBox(lenght_div);
+        $("#TextBoxContainer").append(div);
+    });
+    $("body").on("click", ".remove", function () {
+        $(this).closest("div").remove();
+    });
+});
+function GetDynamicTextBox(value) {
+        var row = "";
+        row += '<div class="form-group app">';
+        row += '<input type="text" name="i[]" value="' + value + '"/>';
+        row += '<input type="text" name="row_id[]" value=""/>';
+        row += '<div class="col-md-10">';
+        row += '<div class="form-group row">';
+        row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
+        row += '<div class="col-md-4">';
+        row += '<select id="subject_id_' + value + '" name="subject_id[]" class="form-control" >';
+        row += '<option value="">Select</option>';
+        @foreach($data['subject'] as $row)
+            row += '<option value="{{ $row->id }}">{{ $row->title }}( {{ $row->type }} )</option>';
+        @endforeach
+        row += '</select>';
+        row += '</div>';
 
+        row += '</div>';
+        row += '</div>';
+        row += '<div class="col-md-2"><button id="btnRemove" style="" class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus-square"></i></button></div>';
+        row += '</div>';
+        return row;
+    }
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".assign_teacher_form").submit(function (e)
@@ -95,15 +131,20 @@
                         if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {
                                 var subject_id = response[i].subject_id;
-                                console.log(response[i].subject_id);
                                 var row_id = response[i].id;
+                                var class_section_id = response[i].class_section_id;
                                 console.log(response[i].id);
+                                console.log(response[i].subject_id);
                                 appendRow(subject_id, row_id, i);
                             }
+                        }
+                        else {
+                            appendRow(0, 0, 0);
+                        }
                         $('#post_class_id').val(class_id);
                         $('#post_section_id').val(section_id);
+                        $('#class_section_id').val(class_section_id);
                         $('#box_display').show();
-                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown)
                 {
@@ -139,13 +180,16 @@
 
 
     function appendRow(subject_id, row_id, i) {
+        var value = $('#TextBoxContainer .app').length;
         var row = "";
         row += '<div class="form-group app">';
-        row += '<div class="col-md-12">';
+        row += '<input type="text" name="i[]" value="' + value + '"/>';
+        row += '<input type="text" name="row_id[]" value="' + row_id + '"/>';
+        row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
         row += '<div class="col-md-4">';
-        row += '<select disabled id="subject_id_' + i + '" name="subject_id_' + i + '" class="form-control" >';
+        row += '<select id="subject_id_' + i + '" name="subject_id[]" class="form-control" >';
         row += '<option value="">Select</option>';
         @foreach($data['subject'] as $row)
             var selected = "";
@@ -156,11 +200,21 @@
         @endforeach
         row += '</select>';
         row += '</div>';
-
         row += '</div>';
         row += '</div>';
+        row += '<div class="col-md-2"><button id="btnRemove" style="" class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus-square"></i></button></div>';
         row += '</div>';
         $("#TextBoxContainer").append(row);
+    }
+
+    $(document).on('change', '#section_id', function (e) {
+        resetForm();
+    });
+
+    function resetForm() {
+        $('#TextBoxContainer').html("");
+        // $('#btnAdd').hide();
+        $('.save_button').hide();
     }
 </script>
 @endsection

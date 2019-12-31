@@ -7,6 +7,7 @@ use App\Http\Controllers\DM_BaseController;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Subject;
+use App\Model\Dsms\ClassSectionSubject;
 use App\Model\Dsms\Eloquent\DM_General;
 
 class AssignSubjectsController extends DM_BaseController
@@ -15,10 +16,11 @@ class AssignSubjectsController extends DM_BaseController
     protected $base_route ='dsms.assign_subject';
     protected $view_path = 'dsms.assign_subject';
 
-    public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, DM_General $model_g){
+    public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, ClassSectionSubject $model_3, DM_General $model_g){
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
+        $this->model_3 = $model_3;
         $this->model_g = $model_g;
     }
 
@@ -54,7 +56,24 @@ class AssignSubjectsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        //
+        $subject_id = array_filter($request->subject_id);
+        // $class_section_id = array_filter($request->class_section_id);
+        $row_id = array_filter($request->row_id);
+        $array_map = array_map(null, $row_id, $subject_id);
+        // dd($array_map);
+        foreach($array_map as $row) {
+            var_dump($row[1]);
+            if($row[0] != ""){
+                $row = $this->model_3::findOrFail($row[0]);
+            }
+            else {
+                $row = $this->model_3;
+            }
+            $row->class_section_id = $request->class_section_id;
+            $row->subject_id = $row[1];
+            $row->save();
+        }
+        die;
     }
 
     /**
