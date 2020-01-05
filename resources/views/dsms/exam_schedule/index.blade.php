@@ -14,7 +14,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="" method="post" enctype="multipart/form-data">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.getExam')}}" method="post" enctype="multipart/form-data">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Class</label>
@@ -99,6 +99,49 @@
 
 
 
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".assign_teacher_form").submit(function (e)
+        {
+            $("#TextBoxContainer").html("");
+            var postData = $(this).serializeArray();
+            var class_id = $('#class_id').val();
+            var section_id = $('#section_id').val();
+            console.log(postData);
+            var formURL = $(this).attr("action");
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: postData,
+                dataType: 'json',
+                success: function (data, textStatus, jqXHR)
+                {
+                    console.log(data);
+                        var response = data;
+                        if (response && response.length > 0) {
+                            for (i = 0; i < response.length; ++i) {
+                                var subject_id = response[i].subject_id;
+                                console.log(response[i].subject_id);
+                                var row_id = response[i].id;
+                                console.log(response[i].id);
+                                appendRow(subject_id, row_id, i);
+                            }
+                        $('#post_class_id').val(class_id);
+                        $('#post_section_id').val(section_id);
+                        $('#box_display').show();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    console.log(jqXHR.responseText);
+                }
+            });
+            e.preventDefault();
+        });
+    });
 
 </script>
 @endsection

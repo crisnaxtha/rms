@@ -16,12 +16,10 @@ class DM_General extends Model
         return $data;
     }
 
-    public static function getClassSectionSubjects($class_id, $section_id) {
-        $id = self::getClassSectionId($class_id, $section_id);
-
+    public static function getClassSectionSubjects($class_section_id) {
         $data = DB::table('class_section_subjects')
                 ->join('subjects', 'class_section_subjects.subject_id', '=', 'subjects.id')
-                ->where('class_section_subjects.class_section_id', '=', $id)
+                ->where('class_section_subjects.class_section_id', '=', $class_section_id)
                 ->where('class_section_subjects.status', '=', 1)
                 ->select('class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', )
                 ->get();
@@ -34,6 +32,18 @@ class DM_General extends Model
                     ->where('class_sections.section_id', '=', $section_id)
                     ->select('class_sections.id')
                     ->first();
-        return $data->id;
+        return $data;
+    }
+
+    public static function getExamSchedule($class_section_id) {
+        $data = DB::table('class_section_subjects')
+                ->join('subjects', 'class_section_subjects.subject_id', '=', 'subjects.id')
+                ->join('exam_schedules', 'class_section_subjects.id', '=', 'exam_schedules.class_section_subject_id' )
+                ->join('exams', 'exam_schedules.exam_id', '=', 'exams.id')
+                ->where('class_section_subjects.class_section_id', '=', $class_section_id)
+                ->where('class_section_subjects.status', '=', 1)
+                ->select('class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', 'exam_schedules.*' , 'exams.title as exm_title')
+                ->get();
+        return $data;
     }
 }

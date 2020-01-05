@@ -60,8 +60,8 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('delete',                               ['as'=>'destroy',              'uses'=>'AssignSubjectsController@destroy']);
 
             /** Ajax Route */
-            Route::post('getSection',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getClassSection']);
-            Route::post('getSubject',                               ['as'=>'getSubject',              'uses'=>'AssignSubjectsController@getClassSectionSubjects']);
+            Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getClassSection']);
+            Route::post('get_subject',                               ['as'=>'getSubject',              'uses'=>'AssignSubjectsController@getClassSectionSubjects']);
         });
 
         Route::group(['as'=> 'exam.', 'prefix' => 'exam'], function(){
@@ -80,6 +80,10 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'ExamScheduleController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'ExamScheduleController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamScheduleController@destroy']);
+
+              /** Ajax Route */
+            //   Route::post('get_section',                        ['as'=>'getSection',              'uses'=>'ExamScheduleController@getClassSection']);
+            Route::post('get_exam',                           ['as'=>'getExam',              'uses'=>'ExamScheduleController@getExamSchedule']);
         });
 
     });

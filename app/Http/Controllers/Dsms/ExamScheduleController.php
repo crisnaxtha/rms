@@ -95,4 +95,15 @@ class ExamScheduleController extends DM_BaseController
     {
         //
     }
+
+    public function getExamSchedule(Request $request) {
+        if($request->ajax()){
+            $class_id = $request->class_id;
+            $section_id = $request->section_id;
+            $class_section = $this->model_g::getClassSectionId($class_id, $section_id);
+            $exams_schedules = $this->model_g::getExamSchedule($class_section->id);
+            var_dump($exams_schedules);die;
+            return $subjects;
+        }
+    }
 }

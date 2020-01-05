@@ -11,6 +11,5 @@ trait DM_General {
             $sections = $this->model_g::getClassSections($class_id);
            return $sections;
         }
-
     }
 }

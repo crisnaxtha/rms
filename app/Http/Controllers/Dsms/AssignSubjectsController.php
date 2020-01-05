@@ -144,7 +144,8 @@ class AssignSubjectsController extends DM_BaseController
         if($request->ajax()){
             $class_id = $request->class_id;
             $section_id = $request->section_id;
-            $subjects = $this->model_g::getClassSectionSubjects($class_id, $section_id);
+            $class_section = $this->model_g::getClassSectionId($class_id, $section_id);
+            $subjects = $this->model_g::getClassSectionSubjects($class_section->id);
             return $subjects;
         }
     }

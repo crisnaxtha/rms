@@ -94,7 +94,7 @@ class ExamListController extends DM_BaseController
     {
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
-        // $row->group = $request->group;
+        $row->description = $request->description;
         $row->save();
 
         if($row->save()){
