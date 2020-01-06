@@ -1,7 +1,9 @@
 @extends('dsms.layouts.app')
 @section('css')
+<link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/assets/bootstrap-datetimepicker/css/datetimepicker.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/assets/bootstrap-timepicker/compiled/timepicker.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/assets/bootstrap-datetimepicker/css/datetimepicker.css')}}" />
 @endsection
-
 @section('content')
  <!--select2 start-->
  <div class="row">
@@ -16,8 +18,19 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.getExam')}}" method="post" enctype="multipart/form-data">
-                    <div class="col-md-6">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.getSubject')}}" method="post" enctype="multipart/form-data">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="">Exam</label>
+                            <select class="dropdown-class" name="exam_id" id="exam_id">
+                                <option value="">Select</option>
+                                @foreach($data['exam'] as $row)
+                                <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Class</label>
                             <select class="dropdown-class" name="class_id" id="class_id">
@@ -28,7 +41,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Section</label>
                             <select class="dropdown-section" name="section_id" id="section_id">
@@ -53,15 +66,20 @@
             <div class="panel-body">
                 <form action="#" class="">
                     @csrf
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
-                    <input type="hidden" value="0" id="post_section_id" name="section_id">
+                    <input type="text" value="0" id="post_class_id" name="class_id">
+                    <input type="text" value="0" id="post_section_id" name="section_id">
+                    <input type="text" value="0" id="post_exam_id" name="exam_id">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Exam Name</th>
-                                <th>Action</th>
+                                <th>Subject</th>
+                                <th>Date</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                                <th>Room</th>
+                                <th>Full Marks</th>
+                                <th>Passing Marks</th>
                             </tr>
                             </thead>
                             <tbody id="TableContainer">
@@ -70,7 +88,7 @@
                     </div>
                     {{-- <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div> --}}
-                    {{-- <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button> --}}
+                    <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button>
                 </form>
             </div>
         </section>
@@ -80,6 +98,9 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{asset('assets/dsms/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/dsms/assets/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/dsms/assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
     <!--select2-->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -111,10 +132,6 @@
             }
         });
     });
-
-
-
-
 </script>
 
 <script type="text/javascript">
@@ -125,6 +142,7 @@
             var postData = $(this).serializeArray();
             var class_id = $('#class_id').val();
             var section_id = $('#section_id').val();
+            var exam_id = $('#exam_id').val();
             console.log(postData);
             var formURL = $(this).attr("action");
             $.ajax({
@@ -137,14 +155,16 @@
                     console.log(data);
                         var response = data;
                         if (response && response.length > 0) {
-                            for (const [key, value] of Object.entries(response)) {
-                                for (const [key, val] of Object.entries(value)) {
-                                    console.log(key, val);
-                                    appendTable(key, val);
-                                }
+                            for (i = 0; i < response.length; ++i) {
+                                var subject_id = response[i].subject_id;
+                                console.log(response[i].subject_id);
+                                var row_id = response[i].id;
+                                console.log(response[i].id);
+                                appendRow(subject_id, row_id, i);
                             }
                         $('#post_class_id').val(class_id);
                         $('#post_section_id').val(section_id);
+                        $('#post_exam_id').val(exam_id);
                         $('#box_display').show();
                     }
                 },
@@ -157,64 +177,73 @@
         });
     });
 
-
-    function appendTable(key, value){
+    function appendRow(subject_id, row_id, i) {
         var row = "";
-        row += '<tr><th scope="row">1</th>';
-        row += '<td>' + key + '</td>';
+        row += '<tr>';
+
         row += '<td>';
-        row += '<button class="btn btn-success btn-xs" data-toggle="modal" href="#myModal5">View</button>';
-        row += '<div class="modal fade modal-dialog-center" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
-        row += '<div class="modal-dialog modal-lg">';
-        row += '<div class="modal-content-wrap">';
-        row += '<div class="modal-content">';
-        row += '<div class="modal-header">';
-        row += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-        row += '<h4 class="modal-title">' + key + '</h4>';
-        row += '</div>';
-        row += '<div class="modal-body">';
-        row += '<div class="table-responsive">';
-        row += '<table class="table table-bordered">';
-        row += '<thead>';
-        row += '<tr>';
-        row += '<th>#</th>';
-        row += '<th>Subject</th>';
-        row += '<th>Date</th>';
-        row += '<th>Start Time</th>';
-        row += '<th>End Time</th>';
-        row += '<th>Room</th>';
-        row += '<th>Full Marks</th>';
-        row += '<th>Pass Marks</th>';
-        row += '</tr>';
-        row += '</thead>';
-        row += '<tbody>';
-        row += '<tr>';
-        for (const [key, val] of Object.entries(value)) {
-        row += '<th scope="row">1</th>';
-        row += '<td>' + val['sub_title'] +'</td>';
-        row += '<td>' + val['date_of_exam'] +'</td>';
-        row += '<td>' + val['start_to'] +'</td>';
-        row += '<td>' + val['end_from'] +'</td>';
-        row += '<td>' + val['room_no'] +'</td>';
-        row += '<td>' + val['full_marks'] +'</td>';
-        row += '<td>' + val['passing_marks'] +'</td>';
-        row += '</tr>';
+        @foreach($data['subject'] as $row)
+        if (subject_id === {{ $row->id }}) {
+            row += '{{ $row->title }}( {{ $row->type }} )';
         }
-        row += '</tbody>';
-        row += '</table>';
+        @endforeach
+        row += '</td>';
+
+        row += '<td>';
+        row += '<div class=" col-xs-11">';
+        row += '<input class="form-control form-control-inline input-medium default-date-picker"  size="16" type="text" value="" />';
+        row += '<span class="help-block">Select date</span>';
         row += '</div>';
-        row += '</div>';
-        row += '<div class="modal-footer">';
-        row += '<button data-dismiss="modal" class="btn btn-default" type="button">Close</button>';
-        // row += '<button class="btn btn-warning" type="button"> Confirm</button>';
-        row += '</div>';
-        row += '</div>';
-        row += '</div>';
+        row += '</td>';
+
+        row += '<td>';
+        row += '<div class=" col-xs-11">';
+        row += '<div class="input-group bootstrap-timepicker">';
+        row += '<input class="form-control timepicker-default"  size="16" type="text" value="" />';
+        row += '<span class="input-group-btn">';
+        row += '<button class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>';
+        row += '</span>';
         row += '</div>';
         row += '</div>';
         row += '</td>';
+
+        row += '<td>';
+        row += '<div class=" col-xs-11">';
+        row += '<div class="input-group bootstrap-timepicker">';
+        row += '<input class="form-control timepicker-default"  size="16" type="text" value="" />';
+        row += '<span class="input-group-btn">';
+        row += '<button class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>';
+        row += '</span>';
+        row += '</div>';
+        row += '</div>';
+        row += '</td>';
+
+        row += '<td>';
+        row += '<div class=" col-xs-11">';
+        row += '<input class="form-control"  size="16" type="text" value="" />';
+        row += '</div>';
+        row += '</td>';
+
+        row += '<td>';
+        row += '<div class=" col-xs-11">';
+        row += '<input class="form-control"  size="16" type="text" value="" />';
+        row += '</div>';
+        row += '</td>';
+
+        row += '<td>';
+        row += '<div class=" col-xs-11">';
+        row += '<input class="form-control"  size="16" type="text" value="" />';
+        row += '</div>';
+        row += '</td>';
+
         row += '</tr>';
         $("#TableContainer").append(row);
+        $('.default-date-picker').datepicker({
+            format: 'mm-dd-yyyy',
+            autoclose: true
+        });
+        //timepicker start
+        $('.timepicker-default').timepicker();
     }
 
 </script>

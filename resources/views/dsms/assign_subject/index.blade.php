@@ -1,5 +1,7 @@
 @extends('dsms.layouts.app')
 @section('css')
+@endsection
+
 @section('content')
  <!--select2 start-->
  <div class="row">
