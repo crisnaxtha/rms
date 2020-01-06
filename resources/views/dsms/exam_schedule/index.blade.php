@@ -46,13 +46,35 @@
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
-                Assign Subject
+                Exam List
             </header>
             <div class="panel-body">
                 <form action="#" class="">
                     @csrf
                     <input type="hidden" value="0" id="post_class_id" name="class_id">
                     <input type="hidden" value="0" id="post_section_id" name="section_id">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Exam Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody id="TableContainer">
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                                <td>Table cell</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
                     {{-- <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button> --}}
@@ -106,7 +128,7 @@
     $(document).ready(function () {
         $(".assign_teacher_form").submit(function (e)
         {
-            $("#TextBoxContainer").html("");
+            $("#TableContainer").html("");
             var postData = $(this).serializeArray();
             var class_id = $('#class_id').val();
             var section_id = $('#section_id').val();
@@ -122,12 +144,11 @@
                     console.log(data);
                         var response = data;
                         if (response && response.length > 0) {
-                            for (i = 0; i < response.length; ++i) {
-                                var subject_id = response[i].subject_id;
-                                console.log(response[i].subject_id);
-                                var row_id = response[i].id;
-                                console.log(response[i].id);
-                                appendRow(subject_id, row_id, i);
+                            for (const [key, value] of Object.entries(response)) {
+                                for (const [key, val] of Object.entries(value)) {
+                                    console.log(key, val);
+                                    appendTable(key, val);
+                                }
                             }
                         $('#post_class_id').val(class_id);
                         $('#post_section_id').val(section_id);
@@ -142,6 +163,66 @@
             e.preventDefault();
         });
     });
+
+
+    function appendTable(key, value){
+        var row = "";
+        row += '<tr><th scope="row">1</th>';
+        row += '<td>' + key + '</td>';
+        row += '<td>';
+        row += '<button class="btn btn-success btn-xs" data-toggle="modal" href="#myModal5">View</button>';
+        row += '<div class="modal fade modal-dialog-center" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+        row += '<div class="modal-dialog modal-lg">';
+        row += '<div class="modal-content-wrap">';
+        row += '<div class="modal-content">';
+        row += '<div class="modal-header">';
+        row += '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+        row += '<h4 class="modal-title">' + key + '</h4>';
+        row += '</div>';
+        row += '<div class="modal-body">';
+        row += '<div class="table-responsive">';
+        row += '<table class="table table-bordered">';
+        row += '<thead>';
+        row += '<tr>';
+        row += '<th>#</th>';
+        row += '<th>Subject</th>';
+        row += '<th>Date</th>';
+        row += '<th>Start Time</th>';
+        row += '<th>End Time</th>';
+        row += '<th>Room</th>';
+        row += '<th>Full Marks</th>';
+        row += '<th>Pass Marks</th>';
+        row += '</tr>';
+        row += '</thead>';
+        row += '<tbody>';
+        row += '<tr>';
+        for (const [key, val] of Object.entries(value)) {
+        row += '<th scope="row">1</th>';
+        row += '<td>' + val['sub_title'] +'</td>';
+        row += '<td>' + val['date_of_exam'] +'</td>';
+        row += '<td>' + val['start_to'] +'</td>';
+        row += '<td>' + val['end_from'] +'</td>';
+        row += '<td>' + val['room_no'] +'</td>';
+        row += '<td>' + val['full_marks'] +'</td>';
+        row += '<td>' + val['passing_marks'] +'</td>';
+        row += '</tr>';
+        }
+        row += '</tbody>';
+        row += '</table>';
+        row += '</div>';
+        row += '</div>';
+        row += '<div class="modal-footer">';
+        row += '<button data-dismiss="modal" class="btn btn-default" type="button">Close</button>';
+        // row += '<button class="btn btn-warning" type="button"> Confirm</button>';
+        row += '</div>';
+        row += '</div>';
+        row += '</div>';
+        row += '</div>';
+        row += '</div>';
+        row += '</td>';
+        row += '</tr>';
+        $("#TableContainer").append(row);
+    }
 
 </script>
 @endsection
