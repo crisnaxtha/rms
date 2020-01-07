@@ -41,6 +41,9 @@
                     @if(Route::has('dsms.exam_schedule.index'))
                     <li><a class="{{ ($_panel == 'Exam Schedule') ? 'active' : '' }}" href="{{ URL::route('dsms.exam_schedule.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Exam Schedule')}}</span></a></li>
                     @endif
+                    @if(Route::has('dsms.grade.index'))
+                    <li><a class="{{ ($_panel == 'Grade') ? 'active' : '' }}" href="{{ URL::route('dsms.grade.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Grade')}}</span></a></li>
+                    @endif
                 </ul>
             </li>
         </ul>

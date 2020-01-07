@@ -87,6 +87,15 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::post('get_exam',                           ['as'=>'getExam',              'uses'=>'ExamScheduleController@getExamSchedule']);
         });
 
+        Route::group(['as'=> 'grade.', 'prefix' => 'grade'], function(){
+            Route::get('',                                      ['as'=>'index',              'uses'=>'GradesController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'GradesController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'GradesController@store']);
+            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'GradesController@edit']);
+            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'GradesController@update']);
+            Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'GradesController@destroy']);
+        });
+
     });
 
 });
