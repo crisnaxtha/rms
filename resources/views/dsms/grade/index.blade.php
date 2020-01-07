@@ -40,8 +40,10 @@
                    <thead>
                       <tr>
                          <th>#</th>
-                         <th>Class Number/ Name</th>
-                         {{-- <th>Class Group</th> --}}
+                         <th>Grade Name</th>
+                         <th>Percent From</th>
+                         <th>Percent Upto</th>
+                         <th>Point</th>
                          <th>Action</th>
                       </tr>
                    </thead>
@@ -51,9 +53,10 @@
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $row->title }}</td>
-                           {{-- <td>{{ $row->group }}</td> --}}
+                           <td>{{ $row->mark_from }}</td>
+                           <td>{{ $row->mark_upto }}</td>
+                           <td>{{ $row->point }}</td>
                            <td>
-                              @include('dsms.class.includes.buttons.edit-assign')
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')
                            </td>

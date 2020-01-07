@@ -48,7 +48,10 @@ class GradesController extends DM_BaseController
     {
         $row = $this->model;
         $row->title = $request->title;
-        // $row->group = $request->group;
+        $row->mark_from = $request->mark_from;
+        $row->mark_upto = $request->mark_upto;
+        $row->point = $request->point;
+        $row->description = $request->description;
         $row->save();
 
         if($row->save()){
@@ -94,7 +97,10 @@ class GradesController extends DM_BaseController
     {
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
-        // $row->group = $request->group;
+        $row->mark_from = $request->mark_from;
+        $row->mark_upto = $request->mark_upto;
+        $row->point = $request->point;
+        $row->description = $request->description;
         $row->save();
 
         if($row->save()){
