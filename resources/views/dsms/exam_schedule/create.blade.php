@@ -66,9 +66,9 @@
             <div class="panel-body">
                 <form action="{{ route($_base_route.'.store') }}" method="POST" class="">
                     @csrf
-                    <input type="text" value="0" id="post_class_id" name="class_id">
-                    <input type="text" value="0" id="post_section_id" name="section_id">
-                    <input type="text" value="0" id="post_exam_id" name="exam_id">
+                    <input type="hidden" value="0" id="post_class_id" name="class_id">
+                    <input type="hidden" value="0" id="post_section_id" name="section_id">
+                    <input type="hidden" value="0" id="post_exam_id" name="exam_id">
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <thead>
@@ -186,7 +186,7 @@
         @foreach($data['subject'] as $row)
         if (subject_id === {{ $row->id }}) {
             row += '{{ $row->title }}({{ substr($row->type, 0, 2) }})';
-            row += '<input type="text" value="{{ $row->id }}" name="subject['+ i +']"/>';
+            row += '<input type="hidden" value="{{ $row->id }}" name="subject['+ i +']"/>';
         }
         @endforeach
         row += '</td>';
@@ -197,7 +197,7 @@
 
         row += '<td>';
         row += '<div class="input-group bootstrap-timepicker">';
-        row += '<input class="form-control timepicker-default" type="text" value=""  name="start_time['+ i +']"/>';
+        row += '<input class="form-control timepicker-default" type="text" value="10:00:00"  name="start_time['+ i +']"/>';
         row += '<span class="input-group-btn">';
         row += '<button class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>';
         row += '</span>';
@@ -206,7 +206,7 @@
 
         row += '<td>';
         row += '<div class="input-group bootstrap-timepicker">';
-        row += '<input class="form-control timepicker-default" type="text" value=""  name="end_time['+ i +']"/>';
+        row += '<input class="form-control timepicker-default" type="text" value="13:00:00"  name="end_time['+ i +']"/>';
         row += '<span class="input-group-btn">';
         row += '<button class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>';
         row += '</span>';
@@ -218,11 +218,11 @@
         row += '</td>';
 
         row += '<td>';
-        row += '<input class="form-control" type="text" value="" name="full_marks['+ i +']" placeholder="Enter Full Marks"/>';
+        row += '<input class="form-control" type="text" value="100" name="full_marks['+ i +']" placeholder="Enter Full Marks"/>';
         row += '</td>';
 
         row += '<td>';
-        row += '<input class="form-control" type="text" value="" name="pass_marks['+ i +']" placeholder="Enter Passing Marks"/>';
+        row += '<input class="form-control" type="text" value="40" name="pass_marks['+ i +']" placeholder="Enter Passing Marks"/>';
         row += '</td>';
 
         row += '</tr>';
