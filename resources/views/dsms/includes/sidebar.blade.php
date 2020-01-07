@@ -30,7 +30,7 @@
             </li>
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Exam' || $_panel == 'Exam Schedule' ) ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Exam' || $_panel == 'Exam Schedule' || $_panel == 'Grade') ? 'active' : '' }}">
                     <i class="fa fa-sitemap"></i>
                     <span>{{ __('Examination') }}</span>
                 </a>
