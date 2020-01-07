@@ -46,6 +46,18 @@
                     @endif
                 </ul>
             </li>
+
+            <li class="sub-menu">
+                <a href="javascript:;" class="{{ ($_panel == 'Student') ? 'active' : '' }}">
+                    <i class="fa fa-sitemap"></i>
+                    <span>{{ __('Student Information') }}</span>
+                </a>
+                <ul class="sub">
+                    @if(Route::has('dsms.student.create'))
+                    <li><a class="{{ ($_panel == 'Student Create') ? 'active' : '' }}" href="{{ URL::route('dsms.student.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Student Admission')}}</span></a></li>
+                    @endif
+                </ul>
+            </li>
         </ul>
         <!-- sidebar menu end-->
     </div>

@@ -3,7 +3,7 @@
             <i class="fa fa-bars"></i>
         </div>
       <!--logo start-->
-      <a href="{{ URL::route('dsms.dashboard')}}" class="logo">DCM<span>S</span></a>
+      <a href="{{ URL::route('dsms.dashboard')}}" class="logo">DSM<span>S</span></a>
       <!--logo end-->
         <div class="nav notify-row" id="top_menu">
             <!--  notification start -->

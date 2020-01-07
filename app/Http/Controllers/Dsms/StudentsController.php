@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\DM_BaseController;
+use App\Model\Dsms\Student;
 
-class StudentsController extends Controller
+class StudentsController extends DM_BaseController
 {
+    protected $panel = 'Student';
+    protected $base_route ='dsms.student';
+    protected $view_path = 'dsms.student';
+
+    public function __construct(Request $request, Student $model){
+        $this->model = $model;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +32,8 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        //
+        $this->panel = "Student Create";
+        return view($this->loadView($this->view_path.'.create'));
     }
 
     /**
