@@ -9,6 +9,7 @@ use App\Model\Dsms\Eloquent\DM_General;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Subject;
 use App\Model\Dsms\Exam;
+use DB;
 
 class ExamScheduleController extends DM_BaseController
 {
@@ -55,7 +56,28 @@ class ExamScheduleController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        //
+        $class_id = $request->class_id;
+        $section_id = $request->section_id;
+        $exam_id = $request->exam_id;
+
+        $i = $request->i;
+        $class_section_id = $this->model_g::getClassSectionId($class_id, $section_id);
+        foreach($i as $row) {
+            $subject_id = $request->subject[$row];
+            $class_section_subject = $this->model_g::getClassSectionSubject($class_section_id->id, $subject_id);
+            DB::table('exam_schedules')->insert([
+                'exam_id' => $exam_id,
+                'class_section_subject_id' => $class_section_subject->id,
+                'date_of_exam' => $request->date[$row],
+                'start_to' => $request->start_time[$row],
+                'end_from' => $request->end_time[$row],
+                'room_no' => $request->room[$row],
+                'full_marks' => $request->full_marks[$row],
+                'passing_marks' => $request->pass_marks[$row]
+            ]);
+        }
+        session()->flash('alert-success', $this->panel.' Successfully Store');
+        return redirect()->route($this->base_route.'.create');
     }
 
     /**

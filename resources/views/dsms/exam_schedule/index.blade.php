@@ -163,7 +163,7 @@
         row += '<tr><th scope="row">1</th>';
         row += '<td>' + key + '</td>';
         row += '<td>';
-        row += '<button class="btn btn-success btn-xs" data-toggle="modal" href="#myModal5">View</button>';
+        row += '<button class="btn btn-success btn-xs" type="button" data-toggle="modal" href="#myModal5">View</button>';
         row += '<div class="modal fade modal-dialog-center" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
         row += '<div class="modal-dialog modal-lg">';
         row += '<div class="modal-content-wrap">';

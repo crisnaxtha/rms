@@ -71,13 +71,13 @@ class AssignSubjectsController extends DM_BaseController
         foreach($array_map as $row) {
             if(isset($row[0])){
                 DB::table('class_section_subjects')->where('id', '=', $row[0])->update([
-                    'class_section_id' => $class_section_id,
+                    'class_section_id' => $class_section_id->id,
                     'subject_id' => (int)$row[1],
                 ]);
             }
             else{
                 DB::table('class_section_subjects')->insert([
-                    'class_section_id' => $class_section_id,
+                    'class_section_id' => $class_section_id->id,
                     'subject_id' => (int)$row[1],
                 ]);
             }

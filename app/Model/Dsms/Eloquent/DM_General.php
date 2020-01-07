@@ -26,6 +26,15 @@ class DM_General extends Model
         return $data;
     }
 
+    public static function getClassSectionSubject($class_section_id, $subject_id) {
+        $data = DB::table('class_section_subjects')
+                    ->where('class_section_id', '=', $class_section_id)
+                    ->where('subject_id', '=', $subject_id)
+                    ->where('status', '=', 1)
+                    ->first();
+        return $data;
+    }
+
     public static function getClassSectionId($class_id, $section_id) {
         $data =  DB::table('class_sections')
                     ->where('class_sections.class_id', '=', $class_id)
@@ -43,7 +52,6 @@ class DM_General extends Model
                 ->where('class_section_subjects.class_section_id', '=', $class_section_id)
                 ->where('class_section_subjects.status', '=', 1)
                 ->select('class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', 'exam_schedules.*' , 'exams.title as exm_title')
-                // ->groupBy('exam_schedules.exam_id')
                 ->get();
         return $data;
     }

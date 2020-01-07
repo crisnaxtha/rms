@@ -64,7 +64,7 @@
                 Exam List
             </header>
             <div class="panel-body">
-                <form action="#" class="">
+                <form action="{{ route($_base_route.'.store') }}" method="POST" class="">
                     @csrf
                     <input type="text" value="0" id="post_class_id" name="class_id">
                     <input type="text" value="0" id="post_section_id" name="section_id">
@@ -88,7 +88,7 @@
                     </div>
                     {{-- <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div> --}}
-                    <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button>
+                    <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
                 </form>
             </div>
         </section>
@@ -180,70 +180,64 @@
     function appendRow(subject_id, row_id, i) {
         var row = "";
         row += '<tr>';
+        row += '<input type="hidden" name="i[]" value="'+ i +'">';
 
         row += '<td>';
         @foreach($data['subject'] as $row)
         if (subject_id === {{ $row->id }}) {
-            row += '{{ $row->title }}( {{ $row->type }} )';
+            row += '{{ $row->title }}({{ substr($row->type, 0, 2) }})';
+            row += '<input type="text" value="{{ $row->id }}" name="subject['+ i +']"/>';
         }
         @endforeach
         row += '</td>';
 
         row += '<td>';
-        row += '<div class=" col-xs-11">';
-        row += '<input class="form-control form-control-inline input-medium default-date-picker"  size="16" type="text" value="" />';
-        row += '<span class="help-block">Select date</span>';
-        row += '</div>';
+        row += '<input class="form-control default-date-picker" type="text" value="" name="date['+ i +']" placeholder="Enter Date"/>';
         row += '</td>';
 
         row += '<td>';
-        row += '<div class=" col-xs-11">';
         row += '<div class="input-group bootstrap-timepicker">';
-        row += '<input class="form-control timepicker-default"  size="16" type="text" value="" />';
+        row += '<input class="form-control timepicker-default" type="text" value=""  name="start_time['+ i +']"/>';
         row += '<span class="input-group-btn">';
         row += '<button class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>';
         row += '</span>';
         row += '</div>';
-        row += '</div>';
         row += '</td>';
 
         row += '<td>';
-        row += '<div class=" col-xs-11">';
         row += '<div class="input-group bootstrap-timepicker">';
-        row += '<input class="form-control timepicker-default"  size="16" type="text" value="" />';
+        row += '<input class="form-control timepicker-default" type="text" value=""  name="end_time['+ i +']"/>';
         row += '<span class="input-group-btn">';
         row += '<button class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>';
         row += '</span>';
         row += '</div>';
-        row += '</div>';
         row += '</td>';
 
         row += '<td>';
-        row += '<div class=" col-xs-11">';
-        row += '<input class="form-control"  size="16" type="text" value="" />';
-        row += '</div>';
+        row += '<input class="form-control" type="text" value="" name="room['+ i +']" placeholder="Enter Room"/>';
         row += '</td>';
 
         row += '<td>';
-        row += '<div class=" col-xs-11">';
-        row += '<input class="form-control"  size="16" type="text" value="" />';
-        row += '</div>';
+        row += '<input class="form-control" type="text" value="" name="full_marks['+ i +']" placeholder="Enter Full Marks"/>';
         row += '</td>';
 
         row += '<td>';
-        row += '<div class=" col-xs-11">';
-        row += '<input class="form-control"  size="16" type="text" value="" />';
-        row += '</div>';
+        row += '<input class="form-control" type="text" value="" name="pass_marks['+ i +']" placeholder="Enter Passing Marks"/>';
         row += '</td>';
 
         row += '</tr>';
         $("#TableContainer").append(row);
         $('.default-date-picker').datepicker({
-            format: 'mm-dd-yyyy',
+            format: 'yyyy-mm-dd',
             autoclose: true
         });
         //timepicker start
-        $('.timepicker-default').timepicker();
+        $('.timepicker-default').timepicker({
+            autoclose: true,
+            minuteStep: 1,
+            showSeconds: true,
+            showMeridian: false
+        });
     }
 
 </script>
