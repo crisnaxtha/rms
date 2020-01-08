@@ -45,7 +45,7 @@ class CreateStudentsTable extends Migration
             $table->string('guardian_phone')->nullable();
             $table->text('father_pic')->nullable();
             $table->text('mother_pic')->nullable();
-            $table->text('mother_pic')->nullable();
+            $table->text('guardian_pic')->nullable();
             $table->text('previous_school')->nullable();
             $table->text('height')->nullable();
             $table->text('weight')->nullable();
