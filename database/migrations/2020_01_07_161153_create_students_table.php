@@ -18,6 +18,7 @@ class CreateStudentsTable extends Migration
             $table->unsignedInteger('class_section_id');
             $table->string('admission_no')->nullable();
             $table->string('roll_no')->nullable();
+            $table->date('admission_date')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->text('image')->nullable();
