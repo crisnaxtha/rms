@@ -1,5 +1,7 @@
 @extends('dsms.layouts.app')
 @section('css')
+@include('dsms.includes.datatable-assets.css')
+
 @endsection
 
 @section('content')
@@ -19,7 +21,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="row">
-                            <form class="assign_teacher_form" action="{{ route($_base_route.'.search')}}" method="post" enctype="multipart/form-data">
+                            <form class="assign_teacher_form" action="{{ route($_base_route.'.search')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -41,14 +43,14 @@
                                     </div>
                                 </div>
                                 <div class="col-m-12">
-                                    <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button>
+                                    <button class="btn btn-success btn-xs pull-right" id="search_filter" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="row">
-                            <form class="assign_teacher_form" action="{{ route($_base_route.'.search')}}" method="post" enctype="multipart/form-data">
+                            <form class="assign_teacher_form" action="{{ route($_base_route.'.search')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -57,7 +59,7 @@
                                     </div>
                                 </div>
                                 <div class="col-m-12">
-                                    <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button>
+                                    <button class="btn btn-success btn-xs pull-right" id="search_all" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button>
                                 </div>
                             </form>
                         </div>
@@ -69,29 +71,60 @@
 </div>
 <!--select2 end-->
  <!--Assign Subject block-->
-<div class="row" id="box_display" style="display:none">
-    <div class="col-md-12">
-        <section class="panel">
-            <header class="panel-heading">
-                Assign Subject
-            </header>
-            <div class="panel-body">
-                <form action="#" class="">
-                    @csrf
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
-                    <input type="hidden" value="0" id="post_section_id" name="section_id">
-                    <div class="form-horizontal" id="TextBoxContainer" role="form">
-                    </div>
-                    {{-- <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button> --}}
-                </form>
+ <div class="row">
+    <div class="col-sm-12">
+       <section class="panel">
+          <header class="panel-heading">
+             {{ $_panel }}
+          </header>
+          <div class="panel-body">
+            <div class="adv-table">
+                <table  class="display table table-bordered table-striped" id="dynamic-table">
+                   <thead>
+                      <tr>
+                         <th>#</th>
+                         <th>Admission No</th>
+                         <th>Name</th>
+                         <th>Class</th>
+                         <th>Father Name</th>
+                         <th>DoB</th>
+                         <th>Mobile No.</th>
+                         <th>Gender</th>
+                         <th>Action</th>
+                      </tr>
+                   </thead>
+                   <tbody>
+                     @if(isset($data['rows']))
+                        @foreach($data['rows'] as $row)
+                        <tr class="gradeX" id="{{ $row->id }}">
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $row->admission_no }}</td>
+                            <td>{{ $row->first_name }}</td>
+                            <td></td>
+                            <td>{{ $row->father_name }}</td>
+                            <td>{{ $row->dob }}</td>
+                            <td>{{ $row->mobile_no }}</td>
+                            <td>{{ $row->gender }}</td>
+                            <td>
+                                @include('dsms.includes.buttons.button-edit')
+                                @include('dsms.includes.buttons.button-delete')
+                            </td>
+                        </tr>
+                        @endforeach
+                     @endif
+                   </tbody>
+                </table>
             </div>
-        </section>
+          </div>
+       </section>
     </div>
 </div>
 <!--Assign Subject block end-->
 @endsection
 
 @section('js')
+@include('dsms.includes.datatable-assets.js')
+
     <!--select2-->
     <script type="text/javascript">
         $(document).ready(function () {
@@ -124,7 +157,9 @@
         });
     });
 
-
+    $(document).on('click', 'search_filter', function(e) {
+        $('#box_display').show();
+    })
 
 
 </script>

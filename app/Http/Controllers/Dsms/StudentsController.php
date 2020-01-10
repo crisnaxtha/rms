@@ -119,9 +119,23 @@ class StudentsController extends DM_BaseController
     }
 
 
-    public function search() {
+    public function search(Request $request) {
         $class_section_id = $this->model_g::getClassSectionId($request->class_id, $request->section_id);
+        $query = $request->search_text;
+        $data['class'] = $this->model_1::where('status', '=', 1)->get();
 
+        $data['rows'] = $this->model::where('status', '=', 1)
+                            ->orWhere('class_section_id', '=', $class_section_id)
+                            ->where('admission_date', 'LIKE', '%'. $query.'%')
+                            ->orWhere('roll_no', 'LIKE', '%'. $query.'%')
+                            ->orWhere('first_name', 'LIKE', '%'. $query.'%')
+                            ->orWhere('last_name', 'LIKE', '%'. $query.'%')
+                            ->orWhere('mobile_no', 'LIKE', '%'. $query.'%')
+                            ->orWhere('email', 'LIKE', '%'. $query.'%')
+                            ->orWhere('religion', 'LIKE', '%'. $query.'%')
+                            ->orWhere('gender', 'LIKE', '%'. $query.'%')
+                            ->paginate(10);
+        return view($this->loadView($this->view_path.'.index'), compact('data'));
 
     }
 }

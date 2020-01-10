@@ -104,7 +104,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'StudentsController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'StudentsController@destroy']);
 
-            Route::get('search',                                ['as'=>'search',                'uses'=>'StudentsController@search']);
+            Route::post('search',                                ['as'=>'search',                'uses'=>'StudentsController@search']);
         });
 
     });

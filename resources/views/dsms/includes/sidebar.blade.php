@@ -48,7 +48,7 @@
             </li>
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Student') ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Student Admission' || $_panel == 'Student Details') ? 'active' : '' }}">
                     <i class="fa fa-sitemap"></i>
                     <span>{{ __('Student Information') }}</span>
                 </a>
@@ -57,7 +57,7 @@
                     <li><a class="{{ ($_panel == 'Student Details') ? 'active' : '' }}" href="{{ URL::route('dsms.student.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Student Details')}}</span></a></li>
                     @endif
                     @if(Route::has('dsms.student.create'))
-                    <li><a class="{{ ($_panel == 'Student Create') ? 'active' : '' }}" href="{{ URL::route('dsms.student.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Student Admission')}}</span></a></li>
+                    <li><a class="{{ ($_panel == 'Student Admission') ? 'active' : '' }}" href="{{ URL::route('dsms.student.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Student Admission')}}</span></a></li>
                     @endif
                 </ul>
             </li>
