@@ -53,6 +53,9 @@
                     <span>{{ __('Student Information') }}</span>
                 </a>
                 <ul class="sub">
+                    @if(Route::has('dsms.student.index'))
+                    <li><a class="{{ ($_panel == 'Student Details') ? 'active' : '' }}" href="{{ URL::route('dsms.student.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Student Details')}}</span></a></li>
+                    @endif
                     @if(Route::has('dsms.student.create'))
                     <li><a class="{{ ($_panel == 'Student Create') ? 'active' : '' }}" href="{{ URL::route('dsms.student.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Student Admission')}}</span></a></li>
                     @endif

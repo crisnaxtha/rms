@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dsms;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
 use App\Model\Dsms\Student;
+use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Eloquent\DM_General;
 
 class StudentsController extends DM_BaseController
@@ -13,9 +14,10 @@ class StudentsController extends DM_BaseController
     protected $base_route ='dsms.student';
     protected $view_path = 'dsms.student';
 
-    public function __construct(Request $request, Student $model, DM_General $model_g){
+    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1){
         $this->model = $model;
         $this->model_g = $model_g;
+        $this->model_1 = $model_1;
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +26,9 @@ class StudentsController extends DM_BaseController
      */
     public function index()
     {
-        //
+        $this->panel = "Student Details";
+        $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
     /**
@@ -112,5 +116,12 @@ class StudentsController extends DM_BaseController
     public function destroy($id)
     {
         //
+    }
+
+
+    public function search() {
+        $class_section_id = $this->model_g::getClassSectionId($request->class_id, $request->section_id);
+
+
     }
 }
