@@ -121,7 +121,10 @@ class StudentsController extends DM_BaseController
      */
     public function show($id)
     {
-        //
+        $this->panel = "Student Details";
+        $data['row'] = $this->model::findOrFail($id);
+
+        return view($this->loadView($this->view_path.'.show'), compact('data'));
     }
 
     /**
