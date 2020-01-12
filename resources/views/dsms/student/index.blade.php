@@ -21,16 +21,18 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="row">
-                            <form class="assign_teacher_form" action="{{ route($_base_route.'.search')}}" method="POST" enctype="multipart/form-data">
+                            <form class="assign_teacher_form" action="{{ route($_base_route.'.index')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="">Class</label>
                                         <select class="dropdown-class" name="class_id" id="class_id">
                                             <option value="">Select</option>
+                                            @if(isset($data['class']))
                                             @foreach($data['class'] as $row)
-                                            <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                            <option value="{{ $row->id }}" @if(isset($data['class_id'])) @if($data['class_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
                                             @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -39,6 +41,11 @@
                                         <label class="">Section</label>
                                         <select class="dropdown-section" name="section_id" id="section_id">
                                             <option value="">Select</option>
+                                            @if(isset($data['section']))
+                                            @foreach($data['section'] as $row)
+                                            <option value="{{ $row->id }}" @if(isset($data['section_id'])) @if($data['section_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
+                                            @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -50,12 +57,14 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="row">
-                            <form class="assign_teacher_form" action="{{ route($_base_route.'.search')}}" method="POST" enctype="multipart/form-data">
+                            <form class="assign_teacher_form" action="{{ route($_base_route.'.index')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" @if(isset($data['class_id'])) value="{{ $data['class_id'] }}" @endif id="post_class_id" name="class_id">
+                                <input type="hidden" @if(isset($data['section_id'])) value="{{ $data['section_id'] }}" @endif id="post_section_id" name="section_id">
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Search By Keyword</label>
-                                        <input type="text" name="search_text" class="form-control"   placeholder="Search By Student Name, Roll Number, Enroll Number, National Id, Local Id Etc.">
+                                        <input type="text" name="search_text" class="form-control" value="@if(isset($data['query'])) {{ $data['query'] }} @endif"   placeholder="Search By Student Name, Roll Number, Enroll Number, National Id, Local Id Etc.">
                                     </div>
                                 </div>
                                 <div class="col-m-12">
@@ -82,15 +91,14 @@
                 <table  class="display table table-bordered table-striped" id="dynamic-table">
                    <thead>
                       <tr>
-                         <th>#</th>
-                         <th>Admission No</th>
-                         <th>Name</th>
-                         <th>Class</th>
-                         <th>Father Name</th>
-                         <th>DoB</th>
-                         <th>Mobile No.</th>
-                         <th>Gender</th>
-                         <th>Action</th>
+                            <th>#</th>
+                            <th>Admission No</th>
+                            <th>Name</th>
+                            <th>Class</th>
+                            <th>DoB</th>
+                            <th>Mobile No.</th>
+                            <th>Gender</th>
+                            <th>Action</th>
                       </tr>
                    </thead>
                    <tbody>
@@ -99,9 +107,9 @@
                         <tr class="gradeX" id="{{ $row->id }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->admission_no }}</td>
-                            <td>{{ $row->first_name }}</td>
-                            <td></td>
-                            <td>{{ $row->father_name }}</td>
+                            <td>{{ $row->first_name }} {{ $row->last_name }}</td>
+                            <td>@php $cs = dm_classSection($row->class_section_id) @endphp {{ $cs[0]->class_title  }}({{ $cs[0]->sec_title }})</td>
+                            {{-- <td>{{ $row->father_name }}</td> --}}
                             <td>{{ $row->dob }}</td>
                             <td>{{ $row->mobile_no }}</td>
                             <td>{{ $row->gender }}</td>
@@ -157,10 +165,12 @@
         });
     });
 
-    $(document).on('click', 'search_filter', function(e) {
-        $('#box_display').show();
-    })
 
-
+    $(document).on('change', '#section_id', function (e) {
+        var class_id = $('#class_id').val();
+        var section_id = $('#section_id').val();
+        $('#post_class_id').val(class_id);
+        $('#post_section_id').val(section_id);
+    });
 </script>
 @endsection

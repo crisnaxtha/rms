@@ -39,8 +39,17 @@ class DM_General extends Model
         $data =  DB::table('class_sections')
                     ->where('class_sections.class_id', '=', $class_id)
                     ->where('class_sections.section_id', '=', $section_id)
-                    ->select('class_sections.id')
                     ->first();
+        return $data;
+    }
+
+    public static function getClassSection($class_section_id) {
+        $data = DB::table('class_sections')
+                ->join('my_classes', 'class_sections.class_id', '=', 'my_classes.id')
+                ->join('sections', 'class_sections.section_id', '=', 'sections.id')
+                ->where('class_sections.id', $class_section_id)
+                ->select('my_classes.title as class_title', 'sections.title as sec_title')
+                ->get();
         return $data;
     }
 

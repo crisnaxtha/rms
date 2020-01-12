@@ -1,6 +1,8 @@
 <?php
+
+use App\Model\Dsms\Eloquent\DM_General;
 /**
- * showing the status 
+ * showing the status
  */
 if(!function_exists('dm_flag')){
     function dm_flag($value) {
@@ -12,10 +14,10 @@ if(!function_exists('dm_flag')){
     else{ ?>
         <button class="btn btn-round btn-danger btn-xs">
             <i class="fa fa-minus-circle"></i>
-        </button>                                
+        </button>
        <?php
         }
-    }   
+    }
 }
 /** Showing User Role */
 if(!function_exists('dm_userRole')){
@@ -31,5 +33,11 @@ if(!function_exists('dm_userRole')){
         }else {
            echo $role = "<i style='color:white;padding:5px;background:#ec6459'>No Role Assign</i>";
         }
+    }
+}
+if(!function_exists('dm_classSection')){
+    function dm_classSection($class_section_id) {
+        $data = DM_General::getClassSection($class_section_id);
+        return $data;
     }
 }
