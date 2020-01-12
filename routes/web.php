@@ -105,7 +105,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'StudentsController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'StudentsController@destroy']);
 
-            Route::post('excel_import',                         ['as'=>'excel_import',                'uses'=>'StudentsController@excelImport']);
+            Route::any('import',                               ['as'=>'import',                'uses'=>'StudentsController@import']);
         });
 
     });

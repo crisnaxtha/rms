@@ -106,8 +106,8 @@ if(!function_exists('dm_hsubmit')){
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
             <div class="pull-right">
-                <input class="btn btn-danger" type="submit" value="<?=$submitCaption!=null?$submitCaption:''?>" >
-                <a href="<?=$backURL!=null?$backURL:''?>" class="btn btn-default" type="button"><?=$backCaption!=null?$backCaption:''?></a>
+                <input class="btn btn-danger btn-xs" type="submit" value="<?=$submitCaption!=null?$submitCaption:''?>" >
+                <a href="<?=$backURL!=null?$backURL:''?>" class="btn btn-default btn-xs" type="button"><?=$backCaption!=null?$backCaption:''?></a>
             </div>
         </div>
     </div>

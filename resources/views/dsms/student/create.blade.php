@@ -13,6 +13,9 @@
             <section class="panel">
                 <header class="panel-heading">
                    {{ $_panel }}
+                   <span class="tools pull-right">
+                        @include('dsms.student.includes.buttons.button-import')
+                  </span>
                 </header>
                 <div class="panel-body">
                         {{-- @include('dcms.includes.flash-message') --}}

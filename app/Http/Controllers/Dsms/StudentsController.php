@@ -191,7 +191,7 @@ class StudentsController extends DM_BaseController
     }
 
 
-    public function search(Request $request) {
+    public function import(Request $request) {
 
     }
 }
