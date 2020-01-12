@@ -114,6 +114,7 @@
                             <td>{{ $row->mobile_no }}</td>
                             <td>{{ $row->gender }}</td>
                             <td>
+                                @include('dsms.includes.buttons.button-show')
                                 @include('dsms.includes.buttons.button-edit')
                                 @include('dsms.includes.buttons.button-delete')
                             </td>

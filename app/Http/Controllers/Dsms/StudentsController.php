@@ -184,7 +184,7 @@ class StudentsController extends DM_BaseController
      */
     public function destroy($id)
     {
-        //
+        $this->model::destroy($id);
     }
 
 

@@ -100,6 +100,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::any('search',                                ['as'=>'index',              'uses'=>'StudentsController@index']);
             Route::get('create',                                ['as'=>'create',              'uses'=>'StudentsController@create']);
             Route::post('',                                     ['as'=>'store',              'uses'=>'StudentsController@store']);
+            Route::get('{id}/show',                             ['as'=>'show',              'uses'=>'StudentsController@show']);
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'StudentsController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'StudentsController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'StudentsController@destroy']);
