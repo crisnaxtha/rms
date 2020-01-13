@@ -228,7 +228,7 @@ class StudentsController extends DM_BaseController
                 }
             fclose($handle);
             }
-            session()->flash('alert-success', $this->panel.' Successfully Store');
+            session()->flash('alert-success', $this->panel.' Successfully Imported');
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }
         else {

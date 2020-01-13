@@ -108,6 +108,16 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::any('import',                               ['as'=>'import',                'uses'=>'StudentsController@import']);
         });
 
+        Route::group(['as'=> 'marks.', 'prefix' => 'marks'], function(){
+            Route::get('',                                      ['as'=>'index',              'uses'=>'ExamResultsController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'ExamResultsController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'ExamResultsController@store']);
+            Route::get('{id}/show',                             ['as'=>'show',              'uses'=>'ExamResultsController@show']);
+            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'ExamResultsController@edit']);
+            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'ExamResultsController@update']);
+            Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamResultsController@destroy']);
+        });
+
     });
 
 });

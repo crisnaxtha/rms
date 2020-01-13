@@ -9,7 +9,7 @@ use DB;
 
 class GradesController extends DM_BaseController
 {
-    protected $panel = 'Grade';
+    protected $panel = 'Marks Grade';
     protected $base_route ='dsms.grade';
     protected $view_path = 'dsms.grade';
 
