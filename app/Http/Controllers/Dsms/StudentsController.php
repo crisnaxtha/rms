@@ -192,6 +192,23 @@ class StudentsController extends DM_BaseController
 
 
     public function import(Request $request) {
+        $this->panel = "Student Admission";
 
+        if ($request->isMethod('post')){
+            $data['class_id'] = $request->class_id;
+            $data['section_id'] = $request->section_id;
+            $class_section = $this->model_g::getClassSectionId($data['class_id'], $data['section_id']);
+            if(isset($class_section)) {
+                $class_section_id = $class_section->id;
+            }else {
+                $class_section_id = '';
+            }
+
+            return view($this->loadView($this->view_path.'.import'), compact('data'));
+        }
+        else {
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+            return view($this->loadView($this->view_path.'.import'), compact('data'));
+        }
     }
 }
