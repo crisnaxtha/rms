@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
+use App\DM_ImportExport\StudentsImport;
+use App\DM_Libraries\PHPExcel;
 use App\Model\Dsms\Student;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Eloquent\DM_General;
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
 class StudentsController extends DM_BaseController
@@ -204,6 +207,28 @@ class StudentsController extends DM_BaseController
                 $class_section_id = '';
             }
 
+            $path = $request->file('file')->getRealPath();
+            $row = 1;
+            if(($handle = fopen($path, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $this->model::create([
+                        'class_section_id'  => $class_section_id,
+                        'admission_no'      => $data[0],
+                        'roll_no'           => $data[1],
+                        'first_name'        => $data[2],
+                        'last_name'         => $data[3],
+                        'dob'               => date("Y-m-d", strtotime($data[4])),
+                        'religion'          => $data[5],
+                        'mobile_no'         => $data[6],
+                        'email'             => $data[7],
+                        'admission_date'    => date("Y-m-d", strtotime($data[8])),
+                        'blood_group'       => $data[9],
+                        'gender'            => $data[10],
+                    ]);
+                }
+            fclose($handle);
+            }
+            session()->flash('alert-success', $this->panel.' Successfully Store');
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }
         else {
