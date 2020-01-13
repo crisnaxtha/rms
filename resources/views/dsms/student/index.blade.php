@@ -26,7 +26,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="">Class</label>
-                                        <select class="dropdown-class" name="class_id" id="class_id">
+                                        <select class="dropdown-class" name="class_id" id="class_id" class="form-control" required>
                                             <option value="">Select</option>
                                             @if(isset($data['class']))
                                             @foreach($data['class'] as $row)
@@ -39,7 +39,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="">Section</label>
-                                        <select class="dropdown-section" name="section_id" id="section_id">
+                                        <select class="dropdown-section" name="section_id" id="section_id" class="form-control" required>
                                             <option value="">Select</option>
                                             @if(isset($data['section']))
                                             @foreach($data['section'] as $row)

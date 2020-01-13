@@ -91,7 +91,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Class</label><small class="req"> *</small>
-                                <select autofocus="" id="class_id" name="class_id" class="form-control">
+                                <select autofocus="" id="class_id" name="class_id" class="form-control" required>
                                     <option value="">Select</option>
                                     @if(isset($data['class']))
                                     @foreach($data['class'] as $row)
@@ -105,7 +105,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Section</label><small class="req"> *</small>
-                                <select id="section_id" name="section_id" class="form-control">
+                                <select id="section_id" name="section_id" class="form-control" required>
                                     <option value="">Select</option>
                                 </select>
                                 <span class="text-danger"></span>
