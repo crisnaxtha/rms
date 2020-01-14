@@ -18,7 +18,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Exam</label>
-                            <select class="dropdown-class" name="exam_id" id="exam_id">
+                            <select class="dropdown-class" name="exam_id" id="exam_id" required>
                                 <option value="">Select</option>
                                 @foreach($data['exam'] as $row)
                                 <option value="{{ $row->id }}">{{ $row->title }}</option>

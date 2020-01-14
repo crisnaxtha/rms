@@ -65,6 +65,19 @@ class DM_General extends Model
         return $data;
     }
 
+    public static function getExamResult($class_section_id, $exam_id) {
+        $data = DB::table('class_section_subjects')
+                ->join('subjects', 'class_section_subjects.subject_id', '=', 'subjects.id')
+                ->join('exam_schedules', 'class_section_subjects.id', '=', 'exam_schedules.class_section_subject_id' )
+                ->join('exams', 'exam_schedules.exam_id', '=', 'exams.id')
+                ->where('class_section_subjects.class_section_id', '=', $class_section_id)
+                ->where('exam_schedules.exam_id', '=', $exam_id)
+                ->where('class_section_subjects.status', '=', 1)
+                ->select('class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', 'exam_schedules.id as exam_schedule_id' , 'exams.title as exm_title')
+                ->get();
+        return $data;
+    }
+
     public static function arrayGroupBy($old_arr_1, $based_on) {
         $arr = array();
         $old_arr = json_decode($old_arr_1, true);
