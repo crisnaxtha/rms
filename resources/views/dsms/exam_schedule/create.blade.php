@@ -6,14 +6,14 @@
 @endsection
 @section('content')
  <!--select2 start-->
- <div class="row">
+<div class="row">
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
                 Select Criteria
                 <div class="pull-right">
                     @if(Route::has($_base_route.'.create'))
-                    <a class="btn btn-success btn-xs" href="{{ route($_base_route.'.create') }}">Add</a>
+                    {{-- <a class="btn btn-success btn-xs" href="{{ route($_base_route.'.create') }}">Add</a> --}}
                     @endif
                 </div>
             </header>
