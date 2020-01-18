@@ -7,6 +7,15 @@ use DB;
 
 class DM_General extends Model
 {
+    public static function joinSchoolClass($id) {
+        $data = DB::table('school_classes')
+        ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
+        ->where('school_classes.class_id', '=', $id)
+        ->select('school_classes.*', 'my_classes.title')
+        ->get();
+        return $data;
+    }
+
     public static function getClassSections($class_id) {
         $data = DB::table('class_sections')
         ->join('sections', 'class_sections.section_id', '=', 'sections.id')

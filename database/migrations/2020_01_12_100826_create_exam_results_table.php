@@ -15,7 +15,6 @@ class CreateExamResultsTable extends Migration
     {
         Schema::create('exam_results', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('school_id')->nullable();
             $table->string('attendance');
             $table->unsignedInteger('exam_schedules_id')->nullable();
             $table->unsignedInteger('student_id')->nullable();

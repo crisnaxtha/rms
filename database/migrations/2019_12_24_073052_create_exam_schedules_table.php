@@ -18,7 +18,7 @@ class CreateExamSchedulesTable extends Migration
             $table->unsignedInteger('school_id')->nullable();
             $table->unsignedInteger('session_id')->nullable();
             $table->unsignedInteger('exam_id')->nullable();
-            $table->unsignedInteger('class_section_subject_id')->nullable();
+            $table->unsignedInteger('school_class_section_subject_id')->nullable();
             $table->date('date_of_exam')->nullable();
             $table->time('start_to')->nullable();
             $table->time('end_from')->nullable();

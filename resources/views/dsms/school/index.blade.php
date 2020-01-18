@@ -53,6 +53,7 @@
                            <td>{{ $row->code }}</td>
                            <td>{{ $row->title }}</td>
                            <td>
+                              @include('dsms.school.includes.buttons.edit-assign')
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')
                            </td>

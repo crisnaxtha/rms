@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
+use App\Model\Dsms\Eloquent\DM_General;
 use App\Model\Dsms\School;;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
@@ -16,9 +17,10 @@ class SchoolsController extends DM_BaseController
     protected $base_route ='dsms.school';
     protected $view_path = 'dsms.school';
 
-    public function __construct(Request $request, School $model, Section $model_2){
+    public function __construct(Request $request, School $model, MyClass $model_2, DM_General $model_g){
         $this->model = $model;
         $this->model_2 = $model_2;
+        $this->model_g = $model_g;
     }
 
      /**
@@ -122,6 +124,47 @@ class SchoolsController extends DM_BaseController
     public function destroy($id)
     {
         $this->model::destroy($id);
+    }
+
+    public function assignClass($id) {
+        $data['row'] = $this->model::findOrFail($id);
+        $data['class'] = $this->model_2::all();
+        $data['school_class'] = $this->model_g::joinSchoolClass($id);
+        $data['class_id'] = [];
+        foreach($data['school_class'] as $row){
+            array_push($data['class_id'], $row->class_id);
+        }
+        $data['p_id'] = array_combine($data['class_id'], $data['class_id']);
+        return view(parent::loadView($this->view_path.'.section'), compact('data'));
+    }
+
+    public function updateAssignSection(Request $request, $id) {
+        if(DB::table('class_sections')->where('class_id', $id)->first()){
+            DB::table('class_sections')->where('class_id', $id)->delete();
+        }
+        $sections = $request->sections;
+        if(isset($sections)){
+            foreach($sections as $row) {
+                $data[] = [
+                    'section_id' => $row,
+                    'class_id' => $id,
+                ];
+            }
+        DB::table('class_sections')->insert($data);
+        }
+
+        $data['rows'] = $this->model::all();
+        return view(parent::loadView($this->view_path.'.index'), compact('data'));
+
+    }
+
+    public function joinClassSection($id) {
+        $class_role = DB::table('class_sections')
+                    ->join('sections', 'class_sections.section_id', '=', 'sections.id')
+                    ->where('class_sections.class_id', '=', $id)
+                    ->select('class_sections.*', 'sections.title')
+                    ->get();
+        return $class_role;
     }
 
 }
