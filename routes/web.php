@@ -22,6 +22,16 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
     Route::group(['prefix' => 'dashboard'], function(){
         Route::get('/',                     ['as'=>'dashboard',         'uses' => 'HomeController@index']);
 
+        Route::group(['as'=> 'school.', 'prefix' => 'school'], function(){
+            Route::get('',                                      ['as'=>'index',              'uses'=>'SchoolsController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'SchoolsController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'SchoolsController@store']);
+            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'SchoolsController@edit']);
+            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'SchoolsController@update']);
+            Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'SchoolsController@destroy']);
+        });
+
+
         Route::group(['as'=> 'class.', 'prefix' => 'class'], function(){
             Route::get('',                                      ['as'=>'index',              'uses'=>'ClassesController@index']);
             Route::get('create',                                ['as'=>'create',              'uses'=>'ClassesController@create']);
