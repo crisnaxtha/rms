@@ -135,36 +135,25 @@ class SchoolsController extends DM_BaseController
             array_push($data['class_id'], $row->class_id);
         }
         $data['p_id'] = array_combine($data['class_id'], $data['class_id']);
-        return view(parent::loadView($this->view_path.'.section'), compact('data'));
+        return view(parent::loadView($this->view_path.'.assign'), compact('data'));
     }
 
-    public function updateAssignSection(Request $request, $id) {
-        if(DB::table('class_sections')->where('class_id', $id)->first()){
-            DB::table('class_sections')->where('class_id', $id)->delete();
+    public function updateAssignClass(Request $request, $id) {
+        if(DB::table('school_classes')->where('school_id', $id)->first()){
+            DB::table('school_classes')->where('school_id', $id)->delete();
         }
-        $sections = $request->sections;
+        $sections = $request->assign;
         if(isset($sections)){
             foreach($sections as $row) {
                 $data[] = [
-                    'section_id' => $row,
-                    'class_id' => $id,
+                    'class_id' => $row,
+                    'school_id' => $id,
                 ];
             }
-        DB::table('class_sections')->insert($data);
+        DB::table('school_classes')->insert($data);
         }
 
-        $data['rows'] = $this->model::all();
-        return view(parent::loadView($this->view_path.'.index'), compact('data'));
-
-    }
-
-    public function joinClassSection($id) {
-        $class_role = DB::table('class_sections')
-                    ->join('sections', 'class_sections.section_id', '=', 'sections.id')
-                    ->where('class_sections.class_id', '=', $id)
-                    ->select('class_sections.*', 'sections.title')
-                    ->get();
-        return $class_role;
+        return redirect()->route($this->base_route.'.index');
     }
 
 }

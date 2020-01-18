@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="panel">
             <div class="panel-heading">
-                Assign sections
+                Assign Classes
                 @include('dsms.includes.buttons.button-back')
                 <a rel="group_1" href="#select_all" class="btn btn-success btn-xs">Select All</a>
                 <a rel="group_1" href="#select_none" class="btn btn-danger btn-xs">Select None</a>
@@ -16,8 +16,8 @@
                 <div class="form" id="group_1">
                     <form class="cmxform form-horizontal tasi-form" id="signupForm" method="POST" action="{{ route($_base_route.'.assign.update',['id' => $data['row']->id])}}">
                         @csrf
-                        @if(count($data['sections']))
-                        @foreach($data['sections'] as $row)
+                        @if(count($data['class']))
+                        @foreach($data['class'] as $row)
                         @if(array_key_exists($row->id, $data['p_id']))
                         @php $selected_checked_modules = "checked"; @endphp
                         @else
@@ -25,19 +25,16 @@
                         @endif
                         <div class="" style="display:flex;">
                             {{-- <div class="col-lg-10 col-sm-9"> --}}
-                                <input name="sections[]" type="checkbox" style="width: 20px" class="checkbox form-control" id="" value="{{ $row['id'] }}" {{ $selected_checked_modules }}/>
+                                <input name="assign[]" type="checkbox" style="width: 20px" class="checkbox form-control" id="" value="{{ $row['id'] }}" {{ $selected_checked_modules }}/>
                             {{-- </div> --}}
                             <label for="" class="control-label col-lg-2 col-sm-3">{{ $row['title'] }}</label>
 
                         </div>
                         @endforeach
                         @endif
-                        <div class="form-group">
-                            <div class="col-lg-offset-2 col-lg-10">
-                                <button class="btn btn-danger" type="submit">Save</button>
-                                <button class="btn btn-default" type="button">Cancel</button>
-                            </div>
-                        </div>
+                        <?php
+                            dm_hsubmit('Submit', URL::route($_base_route.'.index'), 'Cancel');
+                        ?>
                     </form>
                 </div>
             </div>
