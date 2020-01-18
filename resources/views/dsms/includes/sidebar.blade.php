@@ -8,7 +8,7 @@
             @endif
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' || $_panel == 'Assign Subject' || $_panel == 'School' ) ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' || $_panel == 'Assign Subject' || $_panel == 'School' || $_panel == 'Assign Section') ? 'active' : '' }}">
                     <i class="fa fa-sitemap"></i>
                     <span>{{ __('Academics') }}</span>
                 </a>
@@ -21,6 +21,9 @@
                     @endif
                     @if(Route::has('dsms.section.index'))
                     <li><a class="{{ ($_panel == 'Section') ? 'active' : '' }}" href="{{ URL::route('dsms.section.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Section')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.assign_section.index'))
+                    <li><a class="{{ ($_panel == 'Assign Section') ? 'active' : '' }}" href="{{ URL::route('dsms.assign_section.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Assign Section')}}</span></a></li>
                     @endif
                     @if(Route::has('dsms.subject.index'))
                     <li><a class="{{ ($_panel == 'Subject') ? 'active' : '' }}" href="{{ URL::route('dsms.subject.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Subject')}}</span></a></li>

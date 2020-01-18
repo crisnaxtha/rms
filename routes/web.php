@@ -54,6 +54,20 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'SectionsController@destroy']);
         });
 
+        Route::group(['as'=> 'assign_section.', 'prefix' => 'assign_section'], function(){
+            Route::get('',                                      ['as'=>'index',              'uses'=>'AssignSectionController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'AssignSectionController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'AssignSectionController@store']);
+            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'AssignSectionController@edit']);
+            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'AssignSectionController@update']);
+            Route::delete('delete',                               ['as'=>'destroy',              'uses'=>'AssignSectionController@destroy']);
+
+            /** Ajax Route */
+            Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSectionController@getClassSection']);
+            Route::post('get_subject',                               ['as'=>'getSubject',              'uses'=>'AssignSectionController@getClassSectionSubjects']);
+        });
+
+
         Route::group(['as'=> 'subject.', 'prefix' => 'subject'], function(){
             Route::get('',                                      ['as'=>'index',              'uses'=>'SubjectsController@index']);
             Route::get('create',                                ['as'=>'create',              'uses'=>'SubjectsController@create']);
