@@ -9,6 +9,7 @@ use App\Model\Dsms\Eloquent\DM_General;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Subject;
 use App\Model\Dsms\Exam;
+use App\Model\Dsms\School;
 use DB;
 
 class ExamScheduleController extends DM_BaseController
@@ -17,11 +18,12 @@ class ExamScheduleController extends DM_BaseController
     protected $base_route ='dsms.exam_schedule';
     protected $view_path = 'dsms.exam_schedule';
 
-    public function __construct(Request $request, ExamSchedule $model, MyClass $model_1, Subject $model_2, Exam $model_3, DM_General $model_g){
+    public function __construct(Request $request, ExamSchedule $model, MyClass $model_1, Subject $model_2, Exam $model_3, School $model_4, DM_General $model_g){
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
         $this->model_3 = $model_3;
+        $this->model_4 = $model_4;
         $this->model_g = $model_g;
     }
     /**
@@ -31,7 +33,7 @@ class ExamScheduleController extends DM_BaseController
      */
     public function index()
     {
-        $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        $data['school'] = $this->model_4::all();
         return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
@@ -42,7 +44,7 @@ class ExamScheduleController extends DM_BaseController
      */
     public function create()
     {
-        $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        $data['school'] = $this->model_4::all();
         $data['exam'] = $this->model_3::where('status', '=', 1)->get();
         $data['subject'] = $this->model_2::where('status', '=', 1)->get();
         return view($this->loadView($this->view_path.'.create'), compact('data'));
@@ -56,18 +58,20 @@ class ExamScheduleController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        $school_id = $request->school_id;
         $class_id = $request->class_id;
         $section_id = $request->section_id;
         $exam_id = $request->exam_id;
 
         $i = $request->i;
-        $class_section_id = $this->model_g::getClassSectionId($class_id, $section_id);
+        $school_class = $this->model_g::getSchoolClassId($school_id, $class_id);
+        $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $section_id);
         foreach($i as $row) {
             $subject_id = $request->subject[$row];
-            $class_section_subject = $this->model_g::getClassSectionSubject($class_section_id->id, $subject_id);
+            $school_class_section_subject = $this->model_g::getSchoolClassSectionSubject($school_class_section->id, $subject_id);
             DB::table('exam_schedules')->insert([
                 'exam_id' => $exam_id,
-                'class_section_subject_id' => $class_section_subject->id,
+                'school_class_section_subject_id' => $school_class_section_subject->id,
                 'date_of_exam' => $request->date[$row],
                 'start_to' => $request->start_time[$row],
                 'end_from' => $request->end_time[$row],
@@ -127,21 +131,25 @@ class ExamScheduleController extends DM_BaseController
 
     public function getExamSchedule(Request $request) {
         if($request->ajax()){
+            $school_id = $request->school_id;
             $class_id = $request->class_id;
             $section_id = $request->section_id;
-            $class_section = $this->model_g::getClassSectionId($class_id, $section_id);
-            $exam_schedules = $this->model_g::getExamSchedule($class_section->id);
+            $school_class = $this->model_g::getSchoolClassId($school_id, $class_id);
+            $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $section_id);
+            $exam_schedules = $this->model_g::getExamSchedule($school_class_section->id);
             $unique_exams_schedules[] = $this->model_g::arrayGroupBy($exam_schedules, 'exm_title');
             return $unique_exams_schedules;
         }
     }
 
-    public function getClassSectionSubjects(Request $request) {
+    public function getSchoolClassSectionSubjects(Request $request) {
         if($request->ajax()){
+            $school_id = $request->school_id;
             $class_id = $request->class_id;
             $section_id = $request->section_id;
-            $class_section = $this->model_g::getClassSectionId($class_id, $section_id);
-            $subjects = $this->model_g::getClassSectionSubjects($class_section->id);
+            $school_class = $this->model_g::getSchoolClassId($school_id, $class_id);
+            $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $section_id);
+            $subjects = $this->model_g::getSchoolClassSectionSubjects($school_class_section->id);
             return $subjects;
         }
     }

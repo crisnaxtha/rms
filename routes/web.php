@@ -116,8 +116,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamScheduleController@destroy']);
 
             /** Ajax Route */
-            Route::post('get_section',                        ['as'=>'getSection',              'uses'=>'ExamScheduleController@getClassSection']);
-            Route::post('get_subject',                        ['as'=>'getSubject',       'uses'=>'ExamScheduleController@getClassSectionSubjects']);
+            Route::post('get_subject',                        ['as'=>'getSubject',       'uses'=>'ExamScheduleController@getSchoolClassSectionSubjects']);
             Route::post('get_exam',                           ['as'=>'getExam',              'uses'=>'ExamScheduleController@getExamSchedule']);
         });
 

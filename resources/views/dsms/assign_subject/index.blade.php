@@ -77,14 +77,14 @@
 @endsection
 
 @section('js')
-    <!--select2-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".dropdown-school").select2();
-            $(".dropdown-class").select2();
-            $(".dropdown-section").select2();
-        });
-    </script>
+<!--select2-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".dropdown-school").select2();
+        $(".dropdown-class").select2();
+        $(".dropdown-section").select2();
+    });
+</script>
 <script>
     $(document).on('change', '#school_id', function (e) {
         $('#class_id').html("");
