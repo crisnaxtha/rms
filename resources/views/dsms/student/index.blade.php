@@ -54,9 +54,9 @@
                                         <label class="">Section</label>
                                         <select class="dropdown-section" name="section_id" id="section_id" required>
                                             <option value="">Select</option>
-                                            @if(isset($data['class']))
-                                            @foreach($data['class'] as $row)
-                                            <option value="{{ $row->id }}" @if(isset($data['class_id'])) @if($data['class_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
+                                            @if(isset($data['section']))
+                                            @foreach($data['section'] as $row)
+                                            <option value="{{ $row->id }}" @if(isset($data['section_id'])) @if($data['section_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
                                             @endforeach
                                             @endif
                                         </select>
@@ -122,7 +122,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->admission_no }}</td>
                             <td>{{ $row->first_name }} {{ $row->last_name }}</td>
-                            <td>@php $cs = dm_classSection($row->class_section_id) @endphp {{ $cs[0]->class_title  }}({{ $cs[0]->sec_title }})</td>
+                            <td>@php $cs = dm_schoolClassSection($row->school_class_section_id) @endphp {{ $cs->class_title  }}({{ $cs->sec_title }})</td>
                             {{-- <td>{{ $row->father_name }}</td> --}}
                             <td>{{ $row->dob }}</td>
                             <td>{{ $row->mobile_no }}</td>

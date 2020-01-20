@@ -44,6 +44,7 @@ class StudentsController extends DM_BaseController
             $data['section_id'] = $request->section_id;
             $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
             $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+            // dd($school_class_section);
             if(isset($school_class_section)) {
                 $school_class_section_id = $school_class_section->id;
             }else {
@@ -110,7 +111,7 @@ class StudentsController extends DM_BaseController
     public function create()
     {
         $this->panel = "Student Admission";
-        $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        $data['school'] = $this->model_3::all();
         return view($this->loadView($this->view_path.'.create'), compact('data'));
     }
 
@@ -122,9 +123,14 @@ class StudentsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        $class_section_id = $this->model_g::getClassSectionId($request->class_id, $request->section_id);
+        $data['school_id'] = $request->school_id;
+        $data['class_id'] = $request->class_id;
+        $data['section_id'] = $request->section_id;
+        $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+        $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+
         $row = $this->model;
-        $row->class_section_id = $class_section_id->id;
+        $row->school_class_section_id = $school_class_section->id;
         $row->admission_no = $request->admission_no;
         $row->roll_no = $request->roll_no;
         $row->first_name = $request->firstname;
