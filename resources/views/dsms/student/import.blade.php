@@ -88,29 +88,38 @@
                 @csrf
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Class</label><small class="req"> *</small>
-                                <select autofocus="" id="class_id" name="class_id" class="form-control" required>
+                                <label class="">School</label>
+                                <select class="dropdown-school" name="school_id" id="school_id" required>
                                     <option value="">Select</option>
-                                    @if(isset($data['class']))
-                                    @foreach($data['class'] as $row)
-                                    <option value="{{ $row->id }}" >{{ $row->title }}</option>
+                                    @if(isset($data['school']))
+                                    @foreach($data['school'] as $row)
+                                        <option value="{{ $row->id }}">{{ $row->title }}</option>
                                     @endforeach
                                     @endif
                                 </select>
-                                <span class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Section</label><small class="req"> *</small>
-                                <select id="section_id" name="section_id" class="form-control" required>
+                                <label class="">Class</label>
+                                <select class="dropdown-class" name="class_id" id="class_id" required>
                                     <option value="">Select</option>
                                 </select>
-                                <span class="text-danger"></span>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="">Section</label>
+                                <select class="dropdown-section" name="section_id" id="section_id" required>
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleInputFile">Select CSV File</label><small class="req"> *</small>
@@ -122,7 +131,6 @@
                         <div class="col-md-6 pt20">
                             <button type="submit" class="btn btn-info btn-xs pull-right">Import Student</button>
                         </div>
-
                     </div>
                 </div>
 
@@ -139,26 +147,54 @@
 @section('js')
 @include('dsms.includes.datatable-assets.js')
 
-    <!--select2-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".dropdown-class").select2();
-            $(".dropdown-section").select2();
-        });
-    </script>
-
+ <!--select2-->
 <script type="text/javascript">
+    $(document).ready(function () {
+        $(".dropdown-school").select2();
+        $(".dropdown-class").select2();
+        $(".dropdown-section").select2();
+    });
+</script>
+<script>
+    $(document).on('change', '#school_id', function (e) {
+        $('#class_id').html("");
+        // resetForm();
+        var school_id = $(this).val();
+        // alert(school_id);
+        var url = '{{ route('dsms.assign_section.getClass')}}';
+        var div_data = '<option value="">Select</option>';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {school_id: school_id},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, obj)
+                {
+                    div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
+                });
+                $('#class_id').append(div_data);
+            },
+            error: function(jqXHR){
+                console.log(jqXHR.responseJSON);
+            }
+        });
+    });
+</script>
+<script>
 
     $(document).on('change', '#class_id', function (e) {
         $('#section_id').html("");
         // resetForm();
         var class_id = $(this).val();
+        var school_id = $('#school_id').val();
         var url = '{{ route('dsms.assign_subject.getSection')}}';
         var div_data = '<option value="">Select</option>';
         $.ajax({
             type: "POST",
             url: url,
-            data: {class_id: class_id},
+            data: {class_id: class_id, school_id: school_id},
             dataType: "json",
             success: function (data) {
                 // console.log(data);
@@ -167,16 +203,13 @@
                     div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
                 });
                 $('#section_id').append(div_data);
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.responseText);
             }
         });
     });
 
-
-    $(document).on('change', '#section_id', function (e) {
-        var class_id = $('#class_id').val();
-        var section_id = $('#section_id').val();
-        $('#post_class_id').val(class_id);
-        $('#post_section_id').val(section_id);
-    });
 </script>
+
 @endsection

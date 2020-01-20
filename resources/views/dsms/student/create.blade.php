@@ -53,6 +53,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <hr>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -247,26 +248,5 @@ $('.default-date-picker').datepicker({
     autoclose: true
 });
 
-$(document).on('change', '#class_id', function (e) {
-    $('#section_id').html("");
-    // resetForm();
-    var class_id = $(this).val();
-    var url = '{{ route('dsms.assign_subject.getSection')}}';
-    var div_data = '<option value="">Select</option>';
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: {class_id: class_id},
-        dataType: "json",
-        success: function (data) {
-            // console.log(data);
-            $.each(data, function (i, obj)
-            {
-                div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
-            });
-            $('#section_id').append(div_data);
-        }
-    });
-});
 </script>
 @endsection

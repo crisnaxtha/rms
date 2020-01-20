@@ -44,12 +44,13 @@ class StudentsController extends DM_BaseController
             $data['section_id'] = $request->section_id;
             $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
             $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
-            // dd($school_class_section);
+
             if(isset($school_class_section)) {
                 $school_class_section_id = $school_class_section->id;
             }else {
                 $school_class_section_id = '';
             }
+
             $data['query'] = $request->search_text;
             $data['school'] = $this->model_3::all();
             $data['class'] = $this->model_1::where('status', '=', 1)->get();
@@ -236,13 +237,16 @@ class StudentsController extends DM_BaseController
         $this->panel = "Student Admission";
 
         if ($request->isMethod('post')){
+            $data['school_id'] = $request->school_id;
             $data['class_id'] = $request->class_id;
             $data['section_id'] = $request->section_id;
-            $class_section = $this->model_g::getClassSectionId($data['class_id'], $data['section_id']);
-            if(isset($class_section)) {
-                $class_section_id = $class_section->id;
+            $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+            $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+
+            if(isset($school_class_section)) {
+                $school_class_section_id = $school_class_section->id;
             }else {
-                $class_section_id = '';
+                $school_class_section_id = '';
             }
 
             $path = $request->file('file')->getRealPath();
@@ -250,7 +254,7 @@ class StudentsController extends DM_BaseController
             if(($handle = fopen($path, "r")) !== FALSE) {
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     $this->model::create([
-                        'class_section_id'  => $class_section_id,
+                        'school_class_section_id'  => $school_class_section_id,
                         'admission_no'      => $data[0],
                         'roll_no'           => $data[1],
                         'first_name'        => $data[2],
@@ -270,7 +274,7 @@ class StudentsController extends DM_BaseController
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }
         else {
-            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+            $data['school'] = $this->model_3::all();
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }
     }
