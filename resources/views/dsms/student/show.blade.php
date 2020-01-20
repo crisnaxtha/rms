@@ -16,7 +16,7 @@
                     </a>
                 @endif
                 <h1>{{ $data['row']->first_name }} {{ $data['row']->last_name }}</h1>
-                <p>@php $cs = dm_classSection($data['row']->class_section_id) @endphp {{ $cs[0]->class_title  }}({{ $cs[0]->sec_title }})</p>
+                <p>@php $cs = dm_schoolClassSection($data['row']->school_class_section_id) @endphp {{ $cs->class_title  }}({{ $cs->sec_title }})</p>
                 <p>{{ $data['row']->email }}</p>
                 <p>{{ $data['row']->mobile_no }}</p>
             </div>

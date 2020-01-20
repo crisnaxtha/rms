@@ -179,10 +179,10 @@ class StudentsController extends DM_BaseController
     {
         $this->panel = "Student Details";
         $data['row'] = $this->model::findOrFail($id);
+        $data['school'] = $this->model_3::all();
         $data['class'] = $this->model_1::where('status', '=', 1)->get();
         $data['section'] = $this->model_2::where('status', '=', 1)->get();
-        $data['class_section'] = DB::table('class_sections')->where('id', '=', $data['row']->class_section_id)->first();
-
+        $data['school_class_section'] = $this->model_g::joinSchoolClassSection($data['row']->school_class_section_id);
         return view($this->loadView($this->view_path.'.edit'), compact('data'));
     }
 

@@ -60,8 +60,9 @@ class DM_General extends Model
             ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
             ->join('school_classes', 'school_class_sections.school_class_id', '=', 'school_classes.id')
             ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
+            ->join('schools', 'school_classes.school_id', '=', 'schools.id')
             ->where('school_class_sections.id', '=', $school_class_section_id)
-            ->select('school_class_sections.*','my_classes.title as class_title', 'sections.title as sec_title', 'sections.id as sec_id')
+            ->select('school_class_sections.*','schools.id as school_id', 'my_classes.id as class_id', 'my_classes.title as class_title', 'sections.title as sec_title', 'sections.id as sec_id')
             ->first();
     return $data;
     }
