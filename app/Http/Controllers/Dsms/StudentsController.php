@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
-use App\DM_ImportExport\StudentsImport;
-use App\DM_Libraries\PHPExcel;
 use App\Model\Dsms\Student;
+use App\Model\Dsms\School;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Eloquent\DM_General;
-use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
 class StudentsController extends DM_BaseController
@@ -24,11 +22,12 @@ class StudentsController extends DM_BaseController
     protected $folder = 'student';
     protected $prefix_path_image = '/upload_file/images/student/';
 
-    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2){
+    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3){
         $this->model = $model;
         $this->model_g = $model_g;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
+        $this->model_3 = $model_3;
         $this->folder_path_image = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
     }
     /**
@@ -40,19 +39,23 @@ class StudentsController extends DM_BaseController
     {
         $this->panel = "Student Details";
         if ($request->isMethod('post')){
+            $data['school_id'] = $request->school_id;
             $data['class_id'] = $request->class_id;
             $data['section_id'] = $request->section_id;
-            $class_section = $this->model_g::getClassSectionId($data['class_id'], $data['section_id']);
-            if(isset($class_section)) {
-                $class_section_id = $class_section->id;
+            $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+            $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+            if(isset($school_class_section)) {
+                $school_class_section_id = $school_class_section->id;
             }else {
-                $class_section_id = '';
+                $school_class_section_id = '';
             }
             $data['query'] = $request->search_text;
+            $data['school'] = $this->model_3::all();
             $data['class'] = $this->model_1::where('status', '=', 1)->get();
             $data['section'] = $this->model_2::where('status', '=', 1)->get();
+            if(isset($school_class_section_id) && isset($data['query'])){
             $data['rows'] = $this->model::where('status', '=', 1)
-                                ->orWhere('class_section_id', '=', $class_section_id)
+                                ->orWhere('school_class_section_id', '=', $school_class_section_id)
                                 ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
                                 ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
                                 ->where('first_name', 'LIKE', '%'. $data['query'].'%')
@@ -62,10 +65,39 @@ class StudentsController extends DM_BaseController
                                 ->where('religion', 'LIKE', '%'. $data['query'].'%')
                                 ->where('gender', 'LIKE', '%'. $data['query'].'%')
                                 ->get();
+            }else if(isset($school_class_section_id) && !isset($data['query'])){
+                $data['rows'] = $this->model::where('status', '=', 1)
+                                ->Where('school_class_section_id', '=', $school_class_section_id)
+                                ->get();
+            }
+            else if(!isset($school_class_section_id) && isset($data['query'])){
+                $data['rows'] = $this->model::where('status', '=', 1)
+                                ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
+                                ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
+                                ->where('first_name', 'LIKE', '%'. $data['query'].'%')
+                                ->where('last_name', 'LIKE', '%'. $data['query'].'%')
+                                ->where('mobile_no', 'LIKE', '%'. $data['query'].'%')
+                                ->where('email', 'LIKE', '%'. $data['query'].'%')
+                                ->where('religion', 'LIKE', '%'. $data['query'].'%')
+                                ->where('gender', 'LIKE', '%'. $data['query'].'%')
+                                ->get();
+            }
+            else {
+                $data['rows'] = $this->model::where('status', '=', 1)
+                                ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
+                                ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
+                                ->where('first_name', 'LIKE', '%'. $data['query'].'%')
+                                ->where('last_name', 'LIKE', '%'. $data['query'].'%')
+                                ->where('mobile_no', 'LIKE', '%'. $data['query'].'%')
+                                ->where('email', 'LIKE', '%'. $data['query'].'%')
+                                ->where('religion', 'LIKE', '%'. $data['query'].'%')
+                                ->where('gender', 'LIKE', '%'. $data['query'].'%')
+                                ->get();
+            }
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
         else {
-            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+            $data['school'] = $this->model_3::all();
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
     }
