@@ -18,19 +18,20 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">School</label>
-                            <select class="dropdown-school" name="class_id" id="class_id">
+                            <select class="dropdown-school" name="school_id" id="school_id">
                                 <option value="">Select</option>
                                 @if(isset($data['school']))
                                 @foreach($data['school'] as $row)
                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                 @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="">Class</label>
-                            <select class="dropdown-class" name="section_id" id="section_id">
+                            <select class="dropdown-class" name="class_id" id="class_id">
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -47,14 +48,14 @@
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
-                Assign Subject
+                Assign Section
                 <button id="btnAdd" class="btn btn-primary btn-xs pull-right" type="button" style="display: block;"><i class="fa fa-plus"></i> Add</button>
             </header>
             <div class="panel-body">
-                <form action="{{ route('dsms.assign_subject.store') }}" class="" method="POST">
+                <form action="{{ route($_base_route.'.store') }}" class="" method="POST">
                     @csrf
-                    <input type="hidden" value="" id="post_class_id" name="class_id">
-                    <input type="hidden" value="" id="post_section_id" name="section_id">
+                    <input type="hidden" value="0" id="post_school_id" name="school_id">
+                    <input type="hidden" value="0" id="post_class_id" name="class_id">
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
                     <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
@@ -70,8 +71,36 @@
 <!--select2-->
 <script type="text/javascript">
     $(document).ready(function () {
+        $(".dropdown-school").select2();
         $(".dropdown-class").select2();
-        $(".dropdown-section").select2();
+    });
+</script>
+
+<script>
+    $(document).on('change', '#school_id', function (e) {
+        $('#class_id').html("");
+        // resetForm();
+        var school_id = $(this).val();
+        // alert(school_id);
+        var url = '{{ route('dsms.assign_section.getClass')}}';
+        var div_data = '<option value="">Select</option>';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {school_id: school_id},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, obj)
+                {
+                    div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
+                });
+                $('#class_id').append(div_data);
+            },
+            error: function(jqXHR){
+                console.log(jqXHR.responseJSON);
+            }
+        });
     });
 </script>
 <script>
@@ -92,12 +121,11 @@ function GetDynamicTextBox(value) {
         row += '<input type="hidden" name="row_id[]" value=""/>';
         row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
-        row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="subject_id_' + value + '" name="subject_id[]" class="form-control" >';
+        row += '<select id="section_id_' + value + '" name="section_id[]" class="form-control" >';
         row += '<option value="">Select</option>';
-        @foreach($data['subject'] as $row)
-            row += '<option value="{{ $row->id }}">{{ $row->title }}( {{ $row->type }} )</option>';
+        @foreach($data['section'] as $row)
+            row += '<option value="{{ $row->id }}">{{ $row->title }}</option>';
         @endforeach
         row += '</select>';
         row += '</div>';
@@ -115,8 +143,8 @@ function GetDynamicTextBox(value) {
         {
             $("#TextBoxContainer").html("");
             var postData = $(this).serializeArray();
+            var school_id = $('#school_id').val();
             var class_id = $('#class_id').val();
-            var section_id = $('#section_id').val();
             console.log(postData);
             var formURL = $(this).attr("action");
             $.ajax({
@@ -130,18 +158,18 @@ function GetDynamicTextBox(value) {
                         var response = data;
                         if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {
-                                var subject_id = response[i].subject_id;
+                                var section_id = response[i].section_id;
                                 var row_id = response[i].id;
                                 console.log(response[i].id);
-                                console.log(response[i].subject_id);
-                                appendRow(subject_id, row_id, i);
+                                console.log(response[i].section_id);
+                                appendRow(section_id, row_id, i);
                             }
                         }
                         else {
                             appendRow('', '', '');
                         }
+                        $('#post_school_id').val(school_id);
                         $('#post_class_id').val(class_id);
-                        $('#post_section_id').val(section_id);
                         $('#box_display').show();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -153,29 +181,7 @@ function GetDynamicTextBox(value) {
         });
     });
 
-    $(document).on('change', '#class_id', function (e) {
-        $('#section_id').html("");
-        // resetForm();
-        var class_id = $(this).val();
-        var url = '{{ route('dsms.assign_subject.getSection')}}';
-        var div_data = '<option value="">Select</option>';
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {class_id: class_id},
-            dataType: "json",
-            success: function (data) {
-                // console.log(data);
-                $.each(data, function (i, obj)
-                {
-                    div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
-                });
-                $('#section_id').append(div_data);
-            }
-        });
-    });
-
-    function appendRow(subject_id, row_id, i) {
+    function appendRow(section_id, row_id, i) {
         var value = $('#TextBoxContainer .app').length;
         var row = "";
         row += '<div class="form-group app">';
@@ -183,16 +189,15 @@ function GetDynamicTextBox(value) {
         row += '<input type="hidden" name="row_id[]" value="' + row_id + '"/>';
         row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
-        row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="subject_id_' + i + '" name="subject_id[]" class="form-control" >';
+        row += '<select id="section_id_' + i + '" name="section_id[]" class="form-control" >';
         row += '<option value="">Select</option>';
-        @foreach($data['subject'] as $row)
+        @foreach($data['section'] as $row)
             var selected = "";
-            if (subject_id === {{ $row->id }}) {
+            if (section_id === {{ $row->id }}) {
                 selected = "selected";
             }
-            row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}( {{ $row->type }} )</option>';
+            row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}</option>';
         @endforeach
         row += '</select>';
         row += '</div>';
@@ -221,7 +226,7 @@ function GetDynamicTextBox(value) {
         // alert(id);
         $.ajax({
             type: 'DELETE',
-            url: '{{ route('dsms.assign_subject.destroy')}}',
+            url: '{{ route('dsms.assign_section.destroy')}}',
             dataType: 'json',
             data: {
                 id : id,

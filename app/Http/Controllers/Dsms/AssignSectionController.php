@@ -61,26 +61,25 @@ class AssignSectionController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        // dd('hello');
+        $school_id = $request->school_id;
         $class_id = $request->class_id;
         $section_id = $request->section_id;
-        $subject_id = $request->subject_id;
         $row_id = $request->row_id;
-        $array_map = array_map(null, $row_id, $subject_id);
+        $array_map = array_map(null, $row_id, $section_id);
         // dd($array_map);
-        $class_section_id = $this->model_g::getClassSectionId($class_id, $section_id);
+        $school_class = $this->model_g::getSchoolClassId($school_id, $class_id);
         // dd($class_section_id);
         foreach($array_map as $row) {
             if(isset($row[0])){
-                DB::table('class_section_subjects')->where('id', '=', $row[0])->update([
-                    'class_section_id' => $class_section_id->id,
-                    'subject_id' => (int)$row[1],
+                DB::table('school_class_sections')->where('id', '=', $row[0])->update([
+                    'school_class_id' => $school_class->id,
+                    'section_id' => (int)$row[1],
                 ]);
             }
             else{
-                DB::table('class_section_subjects')->insert([
-                    'class_section_id' => $class_section_id->id,
-                    'subject_id' => (int)$row[1],
+                DB::table('school_class_sections')->insert([
+                    'school_class_id' => $school_class->id,
+                    'section_id' => (int)$row[1],
                 ]);
             }
         }
@@ -130,7 +129,7 @@ class AssignSectionController extends DM_BaseController
      */
     public function destroy(Request $request)
     {
-        DB::table('class_section_subjects')->where('id', '=', $request->id)->delete();
+        DB::table('school_class_sections')->where('id', '=', $request->id)->delete();
     }
 
     public function getSchoolClass(Request $request) {
