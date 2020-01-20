@@ -136,7 +136,8 @@ class ExamScheduleController extends DM_BaseController
             $section_id = $request->section_id;
             $school_class = $this->model_g::getSchoolClassId($school_id, $class_id);
             $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $section_id);
-            $exam_schedules = $this->model_g::getExamSchedule($school_class_section->id);
+            $exam_schedules = $this->model_g::getExamSchedules($school_class_section->id);
+            // var_dump($exam_schedules);die;
             $unique_exams_schedules[] = $this->model_g::arrayGroupBy($exam_schedules, 'exm_title');
             return $unique_exams_schedules;
         }

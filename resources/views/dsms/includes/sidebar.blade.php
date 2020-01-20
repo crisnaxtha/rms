@@ -9,7 +9,7 @@
 
             <li class="sub-menu">
                 <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' || $_panel == 'Assign Subject' || $_panel == 'School' || $_panel == 'Assign Section' || $_panel == 'Assign Class') ? 'active' : '' }}">
-                    <i class="fa fa-sitemap"></i>
+                    <i class="fa fa-book"></i>
                     <span>{{ __('Academics') }}</span>
                 </a>
                 <ul class="sub">
@@ -40,7 +40,7 @@
 
             <li class="sub-menu">
                 <a href="javascript:;" class="{{ ($_panel == 'Exam' || $_panel == 'Exam Schedule' || $_panel == 'Marks Register' || $_panel == 'Marks Grade') ? 'active' : '' }}">
-                    <i class="fa fa-sitemap"></i>
+                    <i class="fa fa-edit"></i>
                     <span>{{ __('Examination') }}</span>
                 </a>
                 <ul class="sub">
@@ -61,7 +61,7 @@
 
             <li class="sub-menu">
                 <a href="javascript:;" class="{{ ($_panel == 'Student Admission' || $_panel == 'Student Details') ? 'active' : '' }}">
-                    <i class="fa fa-sitemap"></i>
+                    <i class="fa fa-group"></i>
                     <span>{{ __('Student Information') }}</span>
                 </a>
                 <ul class="sub">

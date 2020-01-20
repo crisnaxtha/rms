@@ -96,6 +96,7 @@
  <!--Assign Subject block-->
  <div class="row">
     <div class="col-sm-12">
+        @if(isset($data['rows']))
        <section class="panel">
           <header class="panel-heading">
              {{ $_panel }}
@@ -116,7 +117,6 @@
                       </tr>
                    </thead>
                    <tbody>
-                     @if(isset($data['rows']))
                         @foreach($data['rows'] as $row)
                         <tr class="gradeX" id="{{ $row->id }}">
                             <td>{{ $loop->iteration }}</td>
@@ -134,12 +134,12 @@
                             </td>
                         </tr>
                         @endforeach
-                     @endif
                    </tbody>
                 </table>
             </div>
           </div>
        </section>
+       @endif
     </div>
 </div>
 <!--Assign Subject block end-->
