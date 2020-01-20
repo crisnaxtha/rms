@@ -14,8 +14,8 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.getSection')}}" method="post" enctype="multipart/form-data">
-                    <div class="col-md-6">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.getClass')}}" method="post" enctype="multipart/form-data">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="">School</label>
                             <select class="dropdown-school" name="school_id" id="school_id">
@@ -25,14 +25,6 @@
                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                 @endforeach
                                 @endif
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="">Class</label>
-                            <select class="dropdown-class" name="class_id" id="class_id">
-                                <option value="">Select</option>
                             </select>
                         </div>
                     </div>
@@ -48,14 +40,13 @@
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
-                Assign Section
+                Assign Class
                 <button id="btnAdd" class="btn btn-primary btn-xs pull-right" type="button" style="display: block;"><i class="fa fa-plus"></i> Add</button>
             </header>
             <div class="panel-body">
                 <form action="{{ route($_base_route.'.store') }}" class="" method="POST">
                     @csrf
                     <input type="hidden" value="0" id="post_school_id" name="school_id">
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
                     <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
@@ -72,37 +63,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".dropdown-school").select2();
-        $(".dropdown-class").select2();
     });
 </script>
 
-<script>
-    $(document).on('change', '#school_id', function (e) {
-        $('#class_id').html("");
-        // resetForm();
-        var school_id = $(this).val();
-        // alert(school_id);
-        var url = '{{ route('dsms.assign_section.getClass')}}';
-        var div_data = '<option value="">Select</option>';
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {school_id: school_id},
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                $.each(data, function (i, obj)
-                {
-                    div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
-                });
-                $('#class_id').append(div_data);
-            },
-            error: function(jqXHR){
-                console.log(jqXHR.responseJSON);
-            }
-        });
-    });
-</script>
 <script>
  $(function () {
     $(document).on("click", "#btnAdd", function () {
@@ -121,11 +84,11 @@ function GetDynamicTextBox(value) {
         row += '<input type="hidden" name="row_id[]" value=""/>';
         row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
-        row += '<label for="inputValue" class="col-md-1 control-label">Section</label>';
+        row += '<label for="inputValue" class="col-md-1 control-label">Class</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="section_id_' + value + '" name="section_id[]" class="form-control" >';
+        row += '<select id="class_id_' + value + '" name="class_id[]" class="form-control" >';
         row += '<option value="">Select</option>';
-        @foreach($data['section'] as $row)
+        @foreach($data['class'] as $row)
             row += '<option value="{{ $row->id }}">{{ $row->title }}</option>';
         @endforeach
         row += '</select>';
@@ -145,7 +108,6 @@ function GetDynamicTextBox(value) {
             $("#TextBoxContainer").html("");
             var postData = $(this).serializeArray();
             var school_id = $('#school_id').val();
-            var class_id = $('#class_id').val();
             console.log(postData);
             var formURL = $(this).attr("action");
             $.ajax({
@@ -159,18 +121,17 @@ function GetDynamicTextBox(value) {
                         var response = data;
                         if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {
-                                var section_id = response[i].section_id;
+                                var class_id = response[i].class_id;
                                 var row_id = response[i].id;
                                 console.log(response[i].id);
-                                console.log(response[i].section_id);
-                                appendRow(section_id, row_id, i);
+                                console.log(response[i].class_id);
+                                appendRow(class_id, row_id, i);
                             }
                         }
                         else {
                             appendRow('', '', '');
                         }
                         $('#post_school_id').val(school_id);
-                        $('#post_class_id').val(class_id);
                         $('#box_display').show();
                 },
                 error: function (jqXHR, textStatus, errorThrown)
@@ -182,7 +143,7 @@ function GetDynamicTextBox(value) {
         });
     });
 
-    function appendRow(section_id, row_id, i) {
+    function appendRow(class_id, row_id, i) {
         var value = $('#TextBoxContainer .app').length;
         var row = "";
         row += '<div class="form-group app">';
@@ -190,13 +151,13 @@ function GetDynamicTextBox(value) {
         row += '<input type="hidden" name="row_id[]" value="' + row_id + '"/>';
         row += '<div class="col-md-10">';
         row += '<div class="form-group row">';
-        row += '<label for="inputValue" class="col-md-1 control-label">Section</label>';
+        row += '<label for="inputValue" class="col-md-1 control-label">Class</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="section_id_' + i + '" name="section_id[]" class="form-control" >';
+        row += '<select id="class_id_' + i + '" name="class_id[]" class="form-control" >';
         row += '<option value="">Select</option>';
-        @foreach($data['section'] as $row)
+        @foreach($data['class'] as $row)
             var selected = "";
-            if (section_id === {{ $row->id }}) {
+            if (class_id === {{ $row->id }}) {
                 selected = "selected";
             }
             row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}</option>';
@@ -210,7 +171,7 @@ function GetDynamicTextBox(value) {
         $("#TextBoxContainer").append(row);
     }
 
-    $(document).on('change', '#class_id', function (e) {
+    $(document).on('change', '#school_id', function (e) {
         resetForm();
     });
 
@@ -225,10 +186,9 @@ function GetDynamicTextBox(value) {
     });
     $(document).on('click', '#btnDelete', function() {
         var id = $(this).data('id');
-        // alert(id);
         $.ajax({
             type: 'DELETE',
-            url: '{{ route('dsms.assign_section.destroy')}}',
+            url: '{{ route('dsms.assign_class.destroy')}}',
             dataType: 'json',
             data: {
                 id : id,

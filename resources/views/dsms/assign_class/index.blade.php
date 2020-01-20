@@ -16,8 +16,9 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.getSection')}}" method="post" enctype="multipart/form-data">
-                    <div class="col-md-6">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.getClass')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label class="">School</label>
                             <select class="dropdown-school" name="school_id" id="school_id">
@@ -27,14 +28,6 @@
                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                 @endforeach
                                 @endif
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="">Class</label>
-                            <select class="dropdown-class" name="class_id" id="class_id">
-                                <option value="">Select</option>
                             </select>
                         </div>
                     </div>
@@ -56,7 +49,6 @@
                 <form action="#" class="">
                     @csrf
                     <input type="hidden" value="0" id="post_school_id" name="school_id">
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
                     <div class="form-horizontal" id="TextBoxContainer" role="form">
                     </div>
                     {{-- <button class="btn btn-success btn-xs pull-right" id="" type="button"><i class="fa fa-search"></i> &nbsp; Save</button> --}}
@@ -73,36 +65,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(".dropdown-school").select2();
-        $(".dropdown-class").select2();
     });
 </script>
-<script>
-$(document).on('change', '#school_id', function (e) {
-    $('#class_id').html("");
-    // resetForm();
-    var school_id = $(this).val();
-    // alert(school_id);
-    var url = '{{ route('dsms.assign_section.getClass')}}';
-    var div_data = '<option value="">Select</option>';
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: {school_id: school_id},
-        dataType: "json",
-        success: function (data) {
-            console.log(data);
-            $.each(data, function (i, obj)
-            {
-                div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
-            });
-            $('#class_id').append(div_data);
-        },
-        error: function(jqXHR){
-            console.log(jqXHR.responseJSON);
-        }
-    });
-});
-</script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $(".assign_teacher_form").submit(function (e)
@@ -110,7 +75,6 @@ $(document).on('change', '#school_id', function (e) {
             $("#TextBoxContainer").html("");
             var postData = $(this).serializeArray();
             var school_id = $('#school_id').val();
-            var class_id = $('#class_id').val();
             console.log(postData);
             var formURL = $(this).attr("action");
             $.ajax({
@@ -124,14 +88,13 @@ $(document).on('change', '#school_id', function (e) {
                         var response = data;
                         if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {
-                                var section_id = response[i].section_id;
-                                console.log(response[i].section_id);
+                                var class_id = response[i].class_id;
+                                console.log(response[i].class_id);
                                 var row_id = response[i].id;
                                 console.log(response[i].id);
-                                appendRow(section_id, row_id, i);
+                                appendRow(class_id, row_id, i);
                             }
                         $('#post_school_id').val(school_id);
-                        $('#post_class_id').val(class_id);
                         $('#box_display').show();
                     }
                 },
@@ -145,18 +108,18 @@ $(document).on('change', '#school_id', function (e) {
     });
 </script>
 <script>
-    function appendRow(section_id, row_id, i) {
+    function appendRow(class_id, row_id, i) {
         var row = "";
         row += '<div class="form-group app">';
         row += '<div class="col-md-12">';
         row += '<div class="form-group row">';
-        row += '<label for="inputValue" class="col-md-1 control-label">Section</label>';
+        row += '<label for="inputValue" class="col-md-1 control-label">Class</label>';
         row += '<div class="col-md-4">';
-        row += '<select disabled id="subject_id_' + i + '" name="subject_id_' + i + '" class="form-control" >';
+        row += '<select disabled id="class_id_' + i + '" name="class_id_' + i + '" class="form-control" >';
         row += '<option value="">Select</option>';
-        @foreach($data['section'] as $row)
+        @foreach($data['class'] as $row)
             var selected = "";
-            if (section_id === {{ $row->id }}) {
+            if (class_id === {{ $row->id }}) {
                 selected = "selected";
             }
             row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}</option>';
