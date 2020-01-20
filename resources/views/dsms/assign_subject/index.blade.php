@@ -111,7 +111,36 @@
             }
         });
     });
-    </script>
+</script>
+<script>
+
+    $(document).on('change', '#class_id', function (e) {
+        $('#section_id').html("");
+        // resetForm();
+        var class_id = $(this).val();
+        var school_id = $('#school_id').val();
+        var url = '{{ route('dsms.assign_subject.getSection')}}';
+        var div_data = '<option value="">Select</option>';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {class_id: class_id, school_id: school_id},
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                $.each(data, function (i, obj)
+                {
+                    div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
+                });
+                $('#section_id').append(div_data);
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.responseText);
+            }
+        });
+    });
+
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".assign_teacher_form").submit(function (e)
@@ -152,34 +181,6 @@
             e.preventDefault();
         });
     });
-
-    $(document).on('change', '#class_id', function (e) {
-        $('#section_id').html("");
-        // resetForm();
-        var class_id = $(this).val();
-        var school_id = $('#school_id').val();
-        var url = '{{ route('dsms.assign_subject.getSection')}}';
-        var div_data = '<option value="">Select</option>';
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {class_id: class_id, school_id: school_id},
-            dataType: "json",
-            success: function (data) {
-                // console.log(data);
-                $.each(data, function (i, obj)
-                {
-                    div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
-                });
-                $('#section_id').append(div_data);
-            },
-            error: function(jqXHR) {
-                console.log(jqXHR.responseText);
-            }
-        });
-    });
-
-
 
     function appendRow(subject_id, row_id, i) {
         var row = "";
