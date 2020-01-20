@@ -47,10 +47,10 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::post('',                                     ['as'=>'store',              'uses'=>'AssignClassesController@store']);
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'AssignClassesController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'AssignClassesController@update']);
-            Route::delete('delete',                               ['as'=>'destroy',              'uses'=>'AssignClassesController@destroy']);
+            Route::delete('delete',                             ['as'=>'destroy',              'uses'=>'AssignClassesController@destroy']);
 
             /** Ajax Route */
-            Route::post('get_class',                               ['as'=>'getClass',              'uses'=>'AssignSectionController@getSchoolClass']);
+            Route::post('get_class',                            ['as'=>'getClass',              'uses'=>'AssignSectionController@getSchoolClass']);
         });
 
         Route::group(['as'=> 'section.', 'prefix' => 'section'], function(){
@@ -68,11 +68,11 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::post('',                                     ['as'=>'store',              'uses'=>'AssignSectionController@store']);
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'AssignSectionController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'AssignSectionController@update']);
-            Route::delete('delete',                               ['as'=>'destroy',              'uses'=>'AssignSectionController@destroy']);
+            Route::delete('delete',                             ['as'=>'destroy',              'uses'=>'AssignSectionController@destroy']);
 
             /** Ajax Route */
-            Route::post('get_class',                               ['as'=>'getClass',              'uses'=>'AssignSectionController@getSchoolClass']);
-            Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSectionController@getSchoolClassSection']);
+            Route::post('get_class',                             ['as'=>'getClass',              'uses'=>'AssignSectionController@getSchoolClass']);
+            Route::post('get_section',                           ['as'=>'getSection',              'uses'=>'AssignSectionController@getSchoolClassSection']);
         });
 
 
@@ -91,7 +91,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::post('',                                     ['as'=>'store',              'uses'=>'AssignSubjectsController@store']);
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'AssignSubjectsController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'AssignSubjectsController@update']);
-            Route::delete('delete',                               ['as'=>'destroy',              'uses'=>'AssignSubjectsController@destroy']);
+            Route::delete('delete',                             ['as'=>'destroy',              'uses'=>'AssignSubjectsController@destroy']);
 
             /** Ajax Route */
             Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getSchoolClassSection']);
@@ -145,7 +145,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
         Route::group(['as'=> 'marks.', 'prefix' => 'marks'], function(){
             Route::any('',                                      ['as'=>'index',              'uses'=>'ExamResultsController@index']);
             Route::get('create',                                ['as'=>'create',              'uses'=>'ExamResultsController@create']);
-            Route::post('store',                                     ['as'=>'store',              'uses'=>'ExamResultsController@store']);
+            Route::post('store',                                ['as'=>'store',              'uses'=>'ExamResultsController@store']);
             Route::get('{id}/show',                             ['as'=>'show',              'uses'=>'ExamResultsController@show']);
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'ExamResultsController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'ExamResultsController@update']);
