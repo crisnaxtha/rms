@@ -24,11 +24,33 @@ class DM_General extends Model
         return $data;
     }
 
+    //Return multiple section
     public static function getSchoolClassSections($school_class_id) {
         $data = DB::table('school_class_sections')
                 ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
                 ->where('school_class_sections.school_class_id', '=', $school_class_id)
                 ->select('school_class_sections.*', 'sections.title as sec_title', 'sections.id as sec_id')
+                ->get();
+        return $data;
+    }
+
+    //Return single section based on school_class_id and section_id
+    public static function getSchoolClassSection($school_class_id, $section_id) {
+        $data = DB::table('school_class_sections')
+                ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
+                ->where('school_class_sections.school_class_id', '=', $school_class_id)
+                ->where('school_class_sections.section_id', '=', $section_id)
+                ->select('school_class_sections.*', 'sections.title as sec_title', 'sections.id as sec_id')
+                ->first();
+        return $data;
+    }
+
+    public static function getSchoolClassSectionSubjects($school_class_section_id) {
+        $data = DB::table('school_class_section_subjects')
+                ->join('subjects', 'school_class_section_subjects.subject_id', '=', 'subjects.id')
+                ->where('school_class_section_subjects.school_class_section_id', '=', $school_class_section_id)
+                ->where('school_class_section_subjects.status', '=', 1)
+                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', )
                 ->get();
         return $data;
     }

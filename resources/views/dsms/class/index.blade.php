@@ -53,7 +53,6 @@
                            <td>{{ $row->title }}</td>
                            {{-- <td>{{ $row->group }}</td> --}}
                            <td>
-                              @include('dsms.class.includes.buttons.edit-assign')
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')
                            </td>

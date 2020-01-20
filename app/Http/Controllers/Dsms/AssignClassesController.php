@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
-use App\Http\Dm_Traits\DM_General as Dm_TraitsDM_General;
 use App\Model\Dsms\MyClass;
-use App\Model\Dsms\Section;
-use App\Model\Dsms\Subject;
 use App\Model\Dsms\School;
 use App\Model\Dsms\Eloquent\DM_General;
 use DB;

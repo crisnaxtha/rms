@@ -118,45 +118,4 @@ class ClassesController extends DM_BaseController
     {
         $this->model::destroy($id);
     }
-
-    public function assignSection($id) {
-        $data['row'] = $this->model::findOrFail($id);
-        $data['sections'] = $this->model_2::all();
-        $data['class_section'] = $this->joinClassSection($id);
-        $data['section_id'] = [];
-        foreach($data['class_section'] as $row){
-            array_push($data['section_id'], $row->section_id);
-        }
-        $data['p_id'] = array_combine($data['section_id'], $data['section_id']);
-        return view(parent::loadView($this->view_path.'.section'), compact('data'));
-    }
-
-    public function updateAssignSection(Request $request, $id) {
-        if(DB::table('class_sections')->where('class_id', $id)->first()){
-            DB::table('class_sections')->where('class_id', $id)->delete();
-        }
-        $sections = $request->sections;
-        if(isset($sections)){
-            foreach($sections as $row) {
-                $data[] = [
-                    'section_id' => $row,
-                    'class_id' => $id,
-                ];
-            }
-        DB::table('class_sections')->insert($data);
-        }
-
-        $data['rows'] = $this->model::all();
-        return view(parent::loadView($this->view_path.'.index'), compact('data'));
-
-    }
-
-    public function joinClassSection($id) {
-        $class_role = DB::table('class_sections')
-        ->join('sections', 'class_sections.section_id', '=', 'sections.id')
-        ->where('class_sections.class_id', '=', $id)
-        ->select('class_sections.*', 'sections.title')
-        ->get();
-        return $class_role;
-    }
 }

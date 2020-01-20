@@ -17,18 +17,28 @@
             </header>
             <div class="panel-body">
                 <form class="assign_teacher_form" action="{{ route($_base_route.'.getSubject')}}" method="post" enctype="multipart/form-data">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="">School</label>
+                            <select class="dropdown-school" name="school_id" id="school_id">
+                                <option value="">Select</option>
+                                @if(isset($data['school']))
+                                @foreach($data['school'] as $row)
+                                    <option value="{{ $row->id }}">{{ $row->title }}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Class</label>
                             <select class="dropdown-class" name="class_id" id="class_id">
                                 <option value="">Select</option>
-                                @foreach($data['class'] as $row)
-                                <option value="{{ $row->id }}">{{ $row->title }}</option>
-                                @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Section</label>
                             <select class="dropdown-section" name="section_id" id="section_id">
@@ -70,11 +80,38 @@
     <!--select2-->
     <script type="text/javascript">
         $(document).ready(function () {
+            $(".dropdown-school").select2();
             $(".dropdown-class").select2();
             $(".dropdown-section").select2();
         });
     </script>
-
+<script>
+    $(document).on('change', '#school_id', function (e) {
+        $('#class_id').html("");
+        // resetForm();
+        var school_id = $(this).val();
+        // alert(school_id);
+        var url = '{{ route('dsms.assign_section.getClass')}}';
+        var div_data = '<option value="">Select</option>';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {school_id: school_id},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, obj)
+                {
+                    div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
+                });
+                $('#class_id').append(div_data);
+            },
+            error: function(jqXHR){
+                console.log(jqXHR.responseJSON);
+            }
+        });
+    });
+    </script>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".assign_teacher_form").submit(function (e)
@@ -120,12 +157,13 @@
         $('#section_id').html("");
         // resetForm();
         var class_id = $(this).val();
+        var school_id = $('#school_id').val();
         var url = '{{ route('dsms.assign_subject.getSection')}}';
         var div_data = '<option value="">Select</option>';
         $.ajax({
             type: "POST",
             url: url,
-            data: {class_id: class_id},
+            data: {class_id: class_id, school_id: school_id},
             dataType: "json",
             success: function (data) {
                 // console.log(data);
@@ -134,6 +172,9 @@
                     div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
                 });
                 $('#section_id').append(div_data);
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.responseText);
             }
         });
     });

@@ -29,8 +29,6 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'SchoolsController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'SchoolsController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'SchoolsController@destroy']);
-            // Route::get('assign/{id}',                           ['as'=>'assign',                'uses'=>'SchoolsController@assignClass']);
-            // Route::post('assign/update/{id}',                   ['as'=>'assign.update',        'uses'=>'SchoolsController@updateAssignClass']);
         });
 
 
@@ -41,8 +39,6 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'ClassesController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'ClassesController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ClassesController@destroy']);
-            // Route::get('assign_section/{id}',                   ['as'=>'assign',                'uses'=>'ClassesController@assignSection']);
-            // Route::post('assign_section/update/{id}',           ['as'=>'assign.update',        'uses'=>'ClassesController@updateAssignSection']);
         });
 
         Route::group(['as'=> 'assign_class.', 'prefix' => 'assign_class'], function(){
@@ -98,8 +94,8 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('delete',                               ['as'=>'destroy',              'uses'=>'AssignSubjectsController@destroy']);
 
             /** Ajax Route */
-            Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getClassSection']);
-            Route::post('get_subject',                               ['as'=>'getSubject',              'uses'=>'AssignSubjectsController@getClassSectionSubjects']);
+            Route::post('get_section',                               ['as'=>'getSection',              'uses'=>'AssignSubjectsController@getSchoolClassSection']);
+            Route::post('get_subject',                               ['as'=>'getSubject',              'uses'=>'AssignSubjectsController@getSchoolClassSectionSubjects']);
         });
 
         Route::group(['as'=> 'exam.', 'prefix' => 'exam'], function(){

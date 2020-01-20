@@ -126,34 +126,4 @@ class SchoolsController extends DM_BaseController
         $this->model::destroy($id);
     }
 
-    public function assignClass($id) {
-        $data['row'] = $this->model::findOrFail($id);
-        $data['class'] = $this->model_2::all();
-        $data['school_class'] = $this->model_g::joinSchoolClass($id);
-        $data['class_id'] = [];
-        foreach($data['school_class'] as $row){
-            array_push($data['class_id'], $row->class_id);
-        }
-        $data['p_id'] = array_combine($data['class_id'], $data['class_id']);
-        return view(parent::loadView($this->view_path.'.assign'), compact('data'));
-    }
-
-    public function updateAssignClass(Request $request, $id) {
-        if(DB::table('school_classes')->where('school_id', $id)->first()){
-            DB::table('school_classes')->where('school_id', $id)->delete();
-        }
-        $sections = $request->assign;
-        if(isset($sections)){
-            foreach($sections as $row) {
-                $data[] = [
-                    'class_id' => $row,
-                    'school_id' => $id,
-                ];
-            }
-        DB::table('school_classes')->insert($data);
-        }
-
-        return redirect()->route($this->base_route.'.index');
-    }
-
 }
