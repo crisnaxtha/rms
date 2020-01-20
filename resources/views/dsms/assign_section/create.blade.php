@@ -14,13 +14,14 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route('dsms.assign_subject.getSubject')}}" method="post" enctype="multipart/form-data">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.getSection')}}" method="post" enctype="multipart/form-data">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="">Class</label>
-                            <select class="dropdown-class" name="class_id" id="class_id">
+                            <label class="">School</label>
+                            <select class="dropdown-school" name="class_id" id="class_id">
                                 <option value="">Select</option>
-                                @foreach($data['class'] as $row)
+                                @if(isset($data['school']))
+                                @foreach($data['school'] as $row)
                                 <option value="{{ $row->id }}">{{ $row->title }}</option>
                                 @endforeach
                             </select>
@@ -28,8 +29,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="">Section</label>
-                            <select class="dropdown-section" name="section_id" id="section_id">
+                            <label class="">Class</label>
+                            <select class="dropdown-class" name="section_id" id="section_id">
                                 <option value="">Select</option>
                             </select>
                         </div>

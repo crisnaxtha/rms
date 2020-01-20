@@ -8,7 +8,7 @@ use App\Http\Dm_Traits\DM_General as Dm_TraitsDM_General;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Subject;
-// use App\Model\Dsms\ClassSectionSubject;
+use App\Model\Dsms\School;
 use App\Model\Dsms\Eloquent\DM_General;
 use DB;
 
@@ -21,10 +21,11 @@ class AssignSectionController extends DM_BaseController
     protected $base_route ='dsms.assign_section';
     protected $view_path = 'dsms.assign_section';
 
-    public function __construct(Request $request, MyClass $model, Section $model_1, Subject $model_2, DM_General $model_g){
+    public function __construct(Request $request, School $model, Section $model_1, Subject $model_2, MyClass $model_3, DM_General $model_g){
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
+        $this->model_3 = $model_3;
         $this->model_g = $model_g;
     }
 
@@ -35,8 +36,8 @@ class AssignSectionController extends DM_BaseController
      */
     public function index()
     {
-        $data['class'] = $this->model::where('status', '=', 1)->get();
-        $data['subject'] = $this->model_2::where('status', '=', 1)->get();
+        $data['school'] = $this->model::all();
+        $data['section'] = $this->model_1::where('status', '=', 1)->get();
         return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
@@ -47,8 +48,8 @@ class AssignSectionController extends DM_BaseController
      */
     public function create()
     {
-        $data['class'] = $this->model::where('status', '=', 1)->get();
-        $data['subject'] = $this->model_2::where('status', '=', 1)->get();
+        $data['school'] = $this->model::all();
+        $data['section'] = $this->model_1::where('status', '=', 1)->get();
         return view($this->loadView($this->view_path.'.create'), compact('data'));
     }
 
@@ -132,22 +133,22 @@ class AssignSectionController extends DM_BaseController
         DB::table('class_section_subjects')->where('id', '=', $request->id)->delete();
     }
 
-    // public function getClassSection(Request $request) {
-    //     if($request->ajax()){
-    //         $class_id = $request->class_id;
-    //         $sections = $this->model_g::getClassSections($class_id);
-    //        return $sections;
-    //     }
-
-    // }
-
-    public function getClassSectionSubjects(Request $request) {
+    public function getSchoolClass(Request $request) {
         if($request->ajax()){
+            $school_id = $request->school_id;
+            $data = $this->model_g::joinSchoolClass($school_id);
+           return $data;
+        }
+
+    }
+
+    public function getSchoolClassSection(Request $request) {
+        if($request->ajax()){
+            $school_id = $request->school_id;
             $class_id = $request->class_id;
-            $section_id = $request->section_id;
-            $class_section = $this->model_g::getClassSectionId($class_id, $section_id);
-            $subjects = $this->model_g::getClassSectionSubjects($class_section->id);
-            return $subjects;
+            $school_class = $this->model_g::getSchoolClassId($school_id, $class_id);
+            $data = $this->model_g::getSchoolClassSections($school_class->id);
+            return $data;
         }
     }
 }

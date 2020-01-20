@@ -7,12 +7,29 @@ use DB;
 
 class DM_General extends Model
 {
-    public static function joinSchoolClass($id) {
+    public static function joinSchoolClass($class_id) {
         $data = DB::table('school_classes')
-        ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
-        ->where('school_classes.class_id', '=', $id)
-        ->select('school_classes.*', 'my_classes.title')
-        ->get();
+            ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
+            ->where('school_classes.school_id', '=', $class_id)
+            ->select('school_classes.*', 'my_classes.id as class_id', 'my_classes.title as class_title')
+            ->get();
+        return $data;
+    }
+
+    public static function getSchoolClassId($school_id, $class_id) {
+        $data =  DB::table('school_classes')
+                    ->where('school_classes.class_id', '=', $class_id)
+                    ->where('school_classes.school_id', '=', $school_id)
+                    ->first();
+        return $data;
+    }
+
+    public static function getSchoolClassSections($school_class_id) {
+        $data = DB::table('school_class_sections')
+                ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
+                ->where('school_class_sections.school_class_id', '=', $school_class_id)
+                ->select('school_class_sections.*', 'sections.title as sec_title', 'sections.id as sec_id')
+                ->get();
         return $data;
     }
 
