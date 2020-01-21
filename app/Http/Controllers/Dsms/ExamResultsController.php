@@ -11,6 +11,7 @@ use App\Model\Dsms\Exam;
 use App\Model\Dsms\Student;
 use App\Model\Dsms\School;
 use App\Model\Dsms\Section;
+use DB;
 
 class ExamResultsController extends DM_BaseController
 {
@@ -63,6 +64,7 @@ class ExamResultsController extends DM_BaseController
                 }
                 $i++;
             }
+            // die;
             // dd(array_filter($data['old_std_result']));
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'first_name');
             // dd($data['std_result']);
@@ -80,9 +82,49 @@ class ExamResultsController extends DM_BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if ($request->isMethod('post')){
+            $data['school'] = $this->model_4::all();
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+            $data['section'] = $this->model_5::where('status', '=', 1)->get();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+
+            $data['school_id'] = $request->school_id;
+            $data['class_id'] = $request->class_id;
+            $data['section_id'] = $request->section_id;
+            $data['exam_id'] = $request->exam_id;
+
+            $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+            $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
+
+            // $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_section']);
+            $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
+            // dd($data['exam_schedule']);
+            $data['student'] = $this->model_2::where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            $i = 0;
+            $j = 0;
+            $data['old_std_result'] = array();
+            foreach($data['exam_schedule'] as $exam) {
+                // dd($exam);
+                // $data['old_std_result'][$i] = array();
+                foreach($data['student'] as $student) {
+                    // array_push($data['old_std_result'], $this->model::where('exam_schedules_id', '=', $exam->exam_sch_id)->where('student_id', '=', $student->id)->first());
+                    array_push($data['old_std_result'], $this->model_g::getStudentResult($exam->exam_sch_id, $student->id));
+                    $j++;
+                }
+                $i++;
+            }
+            // dd(array_filter($data['old_std_result']));
+            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'first_name');
+            // dd($data['std_result']);
+            return view($this->loadView($this->view_path.'.create'), compact('data'));
+        }
+        else {
+        $data['school'] = $this->model_4::all();
+        $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+        return view($this->loadView($this->view_path.'.create'), compact('data'));
+        }
     }
 
     /**
@@ -93,7 +135,31 @@ class ExamResultsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->data;
+        foreach($data as $rows) {
+                foreach($rows as $row){
+                $old_data =  DB::table('exam_results')->where('exam_schedules_id', '=', $row['exam_schedule_id'])->where('student_id', '=', $row['student_id'])->first();
+                if(isset($old_data)){
+                    DB::table('exam_results')->where('id', '=', $old_data->id)->update([
+                        'exam_schedules_id' => $row['exam_schedule_id'],
+                        'student_id' => $row['student_id'],
+                        'get_marks' => $row['student_number'],
+                        'created_at' => date('Y-m-d-h-m-s')
+                    ]);
+                }
+                else {
+                    DB::table('exam_results')->insert([
+                        'exam_schedules_id' => $row['exam_schedule_id'],
+                        'student_id' => $row['student_id'],
+                        'get_marks' => $row['student_number'],
+                        'created_at' => date('Y-m-d-h-m-s')
+                    ]);
+                }
+            }
+        }
+
+        session()->flash('alert-success', $this->panel.' Successfully Store');
+        return redirect()->route($this->base_route.'.create');
     }
 
     /**
