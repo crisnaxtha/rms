@@ -116,12 +116,22 @@ class DM_General extends Model
 
     }
 
-    public static function getStudentResult($exam_schedule_id, $student_id) {
+    public static function showStudentResult($exam_schedule_id, $student_id) {
         $data = DB::table('exam_results')
                 ->join('students', 'exam_results.student_id', 'students.id')
                 ->where('exam_schedules_id', $exam_schedule_id)
                 ->where('student_id', $student_id)
                 ->select('exam_results.*', 'students.first_name', 'students.last_name')
+                ->first();
+        return $data;
+    }
+
+    public static function getStudentResult($exam_schedule_id, $student_id) {
+        $data = DB::table('students')
+                ->leftJoin('exam_results', 'students.id', '=', 'exam_results.student_id')
+                ->where('students.id', '=', $student_id)
+                ->where('exam_results.exam_schedules_id','=', $exam_schedule_id)
+                ->select('students.id as std_id', 'students.first_name','students.last_name', 'exam_results.*')
                 ->first();
         return $data;
     }

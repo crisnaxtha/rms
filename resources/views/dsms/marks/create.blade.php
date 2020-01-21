@@ -106,10 +106,38 @@
                                 </tr>
                             </thead>
                             <tbody id="TableContainer">
+                            {{-- If Data is already exist in exam_result table then this code of block is called  --}}
+                                @if(count($data['std_result']) != 0)
+                                {{-- @php dd($data['std_result']) @endphp --}}
+                                @foreach($data['std_result'] as $key => $rows)
+                                @php $rows_array_key = array_keys($rows); @endphp
+                                <tr class="gradeX" id="">
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $key }}</td>
+                                    @php $i = 0; @endphp
+                                    @if(isset($data['exam_schedule']))
+                                    @foreach($data['exam_schedule'] as $row)
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][attendance]" value="ABS">Abs</label>
+                                            </div>
+                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows[$rows_array_key[$i]]['std_id']}}">
+                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->sub_id }}">
+                                            <input type="text" name="data[{{ $key }}][{{ $loop->index}}][student_number]" class="form-control input-sm" id="" value="@if(isset($rows[$rows_array_key[$i]]['get_marks'])) {{ $rows[$rows_array_key[$i]]['get_marks'] }} @else 0.00 @endif" placeholder="Enter Marks">
+                                        </div>
+                                    </td>
+                                    @php $i++; @endphp
+                                    @endforeach
+                                    @endif
+                                </tr>
+                                @endforeach
+                                @else
                                 @foreach($data['student'] as $key => $rows)
                                 <tr class="gradeX" id="">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $rows->first_name }}</td>
+                                    @php $i = 0; @endphp
                                     @if(isset($data['exam_schedule']))
                                     @foreach($data['exam_schedule'] as $row)
                                     <td>
@@ -122,10 +150,12 @@
                                             <input type="text" name="data[{{ $key }}][{{ $loop->index}}][student_number]" class="form-control input-sm" id="" value="0.00" placeholder="Enter Marks">
                                         </div>
                                     </td>
+                                    @php $i++; @endphp
                                     @endforeach
                                     @endif
                                 </tr>
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>

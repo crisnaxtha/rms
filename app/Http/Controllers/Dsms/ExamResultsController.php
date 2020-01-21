@@ -55,19 +55,16 @@ class ExamResultsController extends DM_BaseController
             $j = 0;
             $data['old_std_result'] = array();
             foreach($data['exam_schedule'] as $exam) {
-                // dd($exam);
-                // $data['old_std_result'][$i] = array();
                 foreach($data['student'] as $student) {
-                    // array_push($data['old_std_result'], $this->model::where('exam_schedules_id', '=', $exam->exam_sch_id)->where('student_id', '=', $student->id)->first());
-                    array_push($data['old_std_result'], $this->model_g::getStudentResult($exam->exam_sch_id, $student->id));
+                    array_push($data['old_std_result'], $this->model_g::showStudentResult($exam->exam_sch_id, $student->id));
                     $j++;
                 }
                 $i++;
             }
-            // die;
-            // dd(array_filter($data['old_std_result']));
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'first_name');
+            // dd($data['old_std_result']);
             // dd($data['std_result']);
+
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
         else {
@@ -98,7 +95,6 @@ class ExamResultsController extends DM_BaseController
             $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
             $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
 
-            // $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_section']);
             $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
             // dd($data['exam_schedule']);
             $data['student'] = $this->model_2::where('school_class_section_id', '=', $data['school_class_section']->id)->get();
@@ -106,16 +102,12 @@ class ExamResultsController extends DM_BaseController
             $j = 0;
             $data['old_std_result'] = array();
             foreach($data['exam_schedule'] as $exam) {
-                // dd($exam);
-                // $data['old_std_result'][$i] = array();
                 foreach($data['student'] as $student) {
-                    // array_push($data['old_std_result'], $this->model::where('exam_schedules_id', '=', $exam->exam_sch_id)->where('student_id', '=', $student->id)->first());
                     array_push($data['old_std_result'], $this->model_g::getStudentResult($exam->exam_sch_id, $student->id));
                     $j++;
                 }
                 $i++;
             }
-            // dd(array_filter($data['old_std_result']));
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'first_name');
             // dd($data['std_result']);
             return view($this->loadView($this->view_path.'.create'), compact('data'));
@@ -136,7 +128,9 @@ class ExamResultsController extends DM_BaseController
     public function store(Request $request)
     {
         $data = $request->data;
+        // dd($data);
         foreach($data as $rows) {
+            // dump($rows);
                 foreach($rows as $row){
                 $old_data =  DB::table('exam_results')->where('exam_schedules_id', '=', $row['exam_schedule_id'])->where('student_id', '=', $row['student_id'])->first();
                 if(isset($old_data)){
@@ -157,7 +151,7 @@ class ExamResultsController extends DM_BaseController
                 }
             }
         }
-
+        // die;
         session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.create');
     }
