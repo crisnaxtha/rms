@@ -69,16 +69,31 @@ class ExamScheduleController extends DM_BaseController
         foreach($i as $row) {
             $subject_id = $request->subject[$row];
             $school_class_section_subject = $this->model_g::getSchoolClassSectionSubject($school_class_section->id, $subject_id);
-            DB::table('exam_schedules')->insert([
-                'exam_id' => $exam_id,
-                'school_class_section_subject_id' => $school_class_section_subject->id,
-                'date_of_exam' => $request->date[$row],
-                'start_to' => $request->start_time[$row],
-                'end_from' => $request->end_time[$row],
-                'room_no' => $request->room[$row],
-                'full_marks' => $request->full_marks[$row],
-                'passing_marks' => $request->pass_marks[$row]
-            ]);
+            $old_data =  DB::table('exam_schedules')->where('exam_id', '=', $exam_id)->where('school_class_section_subject_id', '=',$school_class_section_subject->id)->first();
+                if(isset($old_data)){
+                    DB::table('exam_schedules')->where('id', '=', $old_data->id)->update([
+                        // 'exam_id' => $exam_id,
+                        // 'school_class_section_subject_id' => $school_class_section_subject->id,
+                        'date_of_exam' => $request->date[$row],
+                        'start_to' => $request->start_time[$row],
+                        'end_from' => $request->end_time[$row],
+                        'room_no' => $request->room[$row],
+                        'full_marks' => $request->full_marks[$row],
+                        'passing_marks' => $request->pass_marks[$row]
+                    ]);
+                }
+                else {
+                    DB::table('exam_schedules')->insert([
+                        'exam_id' => $exam_id,
+                        'school_class_section_subject_id' => $school_class_section_subject->id,
+                        'date_of_exam' => $request->date[$row],
+                        'start_to' => $request->start_time[$row],
+                        'end_from' => $request->end_time[$row],
+                        'room_no' => $request->room[$row],
+                        'full_marks' => $request->full_marks[$row],
+                        'passing_marks' => $request->pass_marks[$row]
+                    ]);
+                }
         }
         session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.create');
