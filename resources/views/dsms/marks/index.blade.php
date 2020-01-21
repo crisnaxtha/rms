@@ -97,6 +97,7 @@
                             {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
                             @endforeach
                             @endif
+                            <th>Action</th>
                       </tr>
                    </thead>
                    <tbody>
@@ -110,6 +111,7 @@
                             {{-- <td>( {{ $row['exam_schedules_id'] }})</td> --}}
                             @endforeach
                             @endif
+                            <td>@include('dsms.marks.includes.buttons.show')</td>
                         </tr>
                         @endforeach
                    </tbody>
@@ -122,6 +124,9 @@
 </div>
 <!--Assign Subject block end-->
 
+<!--print block -->
+@include('dsms.marks.includes.marksheet')
+<!--print block -->
 @endsection
 
 @section('js')

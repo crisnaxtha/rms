@@ -1,0 +1,150 @@
+page {
+    background: white;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.5cm;
+    box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  }
+
+  page[size="A4"] {
+    width: 21cm;
+    height: 29.7cm;
+  }
+
+
+td {
+    border: 1px solid #726E6D;
+    /* padding: 7px; */
+    height: 35px;
+    text-align: center;
+  }
+
+  thead{
+    font-weight:bold;
+    text-align:center;
+    color:black;
+  }
+
+  tbody
+
+  table {
+    border-collapse: collapse;
+  }
+
+  .footer {
+    text-align:right;
+    font-weight:bold;
+  }
+
+  .pull-center{
+      text-align: center;
+
+  }
+
+  .para{
+      font-size: medium;
+  }
+
+  @media print
+  {
+      .demo, .demo *,.hidden
+      {
+          display: none !important;
+      }
+      body {
+        border: none;
+      }
+
+      .pull-center h3{
+        margin-right: 100px;
+      }
+
+      .pull-center h6{
+        margin-right: 100px;
+      }
+
+      /* .pull-center h3{
+        margin-right: 100px;
+      } */
+
+      .logo{
+        top: -185px;
+        right: -18px;
+      }
+
+      .para{
+        top: 50px;
+      }
+
+      .report-header{
+        height: 210px;
+      }
+
+      .signature .col-md-3{
+        margin-right: 30px;
+      }
+
+      .signature .col-md-2{
+        margin-right: 40px;
+      }
+
+
+    }
+
+      @media (max-width: 991px) {
+
+        .logo{
+          top: -185px;
+          right: -18px;
+        }
+        .pull-center h3{
+          margin-right: 100px;
+        }
+
+        .pull-center h6{
+          margin-right: 100px;
+        }
+
+        .report-header{
+          height: 210px;
+        }
+
+        .signature .col-md-3{
+          margin-right: 30px;
+        }
+
+        .signature .col-md-2{
+          margin-right: 40px;
+        }
+
+        .signature .col-md-2::after {
+          background-color: black;
+          top: 0;
+          content: '';
+          display: block;
+          height: 1px;
+          left: 43%;
+          position: absolute;
+          transform: translate(-50%,0);
+          width: 90px;
+      }
+
+      }
+
+
+
+  .signature .col-md-2::after {
+    background-color: black;
+    top: 0;
+    content: '';
+    display: block;
+    height: 1px;
+    left: 43%;
+    position: absolute;
+    transform: translate(-50%,0);
+    width: 90px;
+}
+
+.signature{
+  display: flex;
+}
