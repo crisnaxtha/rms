@@ -1,1 +1,1 @@
-admission_no,roll_no,first_name,last_name,date_of_birth,religion,mobile_no,email,admission_date,blood_group,gender
+admission_no,roll_no,student_name,date_of_birth,religion,mobile_no,email,admission_date,blood_group,gender

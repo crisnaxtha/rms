@@ -135,7 +135,7 @@ class StudentsController extends DM_BaseController
         $row->admission_no = $request->admission_no;
         $row->roll_no = $request->roll_no;
         $row->first_name = $request->firstname;
-        $row->last_name = $request->lastname;
+        // $row->last_name = $request->lastname;
         $row->gender = $request->gender;
         $row->dob = $request->dob;
         $row->religion = $request->religion;
@@ -201,7 +201,7 @@ class StudentsController extends DM_BaseController
         $row->admission_no = $request->admission_no;
         $row->roll_no = $request->roll_no;
         $row->first_name = $request->firstname;
-        $row->last_name = $request->lastname;
+        // $row->last_name = $request->lastname;
         $row->gender = $request->gender;
         $row->dob = $request->dob;
         $row->religion = $request->religion;
@@ -258,14 +258,13 @@ class StudentsController extends DM_BaseController
                         'admission_no'      => $data[0],
                         'roll_no'           => $data[1],
                         'first_name'        => $data[2],
-                        'last_name'         => $data[3],
-                        'dob'               => date("Y-m-d", strtotime($data[4])),
-                        'religion'          => $data[5],
-                        'mobile_no'         => $data[6],
-                        'email'             => $data[7],
-                        'admission_date'    => date("Y-m-d", strtotime($data[8])),
-                        'blood_group'       => $data[9],
-                        'gender'            => $data[10],
+                        'dob'               => date("Y-m-d", strtotime($data[3])),
+                        'religion'          => $data[4],
+                        'mobile_no'         => $data[5],
+                        'email'             => $data[6],
+                        'admission_date'    => date("Y-m-d", strtotime($data[7])),
+                        'blood_group'       => $data[8],
+                        'gender'            => $data[9],
                     ]);
                 }
             fclose($handle);

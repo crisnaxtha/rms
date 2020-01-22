@@ -69,20 +69,20 @@
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">First Name</label><small class="req"> *</small>
+                                        <label for="exampleInputEmail1">Student Name</label><small class="req"> *</small>
                                         <input id="firstname" name="firstname" placeholder="" type="text" class="form-control" value="" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                {{-- <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Last Name</label>
                                         <input id="lastname" name="lastname" placeholder="" type="text" class="form-control" value="" />
                                         <span class="text-danger"></span>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-md-3">

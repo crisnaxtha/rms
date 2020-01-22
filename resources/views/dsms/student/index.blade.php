@@ -121,7 +121,7 @@
                         <tr class="gradeX" id="{{ $row->id }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->admission_no }}</td>
-                            <td>{{ $row->first_name }} {{ $row->last_name }}</td>
+                            <td>{{ $row->first_name }}</td>
                             <td>@php $cs = dm_schoolClassSection($row->school_class_section_id) @endphp {{ $cs->class_title  }}({{ $cs->sec_title }})</td>
                             {{-- <td>{{ $row->father_name }}</td> --}}
                             <td>{{ $row->dob }}</td>

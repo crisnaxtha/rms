@@ -33,9 +33,9 @@
 
                             <th><span>Roll Number</span></th>
 
-                            <th><span>First Name</span></th>
+                            <th><span>Student Name</span></th>
 
-                            <th><span>Last Name</span></th>
+                            {{-- <th><span>Last Name</span></th> --}}
 
                             <th><span class=text-red>*</span><span>Gender</span></th>
 
@@ -62,7 +62,7 @@
 
                             <td>Sample Data</td>
 
-                            <td>Sample Data</td>
+                            {{-- <td>Sample Data</td> --}}
 
                             <td>Sample Data</td>
 

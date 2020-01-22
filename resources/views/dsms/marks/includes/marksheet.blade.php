@@ -66,121 +66,39 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{-- Initialization --}}
+                                @php
+                                    $total_grade_credit_hour = 0;
+                                    $count = count($rows);
+                                @endphp
+
+                                @if(isset($rows))
+                                @foreach($rows as $row)
+                                {{-- grand total  --}}
+                                    @php
+                                    $total_grade_credit_hour += $row['grade_credit_hour'];
+                                    @endphp
                                 <tr>
-                                    <td rowspan="1">1</td>
-                                    <td rowspan="1" colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
+                                    <td rowspan="1">{{ $loop->iteration }}</td>
+                                    <td rowspan="1" colspan="3">{{ $row['exam_schedules_id'] }}</td>
+                                    <td> {{  $row['exam_schedules_id'] }}</td>
+                                    <td> {{  $row['theory_grade'] }}</td>
+                                    <td>{{ $row['practical_grade'] }}</td>
+                                    <td>{{ $row['final_grade'] }}</td>
+                                    <td>{{ $row['grade_point'] }}</td>
                                     <td> </td>
                                 </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td colspan="3">C. Nepali </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
-                                <tr>
-                                    <td>1</td>
-                                    <td colspan="3">C. English </td>
-                                    <td> 4</td>
-                                    <td> C </td>
-                                    <td> B+ </td>
-                                    <td> C+ </td>
-                                    <td> 2.4 </td>
-                                    <td> </td>
-                                </tr>
-
+                                @endforeach
+                                @endif
                             </tbody>
+                            {{-- Logic  --}}
+                            @php
+                                $gpa = $total_grade_credit_hour/($count * 4);
+                            @endphp
                             <tfoot>
                                 <tr>
                                     <td colspan="8" class="footer">GPA</td>
-                                    <td colspan="9"><b>3.73</b></td>
+                                    <td colspan="9"><b>{{ round($gpa, 2) }}</b></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -192,7 +110,7 @@
                                 <tr>
                                     <td>Interval in percent</td>
                                     <td> 90 to 100 </td>
-                                    <td> 80 ta below 90 </td>
+                                    <td> 80 t0 below 90 </td>
                                     <td> 70 to below 80 </td>
                                     <td> 60 to below 70 </td>
                                     <td> 50 to below 60</td>
