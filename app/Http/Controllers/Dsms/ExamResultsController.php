@@ -130,22 +130,43 @@ class ExamResultsController extends DM_BaseController
         $data = $request->data;
         // dd($data);
         foreach($data as $rows) {
-            // dump($rows);
                 foreach($rows as $row){
-                $old_data =  DB::table('exam_results')->where('exam_schedules_id', '=', $row['exam_schedule_id'])->where('student_id', '=', $row['student_id'])->first();
+
+                    $marks['exam_schedule_id'] = $row['exam_schedule_id'];
+                    $marks['student_id'] = $row['student_id'];
+                    if(isset($row['th_attendance'])){
+                        $marks['theory_marks'] = NULL;
+                    }else {
+                        $marks['theory_marks'] = $row['theory_marks'];
+                        $row['th_attendance'] = "Pre";
+                    }
+                    if(isset($row['pr_attendance'])){
+                        $marks['practical_marks'] = NULL;
+                    }else {
+                        $marks['practical_marks'] = $row['practical_marks'];
+                        $row['pr_attendance'] = "Pre";
+                    }
+
+                $old_data =  DB::table('exam_results')->where('exam_schedules_id', '=', $marks['exam_schedule_id'])->where('student_id', '=', $marks['student_id'])->first();
                 if(isset($old_data)){
                     DB::table('exam_results')->where('id', '=', $old_data->id)->update([
-                        'exam_schedules_id' => $row['exam_schedule_id'],
-                        'student_id' => $row['student_id'],
-                        'get_marks' => $row['student_number'],
+                        'theory_attendance' => $row['th_attendance'],
+                        'practical_attendance' => $row['pr_attendance'],
+                        'exam_schedules_id' => $marks['exam_schedule_id'],
+                        'student_id' => $marks['student_id'],
+                        'theory_get_marks' => $marks['theory_marks'],
+                        'practical_get_marks' => $marks['practical_marks'],
                         'created_at' => date('Y-m-d-h-m-s')
                     ]);
                 }
                 else {
                     DB::table('exam_results')->insert([
-                        'exam_schedules_id' => $row['exam_schedule_id'],
-                        'student_id' => $row['student_id'],
-                        'get_marks' => $row['student_number'],
+                        'theory_attendance' => $marks['th_attendance'],
+                        'practical_attendance' => $marks['pr_attendance'],
+                        'exam_schedules_id' => $marks['exam_schedule_id'],
+                        'student_id' => $marks['student_id'],
+                        'theory_get_marks' => $marks['theory_marks'],
+                        'practical_get_marks' => $marks['practical_marks'],
                         'created_at' => date('Y-m-d-h-m-s')
                     ]);
                 }

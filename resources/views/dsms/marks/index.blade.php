@@ -102,12 +102,15 @@
                    </thead>
                    <tbody>
                         @foreach($data['std_result'] as $key => $rows)
+                        {{-- @php dd($rows) @endphp --}}
                         <tr class="gradeX" id="">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $key }}</td>
                             @if(isset($rows))
                             @foreach($rows as $row )
-                            <td>{{ $row['get_marks'] }}</td>
+                            <td>
+                                {{ $row['theory_get_marks'] }} | {{ $row['practical_get_marks'] }}
+                            </td>
                             {{-- <td>( {{ $row['exam_schedules_id'] }})</td> --}}
                             @endforeach
                             @endif
