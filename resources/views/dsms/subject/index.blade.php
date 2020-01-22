@@ -41,8 +41,9 @@
                       <tr>
                          <th>#</th>
                          <th>Subject Name</th>
-                         <th>Subject Code</th>
-                         <th>Subject Type</th>
+                         <th>Subject Credit Hour</th>
+                         <th>Subject Theory Full Marks</th>
+                         <th>Subject Practical Full Marks</th>
                          <th>Action</th>
                       </tr>
                    </thead>
@@ -52,8 +53,9 @@
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $row->title }}</td>
-                           <td>{{ $row->code }}</td>
-                           <td>{{ $row->type }}</td>
+                           <td>{{ $row->credit_hour }}</td>
+                           <td>{{ $row->theory_full_marks }}</td>
+                           <td>{{ $row->practical_full_marks }}</td>
                            <td>
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')

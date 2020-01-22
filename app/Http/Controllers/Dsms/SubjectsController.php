@@ -47,8 +47,9 @@ class SubjectsController extends DM_BaseController
     {
         $row = $this->model;
         $row->title = $request->title;
-        $row->code = $request->code;
-        $row->type = $request->type;
+        $row->theory_full_marks = $request->theory_full_marks;
+        $row->practical_full_marks = $request->practical_full_marks;
+        $row->credit_hour = $request->credit_hour;
         $row->save();
 
         if($row->save()){
@@ -94,8 +95,9 @@ class SubjectsController extends DM_BaseController
     {
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
-        $row->code = $request->code;
-        $row->type = $request->type;
+        $row->theory_full_marks = $request->theory_full_marks;
+        $row->practical_full_marks = $request->practical_full_marks;
+        $row->credit_hour = $request->credit_hour;
         $row->save();
 
         if($row->save()){
