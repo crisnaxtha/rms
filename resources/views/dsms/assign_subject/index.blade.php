@@ -188,7 +188,7 @@
         row += '<div class="col-md-12">';
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
-        row += '<div class="col-md-4">';
+        row += '<div class="col-md-8">';
         row += '<select disabled id="subject_id_' + i + '" name="subject_id_' + i + '" class="form-control" >';
         row += '<option value="">Select</option>';
         @foreach($data['subject'] as $row)
@@ -196,7 +196,7 @@
             if (subject_id === {{ $row->id }}) {
                 selected = "selected";
             }
-            row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}( {{ $row->type }} )</option>';
+            row += '<option value="{{ $row->id }}" ' + selected + '>{{ $row->title }}</option>';
         @endforeach
         row += '</select>';
         row += '</div>';

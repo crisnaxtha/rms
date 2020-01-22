@@ -230,7 +230,7 @@
         row += '<td>';
         @foreach($data['subject'] as $row)
         if (subject_id === {{ $row->id }}) {
-            row += '{{ $row->title }}({{ substr($row->type, 0, 2) }})';
+            row += '{{ $row->title }}';
             row += '<input type="hidden" value="{{ $row->id }}" name="subject['+ i +']"/>';
         }
         @endforeach

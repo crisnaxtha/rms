@@ -50,7 +50,7 @@ class DM_General extends Model
                 ->join('subjects', 'school_class_section_subjects.subject_id', '=', 'subjects.id')
                 ->where('school_class_section_subjects.school_class_section_id', '=', $school_class_section_id)
                 ->where('school_class_section_subjects.status', '=', 1)
-                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', )
+                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id')
                 ->get();
         return $data;
     }
@@ -84,7 +84,7 @@ class DM_General extends Model
                 ->join('exams', 'exam_schedules.exam_id', '=', 'exams.id')
                 ->where('school_class_section_subjects.school_class_section_id', '=', $school_class_section_id)
                 ->where('school_class_section_subjects.status', '=', 1)
-                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', 'exam_schedules.*' , 'exams.title as exm_title')
+                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.theory_full_marks as theory_marks', 'subjects.practical_full_marks as practical_marks', 'subjects.credit_hour',  'exam_schedules.*' , 'exams.title as exm_title')
                 ->get();
         return $data;
     }
@@ -98,7 +98,7 @@ class DM_General extends Model
                 ->where('school_class_section_subjects.school_class_section_id', '=', $school_class_section_id)
                 ->where('exam_schedules.exam_id', '=', $exam_id)
                 ->where('school_class_section_subjects.status', '=', 1)
-                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.code as sub_code', 'exam_schedules.id as exam_sch_id' , 'exams.title as exm_title')
+                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.theory_full_marks as theory_marks', 'subjects.practical_full_marks as practical_marks', 'subjects.credit_hour', 'exam_schedules.id as exam_sch_id' , 'exams.title as exm_title')
                 ->get();
         return $data;
     }
