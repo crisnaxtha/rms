@@ -3,6 +3,7 @@
 namespace App\Model\Dsms\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Model\Dsms\Grade;
 use DB;
 
 class DM_General extends Model
@@ -146,5 +147,80 @@ class DM_General extends Model
         }
         ksort($arr, SORT_NUMERIC);
         return $arr;
+    }
+
+    public static function getSubjectFromExamSchedule($exam_schedule_id){
+        $data = DB::table('exam_schedules')
+                ->leftJoin('school_class_section_subjects', 'exam_schedules.school_class_section_subject_id', 'school_class_section_subjects.id')
+                ->leftJoin('subjects', 'school_class_section_subjects.subject_id', 'subjects.id')
+                ->where('exam_schedules.id', '=', $exam_schedule_id)
+                ->select('subjects.*')
+                ->first();
+        return $data;
+    }
+
+    public static function checkTheoryMarks($exam_schedule_id, $theory_marks){
+        $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
+        if(isset($subject->theory_full_marks)){
+            return $theory_marks;
+        } else {
+            return Null;
+        }
+    }
+
+    public static function checkPracticalMarks($exam_schedule_id, $practical_marks) {
+        $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
+        if(isset($subject->practical_full_marks)){
+            return $practical_marks;
+        } else {
+            return NULL;
+        }
+    }
+
+    public function getTheoryGrade($exam_schedule_id, $theory_marks) {
+        $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
+        if(isset($subject->theory_full_marks)){
+        $marks_percentage = ($theory_marks * 100)/$subject->theory_full_marks;
+        $grade_point = $this->calculateGradePoint($marks_percentage);
+        return $grade_point;
+        } else {
+            return false;
+        }
+    }
+
+    public function getPracticalGrade($exam_schedule_id, $practical_marks) {
+        $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
+        if(isset($subject->practical_full_marks)){
+        $marks_percentage = ($practical_marks * 100)/$subject->practical_full_marks;
+        $grade_point = $this->calculateGradePoint($marks_percentage);
+        return $grade_point;
+        }else {
+            return false;
+        }
+    }
+
+    public function getFinalGrade($exam_schedule_id, $total_marks) {
+        $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
+        $marks_percentage = ($total_marks * 100)/($subject->theory_full_marks +  $subject->practical_full_marks);
+        $grade_point = $this->calculateGradePoint($marks_percentage);
+        return $grade_point;
+    }
+
+    public function getGradeCreditHour($exam_schedule_id, $grade_point) {
+        $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
+        $grade_credit_hour = $grade_point * $subject->credit_hour;
+        return $grade_credit_hour;
+    }
+
+    public function calculateGradePoint($marks_percentage) {
+        $data['rows'] = Grade::all();
+        $grade_point = [];
+        foreach($data['rows'] as $row){
+           if($marks_percentage >= $row->mark_from && $marks_percentage <= $row->mark_upto){
+                array_push($grade_point, $row->title, $row->point);
+                break;
+            }
+        }
+        return $grade_point;
     }
 }
