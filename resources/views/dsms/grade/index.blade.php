@@ -42,8 +42,8 @@
                             <th>#</th>
                             <th>Grade Name</th>
                             <th>Interval in Percent</th>
-
                             <th>Point</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -55,6 +55,7 @@
                            <td>{{ $row->title }}</td>
                            <td>{{ $row->mark_from }} to {{ $row->mark_upto }}</td>
                            <td>{{ $row->point }}</td>
+                           <td>{{ $row->description }}</td>
                            <td>
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')

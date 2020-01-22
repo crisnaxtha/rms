@@ -23,6 +23,10 @@ class CreateExamResultsTable extends Migration
             $table->string('theory_grade')->nullable();
             $table->float('practical_get_marks', 10, 2)->nullable();
             $table->string('practical_grade')->nullable();
+            $table->float('total_marks', 10,2)->nullable();
+            $table->string('final_grade')->nullable();
+            $table->float('grade_point', 1,1)->nullable();
+            $table->float('grade_credit_hour', 10,2)->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->nullable();
             $table->timestamps();
