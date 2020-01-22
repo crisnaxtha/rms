@@ -116,7 +116,7 @@ class DM_General extends Model
                     ->get();
 
     }
-
+//show single result of student
     public static function showStudentResult($exam_schedule_id, $student_id) {
         $data = DB::table('exam_results')
                 ->join('students', 'exam_results.student_id', 'students.id')
@@ -126,7 +126,7 @@ class DM_General extends Model
                 ->first();
         return $data;
     }
-
+//get single result of student based on exam schedule id and student id
     public static function getStudentResult($exam_schedule_id, $student_id) {
         $data = DB::table('students')
                 ->leftJoin('exam_results', 'students.id', '=', 'exam_results.student_id')
@@ -136,7 +136,7 @@ class DM_General extends Model
                 ->first();
         return $data;
     }
-
+//group array base on key
     public static function arrayGroupBy($old_arr_1, $based_on) {
         $arr = array();
         $old_arr = json_decode($old_arr_1, true);
@@ -148,7 +148,7 @@ class DM_General extends Model
         ksort($arr, SORT_NUMERIC);
         return $arr;
     }
-
+//get subject based on exam schedule
     public static function getSubjectFromExamSchedule($exam_schedule_id){
         $data = DB::table('exam_schedules')
                 ->leftJoin('school_class_section_subjects', 'exam_schedules.school_class_section_subject_id', 'school_class_section_subjects.id')
@@ -158,7 +158,7 @@ class DM_General extends Model
                 ->first();
         return $data;
     }
-
+//check if theory is exist on subject
     public static function checkTheoryMarks($exam_schedule_id, $theory_marks){
         $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
         if(isset($subject->theory_full_marks)){
@@ -167,7 +167,7 @@ class DM_General extends Model
             return Null;
         }
     }
-
+//check if practical is exist on subject
     public static function checkPracticalMarks($exam_schedule_id, $practical_marks) {
         $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
         if(isset($subject->practical_full_marks)){
@@ -176,7 +176,7 @@ class DM_General extends Model
             return NULL;
         }
     }
-
+//get theory grade
     public function getTheoryGrade($exam_schedule_id, $theory_marks) {
         $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
         if(isset($subject->theory_full_marks)){
@@ -187,7 +187,7 @@ class DM_General extends Model
             return false;
         }
     }
-
+//get practical grade
     public function getPracticalGrade($exam_schedule_id, $practical_marks) {
         $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
         if(isset($subject->practical_full_marks)){
@@ -198,20 +198,20 @@ class DM_General extends Model
             return false;
         }
     }
-
+//get Final Grade
     public function getFinalGrade($exam_schedule_id, $total_marks) {
         $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
         $marks_percentage = ($total_marks * 100)/($subject->theory_full_marks +  $subject->practical_full_marks);
         $grade_point = $this->calculateGradePoint($marks_percentage);
         return $grade_point;
     }
-
+//calculate grade * credit hour
     public function getGradeCreditHour($exam_schedule_id, $grade_point) {
         $subject = self::getSubjectFromExamSchedule($exam_schedule_id);
         $grade_credit_hour = $grade_point * $subject->credit_hour;
         return $grade_credit_hour;
     }
-
+//Calculate Grade Point
     public function calculateGradePoint($marks_percentage) {
         $data['rows'] = Grade::all();
         $grade_point = [];
@@ -222,5 +222,12 @@ class DM_General extends Model
             }
         }
         return $grade_point;
+    }
+//return student base on id
+    public static function getStudent($student_id){
+        $data = DB::table('students')
+                ->where('id', '=', $student_id)
+                ->first();
+        return $data;
     }
 }

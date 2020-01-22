@@ -1,6 +1,5 @@
 <?php
 
-use App\Model\Dsms\Eloquent\DM_General;
 /**
  * showing the status
  */
@@ -35,9 +34,9 @@ if(!function_exists('dm_userRole')){
         }
     }
 }
-if(!function_exists('dm_schoolClassSection')){
-    function dm_schoolClassSection($school_class_section_id) {
-        $data = DM_General::joinSchoolClassSection($school_class_section_id);
-        return $data;
-    }
-}
+// if(!function_exists('dm_schoolClassSection')){
+//     function dm_schoolClassSection($school_class_section_id) {
+//         $data = DM_General::joinSchoolClassSection($school_class_section_id);
+//         return $data;
+//     }
+// }

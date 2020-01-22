@@ -61,7 +61,7 @@ class ExamResultsController extends DM_BaseController
                 }
                 $i++;
             }
-            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'first_name');
+            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
             // dd($data['old_std_result']);
             // dd($data['std_result']);
 

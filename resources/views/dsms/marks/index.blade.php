@@ -105,7 +105,7 @@
                         {{-- @php dd($rows) @endphp --}}
                         <tr class="gradeX" id="">
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $key }}</td>
+                            <td>{{ dm_getStudent($key)->first_name }}</td>
                             @if(isset($rows))
                             @foreach($rows as $row )
                             <td>

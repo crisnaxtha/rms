@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="para">
-                            <p>The grade secured by <b>{{ $key }}</b> Date of Birth <b>{{ $key }}</b> Symbol number <b>{{ $key}}</b>of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
+                            <p>The grade secured by <b>{{ dm_getStudent($key)->first_name }}</b> Date of Birth <b>{{ dm_getStudent($key)->dob }}</b> Symbol number <b>{{ dm_getStudent($key)->roll_no }}</b> of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
                             </p>
                         </div>
 
@@ -80,8 +80,8 @@
                                     @endphp
                                 <tr>
                                     <td rowspan="1">{{ $loop->iteration }}</td>
-                                    <td rowspan="1" colspan="3">{{ $row['exam_schedules_id'] }}</td>
-                                    <td> {{  $row['exam_schedules_id'] }}</td>
+                                    <td rowspan="1" colspan="3">{{ dm_getSubject($row['exam_schedules_id'])->title }}</td>
+                                    <td> {{ dm_getSubject($row['exam_schedules_id'])->credit_hour }}</td>
                                     <td> {{  $row['theory_grade'] }}</td>
                                     <td>{{ $row['practical_grade'] }}</td>
                                     <td>{{ $row['final_grade'] }}</td>
