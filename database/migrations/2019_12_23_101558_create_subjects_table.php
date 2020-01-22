@@ -20,7 +20,7 @@ class CreateSubjectsTable extends Migration
             $table->string('theory_full_marks')->nullable();
             $table->string('practical_full_marks')->nullable();
             $table->integer('credit_hour')->nullable();
-            $table->boolean('status')->default(1)->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

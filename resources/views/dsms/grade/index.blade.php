@@ -37,24 +37,23 @@
                 @include('dsms.includes.flash-message')
             <div class="adv-table">
                 <table  class="display table table-bordered table-striped" id="dynamic-table">
-                   <thead>
-                      <tr>
-                         <th>#</th>
-                         <th>Grade Name</th>
-                         <th>Percent From</th>
-                         <th>Percent Upto</th>
-                         <th>Point</th>
-                         <th>Action</th>
-                      </tr>
-                   </thead>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Grade Name</th>
+                            <th>Interval in Percent</th>
+
+                            <th>Point</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
                    <tbody>
                      @if(isset($data['rows']))
                         @foreach($data['rows'] as $row)
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $row->title }}</td>
-                           <td>{{ $row->mark_from }}</td>
-                           <td>{{ $row->mark_upto }}</td>
+                           <td>{{ $row->mark_from }} to {{ $row->mark_upto }}</td>
                            <td>{{ $row->point }}</td>
                            <td>
                               @include('dsms.includes.buttons.button-edit')
