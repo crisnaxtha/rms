@@ -4,7 +4,14 @@ namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
-use App\User;
+use App\User;use App\Model\Dsms\ExamResult;
+use App\Model\Dsms\Eloquent\DM_General;
+use App\Model\Dsms\MyClass;
+use App\Model\Dsms\Exam;
+use App\Model\Dsms\Student;
+use App\Model\Dsms\School;
+use App\Model\Dsms\Section;
+use App\Model\Dsms\Subject;
 
 class HomeController extends DM_BaseController
 {
@@ -12,8 +19,15 @@ class HomeController extends DM_BaseController
     protected $base_route ='';
     protected $view_path = 'dsms';
 
-    public function __construct(Request $request, User $user){
-        $this->user = $user;
+    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5, Subject $model_6, DM_General $model_g){
+        $this->model = $model;
+        $this->model_1 = $model_1;
+        $this->model_2 = $model_2;
+        $this->model_3 = $model_3;
+        $this->model_4 = $model_4;
+        $this->model_5 = $model_5;
+        $this->model_6 = $model_6;
+        $this->model_g = $model_g;
     }
 
     /**
@@ -23,7 +37,13 @@ class HomeController extends DM_BaseController
      */
     public function index()
     {
-        return view($this->loadView($this->view_path.'.index'));
+        $data['school'] = $this->model_4::all();
+        $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        $data['section'] = $this->model_5::where('status', '=', 1)->get();
+        $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+        $data['student'] = $this->model_2::where('status', '=', 1)->get();
+        $data['subject'] = $this->model_6::where('status', '=', 1)->get();
+        return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
     /**

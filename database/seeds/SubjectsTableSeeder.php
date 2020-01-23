@@ -23,7 +23,7 @@ class SubjectsTableSeeder extends Seeder
             'title' =>'Compulsory Nepali',
             'theory_full_marks'=>'75',
             'practical_full_marks'=>'25',
-            'credit_hour'=>'',
+            'credit_hour'=>'4',
         ]);
         Subject::create([
             'title' =>'Compulsory Mathematics',
