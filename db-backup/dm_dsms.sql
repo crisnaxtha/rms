@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2020 at 08:29 AM
+-- Generation Time: Jan 23, 2020 at 08:51 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.8
 
@@ -168,6 +168,14 @@ CREATE TABLE `my_classes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `my_classes`
+--
+
+INSERT INTO `my_classes` (`id`, `title`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Class V', 1, '2020-01-23 02:06:32', '2020-01-23 02:06:32'),
+(2, 'Class VIII', 1, '2020-01-23 02:06:32', '2020-01-23 02:06:32');
 
 -- --------------------------------------------------------
 
@@ -611,7 +619,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `my_classes`
 --
 ALTER TABLE `my_classes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `permissions`
