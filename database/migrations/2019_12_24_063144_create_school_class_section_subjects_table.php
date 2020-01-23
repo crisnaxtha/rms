@@ -15,11 +15,16 @@ class CreateSchoolClassSectionSubjectsTable extends Migration
     {
         Schema::create('school_class_section_subjects', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('session_id')->nullable();
+            // $table->unsignedInteger('session_id')->nullable();
+            // $table->unsignedInteger('school_id')->nullable();
             $table->unsignedInteger('school_class_section_id')->nullable();
             $table->unsignedInteger('subject_id')->nullable();
             $table->text('description')->nullable();
-            $table->boolean('status')->default(1)->nullable();
+            $table->boolean('status')->default(1);
+            $table->foreign('school_class_section_id')->references('id')->on('school_class_sections')
+                    ->onDelete('cascade');
+            $table->foreign('subject_id')->references('id')->on('subjects')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

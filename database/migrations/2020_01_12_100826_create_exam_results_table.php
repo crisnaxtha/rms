@@ -15,6 +15,7 @@ class CreateExamResultsTable extends Migration
     {
         Schema::create('exam_results', function (Blueprint $table) {
             $table->increments('id');
+            // $table->unsignedInteger('school_id')->nullable();
             $table->string('theory_attendance')->nullable();
             $table->string('practical_attendance')->nullable();
             $table->unsignedInteger('exam_schedules_id')->nullable();
@@ -29,6 +30,10 @@ class CreateExamResultsTable extends Migration
             $table->float('grade_credit_hour', 10,2)->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->nullable();
+            $table->foreign('exam_schedules_id')->references('id')->on('exam_schedules')
+                    ->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ class CreateExamSchedulesTable extends Migration
     {
         Schema::create('exam_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('school_id')->nullable();
-            $table->unsignedInteger('session_id')->nullable();
+            // $table->unsignedInteger('school_id')->nullable();
+            // $table->unsignedInteger('session_id')->nullable();
             $table->unsignedInteger('exam_id')->nullable();
             $table->unsignedInteger('school_class_section_subject_id')->nullable();
             $table->date('date_of_exam')->nullable();
@@ -27,6 +27,10 @@ class CreateExamSchedulesTable extends Migration
             $table->integer('passing_marks')->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->default(0)->nullable();
+            $table->foreign('school_class_section_subject_id')->references('id')->on('school_class_section_subjects')
+                    ->onDelete('cascade');
+            $table->foreign('exam_id')->references('id')->on('exams')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ class CreateSchoolClassSectionsTable extends Migration
     {
         Schema::create('school_class_sections', function (Blueprint $table) {
             $table->increments('id');
+            // $table->unsignedInteger('school_id')->nullable();
             $table->unsignedInteger('school_class_id')->nullable();
             $table->unsignedInteger('section_id')->nullable();
             $table->foreign('school_class_id')->references('id')->on('school_classes')
