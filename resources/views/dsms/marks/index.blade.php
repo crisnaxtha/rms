@@ -89,15 +89,15 @@
                 <table  class="display table table-bordered table-striped" id="dynamic-table">
                    <thead>
                       <tr>
-                            <th>#</th>
-                            <th>Student</th>
+                            <th style="font-size: 11px;">#</th>
+                            <th style="font-size: 11px;">Student</th>
                             @if(isset($data['exam_schedule']))
                             @foreach($data['exam_schedule'] as $row)
-                            <th>{{ $row->sub_title }}</th>
+                            <th style="font-size: 11px;">{{ $row->sub_title }}</th>
                             {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
                             @endforeach
                             @endif
-                            <th>Action</th>
+                            <th style="font-size: 11px;">View Grade-Sheet</th>
                       </tr>
                    </thead>
                    <tbody>
@@ -114,7 +114,10 @@
                             {{-- <td>( {{ $row['exam_schedules_id'] }})</td> --}}
                             @endforeach
                             @endif
-                            <td>@include('dsms.marks.includes.buttons.show')</td>
+                            <td>
+                                @include('dsms.marks.includes.buttons.show')
+                                @include('dsms.marks.includes.buttons.print')
+                            </td>
                         </tr>
                         @endforeach
                    </tbody>

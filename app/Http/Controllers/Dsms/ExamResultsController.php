@@ -269,4 +269,28 @@ class ExamResultsController extends DM_BaseController
     {
         //
     }
+
+    public function printMarksheet($exam_id, $school_id, $class_id, $section_id, $student_id) {
+        $data['exam_id'] = $exam_id;
+        $data['school_id'] = $school_id;
+        $data['class_id'] = $class_id;
+        $data['section_id'] = $section_id;
+        $data['student_id'] = $student_id;
+
+        $data['school'] = $this->model_4::all();
+        $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        $data['section'] = $this->model_5::where('status', '=', 1)->get();
+        $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+
+        $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+        $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
+        $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
+        $data['result'] = array();
+        foreach($data['exam_schedule'] as $exam) {
+                array_push($data['result'], $this->model_g::getStudentResult($exam->exam_sch_id, $data['student_id']));
+        }
+        // dd($data['result']);
+        return view($this->loadView($this->view_path.'.gradesheet'), compact('data'));
+
+    }
 }

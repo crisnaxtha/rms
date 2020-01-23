@@ -1,9 +1,5 @@
  <!-- Latest compiled and minified CSS -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
- <!-- Optional theme -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
- <link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/marksheet_style.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/marksheet_style.css')}}">
 @if(isset($data['std_result']))
 @foreach($data['std_result'] as $key => $rows)
 <!-- vertical center large Modal  start -->
@@ -17,7 +13,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <page size="A4" style="border-style:double; padding:20px;">
+                    <page size="A4" style="border-style:double; padding:20px;" >
                         <div class="row report-header">
                             <div class="col-md-12 ">
                                 <div class="col-md-2">
@@ -31,7 +27,7 @@
                                         <h6>Basic Level Examination</h6>
                                         <h6>Mukli, Solikhumbu</h6>
                                         <h4><b>Basic Education Completion Examination</b></h4>
-                                        <h5>Class-VIII</h5>
+                                        <h5>@foreach($data['class'] as $cl) @if($cl->id == $data['class_id']) {{ $cl->title }} @endif @endforeach</h5>
                                         <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                                     </div>
                                 </div>
@@ -152,15 +148,15 @@
 
                                 <tr>
                                     <td><b>Description</b></td>
-                                    <td style="font-size: 14px;">Outstanding</td>
-                                    <td style="font-size: 14px;"> Excellent</td>
-                                    <td style="font-size: 14px;"> Very Good</td>
-                                    <td style="font-size: 14px;">Good</td>
-                                    <td style="font-size: 14px;">Satisfactory </tdstyle="font-size: 14px;">
-                                        <td style="font-size: 14px;">Acceptable </td>
-                                        <td style="font-size: 14px;">Partially acceptable</td>
-                                        <td style="font-size: 14px;">Insufficient</td>
-                                        <td style="font-size: 14px;">Very Insufficient</td>
+                                    <td style="font-size: 11px;">Outstanding</td>
+                                    <td style="font-size: 11px;"> Excellent</td>
+                                    <td style="font-size: 11px;"> Very Good</td>
+                                    <td style="font-size: 11px;">Good</td>
+                                    <td style="font-size: 11px;">Satisfactory </tdstyle="font-size: 11px;">
+                                        <td style="font-size: 11px;">Acceptable </td>
+                                        <td style="font-size: 11px;">Partially acceptable</td>
+                                        <td style="font-size: 11px;">Insufficient</td>
+                                        <td style="font-size: 11px;">Very Insufficient</td>
 
                                 </tr>
                             </tbody>
@@ -202,15 +198,14 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                    <button class="btn btn-warning" type="button"> Confirm</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <!-- vertical center large Modal end -->
 @endforeach
 @endif
  <!-- Latest compiled and minified JavaScript -->
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
