@@ -1,3 +1,4 @@
+@page { size: auto;  margin: 0mm; }
 page {
     background: white;
     display: block;
@@ -47,6 +48,7 @@ td {
 
   @media print
   {
+    @page { size: auto;  margin: 0mm; }
       .demo, .demo *,.hidden
       {
           display: none !important;
