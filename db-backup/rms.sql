@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 23, 2020 at 08:51 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.8
+-- Generation Time: Jan 24, 2020 at 07:00 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dm_dsms`
+-- Database: `rms`
 --
 
 -- --------------------------------------------------------
@@ -32,8 +32,8 @@ CREATE TABLE `exams` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `session_id` int(10) UNSIGNED DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -58,7 +58,7 @@ CREATE TABLE `exam_results` (
   `final_grade` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `grade_point` double(10,1) DEFAULT NULL,
   `grade_credit_hour` double(10,2) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
   `status` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -80,8 +80,8 @@ CREATE TABLE `exam_schedules` (
   `room_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `full_marks` int(11) DEFAULT NULL,
   `passing_marks` int(11) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) DEFAULT 0,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -98,8 +98,8 @@ CREATE TABLE `grades` (
   `point` double(10,2) DEFAULT NULL,
   `mark_from` double(10,2) DEFAULT NULL,
   `mark_upto` double(10,2) DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -109,15 +109,15 @@ CREATE TABLE `grades` (
 --
 
 INSERT INTO `grades` (`id`, `title`, `point`, `mark_from`, `mark_upto`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'A+', 4.00, 90.00, 100.00, 'Outstanding', 0, '2020-01-23 01:40:58', '2020-01-23 01:40:58'),
-(2, 'A', 3.60, 80.00, 90.00, 'Excellent', 0, '2020-01-23 01:40:58', '2020-01-23 01:40:58'),
-(3, 'B+', 3.20, 70.00, 80.00, 'Very good', 0, '2020-01-23 01:40:58', '2020-01-23 01:40:58'),
-(4, 'B', 2.80, 60.00, 70.00, 'Good', 0, '2020-01-23 01:40:58', '2020-01-23 01:40:58'),
-(5, 'C+', 2.40, 50.00, 60.00, 'Satisfactory', 0, '2020-01-23 01:40:58', '2020-01-23 01:40:58'),
-(6, 'C', 2.00, 40.00, 50.00, 'Acceptable', 0, '2020-01-23 01:40:59', '2020-01-23 01:40:59'),
-(7, 'D+', 1.60, 30.00, 40.00, 'Partially acceptable', 0, '2020-01-23 01:40:59', '2020-01-23 01:40:59'),
-(8, 'D', 1.20, 20.00, 30.00, 'Insufficient', 0, '2020-01-23 01:40:59', '2020-01-23 01:40:59'),
-(9, 'E', 0.80, 0.00, 20.00, 'Very insufficient', 0, '2020-01-23 01:40:59', '2020-01-23 01:40:59');
+(1, 'A+', 4.00, 90.00, 100.00, 'Outstanding', 0, '2020-01-23 23:34:15', '2020-01-23 23:34:15'),
+(2, 'A', 3.60, 80.00, 90.00, 'Excellent', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(3, 'B+', 3.20, 70.00, 80.00, 'Very good', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(4, 'B', 2.80, 60.00, 70.00, 'Good', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(5, 'C+', 2.40, 50.00, 60.00, 'Satisfactory', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(6, 'C', 2.00, 40.00, 50.00, 'Acceptable', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(7, 'D+', 1.60, 30.00, 40.00, 'Partially acceptable', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(8, 'D', 1.20, 20.00, 30.00, 'Insufficient', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(9, 'E', 0.80, 0.00, 20.00, 'Very insufficient', 0, '2020-01-23 23:34:16', '2020-01-23 23:34:16');
 
 -- --------------------------------------------------------
 
@@ -164,7 +164,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `my_classes` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) DEFAULT 1,
+  `status` tinyint(1) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -174,8 +174,8 @@ CREATE TABLE `my_classes` (
 --
 
 INSERT INTO `my_classes` (`id`, `title`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Class V', 1, '2020-01-23 02:06:32', '2020-01-23 02:06:32'),
-(2, 'Class VIII', 1, '2020-01-23 02:06:32', '2020-01-23 02:06:32');
+(1, 'Class V', 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17'),
+(2, 'Class VIII', 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17');
 
 -- --------------------------------------------------------
 
@@ -244,8 +244,8 @@ CREATE TABLE `schools` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `established` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `code` int(11) NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `code` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -288,8 +288,8 @@ CREATE TABLE `school_class_section_subjects` (
   `id` int(10) UNSIGNED NOT NULL,
   `school_class_section_id` int(10) UNSIGNED DEFAULT NULL,
   `subject_id` int(10) UNSIGNED DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -303,7 +303,7 @@ CREATE TABLE `school_class_section_subjects` (
 CREATE TABLE `sections` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) DEFAULT 1,
+  `status` tinyint(1) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -317,7 +317,7 @@ CREATE TABLE `sections` (
 CREATE TABLE `sessions` (
   `id` int(10) UNSIGNED NOT NULL,
   `session` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) DEFAULT 0,
+  `status` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -336,7 +336,7 @@ CREATE TABLE `students` (
   `admission_date` date DEFAULT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci,
   `mobile_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `province` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -344,8 +344,8 @@ CREATE TABLE `students` (
   `religion` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `dob` date DEFAULT NULL,
   `gender` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `current_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `permanent_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `current_address` text COLLATE utf8mb4_unicode_ci,
+  `permanent_address` text COLLATE utf8mb4_unicode_ci,
   `blood_group` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `father_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `father_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -356,17 +356,17 @@ CREATE TABLE `students` (
   `guardian_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guardian_relation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guardian_occupation` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `guardian_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guardian_address` text COLLATE utf8mb4_unicode_ci,
   `guardian_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `guardian_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `father_pic` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mother_pic` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `guardian_pic` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `previous_school` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `height` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `weight` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `father_pic` text COLLATE utf8mb4_unicode_ci,
+  `mother_pic` text COLLATE utf8mb4_unicode_ci,
+  `guardian_pic` text COLLATE utf8mb4_unicode_ci,
+  `previous_school` text COLLATE utf8mb4_unicode_ci,
+  `height` text COLLATE utf8mb4_unicode_ci,
+  `weight` text COLLATE utf8mb4_unicode_ci,
   `measurement_date` date DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -383,7 +383,7 @@ CREATE TABLE `subjects` (
   `theory_full_marks` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `practical_full_marks` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `credit_hour` int(11) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -393,15 +393,15 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `title`, `theory_full_marks`, `practical_full_marks`, `credit_hour`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Compulsory English', '75', '25', 4, 1, '2020-01-23 01:43:21', '2020-01-23 01:43:21'),
-(2, 'Compulsory Nepali', '75', '25', 4, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(3, 'Compulsory Mathematics', '100', '', 4, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(4, 'Compulsory Social Studies and Population Education', '75', '25', 4, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(5, 'Compulsory Science and Environment Education', '75', '25', 4, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(6, 'Compulsory Moral Education', '50', '20', 2, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(7, 'Compulsory Health and Physical Education', '50', '20', 2, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(8, 'Compulsory Occupation, Business and Technology Education', '75', '25', 4, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22'),
-(9, 'Optional Computer Education', '75', '25', 4, 1, '2020-01-23 01:43:22', '2020-01-23 01:43:22');
+(1, 'Compulsory English', '75', '25', 4, 1, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(2, 'Compulsory Nepali', '75', '25', 4, 1, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(3, 'Compulsory Mathematics', '100', '', 4, 1, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(4, 'Compulsory Social Studies and Population Education', '75', '25', 4, 1, '2020-01-23 23:34:16', '2020-01-23 23:34:16'),
+(5, 'Compulsory Science and Environment Education', '75', '25', 4, 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17'),
+(6, 'Compulsory Moral Education', '50', '20', 2, 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17'),
+(7, 'Compulsory Health and Physical Education', '50', '20', 2, 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17'),
+(8, 'Compulsory Occupation, Business and Technology Education', '75', '25', 4, 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17'),
+(9, 'Optional Computer Education', '75', '25', 4, 1, '2020-01-23 23:34:17', '2020-01-23 23:34:17');
 
 -- --------------------------------------------------------
 
@@ -428,10 +428,10 @@ CREATE TABLE `users` (
   `nationality` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phone_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bio` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bio` text COLLATE utf8mb4_unicode_ci,
   `section_id` int(10) UNSIGNED DEFAULT NULL,
   `forgotten_password_time` int(11) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -443,7 +443,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `username`, `avatar`, `phone`, `type`, `role_super`, `role_id`, `code`, `student_code`, `gender`, `blood_group`, `nationality`, `phone_number`, `address`, `bio`, `section_id`, `forgotten_password_time`, `status`, `deleted_at`, `created_at`, `updated_at`, `remember_token`) VALUES
-(1, 'Super Admin', 'lochan2075@gmail.com', NULL, '$2y$10$ipSTvQkKYfFCzRi7.RAeSeZsjNkfGIeamrC0bh7qfg22t0QmHFI2u', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, '', '', '', '', '', NULL, NULL, NULL, 1, NULL, '2020-01-23 01:40:48', '2020-01-23 01:40:48', NULL);
+(1, 'Super Admin', 'lochan2075@gmail.com', NULL, '$2y$10$LX4UylIkCcGKVvz5NymNg.y/uvUJvODooWG.fAlxa0frJl1y6tCRC', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, '', '', '', '', '', NULL, NULL, NULL, 1, NULL, '2020-01-23 23:34:15', '2020-01-23 23:34:15', NULL);
 
 --
 -- Indexes for dumped tables

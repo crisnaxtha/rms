@@ -13,7 +13,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/dsms/img/favicon.png') }}">
 
     @if(isset($_panel))
-    <title>{{ $_panel }} | DSMS</title>
+    <title>{{ $_panel }} | RMS</title>
     @else
     <title>dsms</title>
     @endif

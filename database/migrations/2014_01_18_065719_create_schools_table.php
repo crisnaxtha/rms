@@ -18,7 +18,7 @@ class CreateSchoolsTable extends Migration
             $table->string('title');
             $table->string('established')->nullable();
             $table->text('description')->nullable();
-            $table->integer('code')->unique();
+            $table->integer('code')->unique()->nullable();
             $table->timestamps();
         });
     }
