@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class DM_CheckRole
+class DM_CheckSuper
 {
     /**
      * Handle an incoming request.
@@ -14,14 +14,11 @@ class DM_CheckRole
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next)
     {
+        // dd(config('auth.middleware_email'));
         if(Auth::check()){
-            if(Auth::user()->role == "super-admin"){
-                return $next($request);
-            }
-            if(Auth::user()->role == $role)
-            {
+            if(Auth::user()->email == config('auth.middleware_email.email')){
                 return $next($request);
             }
             session()->flash('alert-warning', 'You have no authority to access !!!');

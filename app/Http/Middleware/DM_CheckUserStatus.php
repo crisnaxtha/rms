@@ -20,7 +20,7 @@ class DM_CheckUserStatus
         if(Auth::check() && Auth::user()->status != 1){
             Auth::logout();
             session()->flash('alert-warning', 'You are Inactive User. Please Contact Admin');
-            return redirect()->route('dcms.login');
+            return redirect()->route('login');
         }
         return $response;
     }

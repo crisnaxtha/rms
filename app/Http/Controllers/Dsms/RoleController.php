@@ -21,11 +21,8 @@ class RoleController extends DM_BaseController
 
     public function __construct(Request $request,Role $model, Permission $permission) {
         $this->middleware('auth');
-        // $this->middleware('permission:role-list', ['only' => ['index']]);
-        // $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-        // $this->middleware('permission:assign-permission', ['only' => ['destroy']]);
+        $this->middleware('super');
+
         $this->model = $model;
         $this->permission = $permission;
     }

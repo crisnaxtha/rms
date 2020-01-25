@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'status' => \App\Http\Middleware\DM_CheckUserStatus::class,
         'role'   => \App\Http\Middleware\DM_CheckRole::class,
         'permission' => \App\Http\Middleware\DM_CheckPermission::class,
+        'super' => \App\Http\Middleware\DM_CheckSuper::class,
     ];
 
     /**

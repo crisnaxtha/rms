@@ -100,4 +100,9 @@ return [
         ],
     ],
 
+    //This is extra middleware for auth
+    'middleware_email' => [
+        'email' => 'lochan2075@gmail.com',
+    ]
+
 ];
