@@ -46,6 +46,18 @@ class GradesController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'mark_from' => 'required',
+            'mark_upto' => 'required',
+            'point' => 'required',
+        ],
+        [
+            'title.required' => 'You must enter the Grade name!',
+            'mark_from.required' => 'You must enter the Percent From!',
+            'mark_upto.required' => 'You must enter the Percent Upto!',
+            'point.required' => 'You must enter the Grade Point!',
+        ]);
         $row = $this->model;
         $row->title = $request->title;
         $row->mark_from = $request->mark_from;
@@ -95,6 +107,18 @@ class GradesController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'mark_from' => 'required',
+            'mark_upto' => 'required',
+            'point' => 'required',
+        ],
+        [
+            'title.required' => 'You must enter the Grade name!',
+            'mark_from.required' => 'You must enter the Percent From!',
+            'mark_upto.required' => 'You must enter the Percent Upto!',
+            'point.required' => 'You must enter the Grade Point!',
+        ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
         $row->mark_from = $request->mark_from;
