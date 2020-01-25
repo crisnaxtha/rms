@@ -206,6 +206,13 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
         Route::get('backup',                                ['as'=>'backup',             'uses'=>'DatabasesBackupController@databaseBackup']);
     });
 
+      /**
+     * Setting Routes
+     */
+    Route::group(['as'=>'setting.', 'prefix'=>'setting'], function(){
+            Route::get('',                      ['as' =>'index',     'uses'=>'GradeSheetController@getGeneralSetting']);
+            Route::post('{setting}',            ['as' =>'store',     'uses'=>'GradeSheetController@updateGeneralSetting']);
+    });
 
     });
 
