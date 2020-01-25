@@ -56,7 +56,7 @@ class SchoolsController extends DM_BaseController
             'title' => 'required|max:255',
         ],
         [
-            'title.required' => 'You have enter the SCHOOL name!',
+            'title.required' => 'You must enter the SCHOOL name!',
         ]);
         $row = $this->model;
         $row->title = $request->title;
@@ -110,7 +110,7 @@ class SchoolsController extends DM_BaseController
             'title' => 'required|max:255',
         ],
         [
-            'title.required' => 'You have enter the SCHOOL name!',
+            'title.required' => 'You must enter the SCHOOL name!',
         ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;

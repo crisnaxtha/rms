@@ -50,7 +50,7 @@ class SectionsController extends DM_BaseController
             'title' => 'required|max:255',
         ],
         [
-            'title.required' => 'You have enter the SECTION name!',
+            'title.required' => 'You must enter the SECTION name!',
         ]);
         $row = $this->model;
         $row->title = $request->title;
@@ -101,7 +101,7 @@ class SectionsController extends DM_BaseController
             'title' => 'required|max:255',
         ],
         [
-            'title.required' => 'You have enter the SECTION name!',
+            'title.required' => 'You must enter the SECTION name!',
         ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;

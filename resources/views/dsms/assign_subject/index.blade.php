@@ -20,7 +20,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="">School</label>
-                            <select class="dropdown-school" name="school_id" id="school_id">
+                            <select class="dropdown-school" name="school_id" id="school_id" required>
                                 <option value="">Select</option>
                                 @if(isset($data['school']))
                                 @foreach($data['school'] as $row)
@@ -33,7 +33,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Class</label>
-                            <select class="dropdown-class" name="class_id" id="class_id">
+                            <select class="dropdown-class" name="class_id" id="class_id" required>
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -41,7 +41,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="">Section</label>
-                            <select class="dropdown-section" name="section_id" id="section_id">
+                            <select class="dropdown-section" name="section_id" id="section_id" required>
                                 <option value="">Select</option>
                             </select>
                         </div>

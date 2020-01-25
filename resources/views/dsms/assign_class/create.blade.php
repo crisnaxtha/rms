@@ -18,7 +18,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="">School</label>
-                            <select class="dropdown-school" name="school_id" id="school_id">
+                            <select class="dropdown-school" name="school_id" id="school_id" required>
                                 <option value="">Select</option>
                                 @if(isset($data['school']))
                                 @foreach($data['school'] as $row)
