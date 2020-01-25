@@ -73,6 +73,11 @@
                     @endif
                 </ul>
             </li>
+            {{-- @permission('database-table-list') --}}
+            @if( Route::has('dsms.database.index'))
+            <li><a class="{{ ($_panel == 'DB Backup') ? 'active' : '' }}" href="{{ URL::route('dsms.database.index') }}" ><i class="fa fa-cloud-download"></i><span>{{__('DB Backup')}}</span></a></li>
+            @endif
+            {{-- @endpermission --}}
         </ul>
         <!-- sidebar menu end-->
     </div>

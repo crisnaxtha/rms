@@ -197,6 +197,15 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::post('assign_permission/update/{id}',          ['as'=>'assign.update',        'uses'=>'RoleController@updateAssignPermission']);
         });
 
+        /**
+     * DB backup Routes
+     */
+    Route::group(['prefix' => 'database', 'as'=>'database.', ], function () {
+        Route::get('',                                      ['as'=>'index',              'uses'=>'DatabasesBackupController@index']);
+        Route::get('download',                              ['as'=>'download',           'uses'=>'DatabasesBackupController@databaseDownload']);
+        Route::get('backup',                                ['as'=>'backup',             'uses'=>'DatabasesBackupController@databaseBackup']);
+    });
+
 
     });
 
