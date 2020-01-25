@@ -15,7 +15,7 @@
                    {{ $_panel }}
                 </header>
                 <div class="panel-body">
-                        @include('dsms.includes.flash-message')
+                        @include('dsms.includes.flash_message_error')
                     <div class=" form">
                         @if(isset($data['single']))
                             @include($_view_path.'.includes.form-edit')
@@ -40,7 +40,7 @@
                    <thead>
                       <tr>
                          <th>#</th>
-                         <th>School Code</th>
+                         {{-- <th>School Code</th> --}}
                          <th>School Name</th>
                          <th>Action</th>
                       </tr>
@@ -50,7 +50,7 @@
                         @foreach($data['rows'] as $row)
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
-                           <td>{{ $row->code }}</td>
+                           {{-- <td>{{ $row->code }}</td> --}}
                            <td>{{ $row->title }}</td>
                            <td>
                               @include('dsms.school.includes.buttons.edit-assign')
