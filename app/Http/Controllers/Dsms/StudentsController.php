@@ -124,6 +124,19 @@ class StudentsController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'first_name' => 'required|max:255',
+            'dob' => 'required',
+            'roll_no' => 'required',
+            'school_id' => 'required',
+            'class_id' => 'required',
+            'section_id' => 'required',
+        ],
+        [
+            'first_name.required' => 'You must enter the STUDENT name!',
+            'dob.required' => 'You must enter the DATE OF BIRTH name!',
+            'roll_no.required' => 'You must enter the SYMBOL NO.!',
+        ]);
         $data['school_id'] = $request->school_id;
         $data['class_id'] = $request->class_id;
         $data['section_id'] = $request->section_id;
@@ -195,6 +208,20 @@ class StudentsController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'first_name' => 'required|max:255',
+            'dob' => 'required',
+            'roll_no' => 'required',
+            'school_id' => 'required',
+            'class_id' => 'required',
+            'section_id' => 'required',
+        ],
+        [
+            'first_name.required' => 'You must enter the STUDENT name!',
+            'dob.required' => 'You must enter the DATE OF BIRTH name!',
+            'roll_no.required' => 'You must enter the SYMBOL NO.!',
+        ]);
+
         $class_section_id = $this->model_g::getClassSectionId($request->class_id, $request->section_id);
         $row = $this->model::findOrFail($id);
         $row->class_section_id = $class_section_id->id;

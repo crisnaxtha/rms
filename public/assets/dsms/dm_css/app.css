@@ -148,3 +148,7 @@
 	z-index: 9999;
 	background: url("../img/loader.gif") center no-repeat #fff;
 }
+
+.form-group .req {
+    color: #fc2d42;
+}

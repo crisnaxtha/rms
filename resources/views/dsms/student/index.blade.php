@@ -78,7 +78,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label>Search By Keyword</label>
-                                        <input type="text" name="search_text" class="form-control" value="@if(isset($data['query'])) {{ $data['query'] }} @endif"   placeholder="Search By Student Name, Roll Number, Enroll Number, National Id, Local Id Etc.">
+                                        <input type="text" name="search_text" class="form-control" value="@if(isset($data['query'])) {{ $data['query'] }} @endif"   placeholder="Search By Student Name, Roll Number, Enroll Number, Etc." required>
                                     </div>
                                 </div>
                                 <div class="col-m-12">

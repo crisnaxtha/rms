@@ -15,7 +15,7 @@
                    {{ $_panel }}
                 </header>
                 <div class="panel-body">
-                        {{-- @include('dcms.includes.flash-message') --}}
+                    @include('dsms.includes.flash_message_error')
                     <div class=" form">
                         <form id="form1" action="{{ route($_base_route.'.update', ['id'=> $data['row']->id]) }}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
                             @csrf {{  method_field('PUT')}}
@@ -64,15 +64,8 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Admission Number</label> <small class="req"> *</small>
-                                        <input autofocus="" id="admission_no" name="admission_no" placeholder="" type="text" class="form-control" value="{{ $data['row']->admission_no }}" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Roll Number</label>
-                                        <input id="roll_no" name="roll_no" placeholder="" type="text" class="form-control" value="{{ $data['row']->roll_no }}" />
+                                        <label for="exampleInputEmail1">Symbol Number</label>
+                                        <input autofocus="" id="roll_no" name="roll_no" placeholder="" type="text" class="form-control" value="{{ $data['row']->roll_no }}" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -80,6 +73,13 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Student Name</label><small class="req"> *</small>
                                         <input id="firstname" name="firstname" placeholder="" type="text" class="form-control" value="{{ $data['row']->first_name }}" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Date Of Birth</label><small class="req"> *</small>
+                                        <input id="dob" name="dob" placeholder="" type="text" class="form-control default-date-picker" value="{{ $data['row']->dob }}" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -106,13 +106,6 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Date Of Birth</label><small class="req"> *</small>
-                                        <input id="dob" name="dob" placeholder="" type="text" class="form-control default-date-picker" value="{{ $data['row']->dob }}" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
                                         <label for="exampleInputEmail1">Mobile Number</label>
                                         <input id="mobileno" name="mobileno" placeholder="" type="text" class="form-control" value="{{ $data['row']->mobile_no }}" />
                                         <span class="text-danger"></span>
@@ -122,22 +115,6 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
                                         <input id="email" name="email" placeholder="" type="text" class="form-control" value="{{ $data['row']->email }}" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Religion</label>
-                                        <input id="religion" name="religion" placeholder="" type="text" class="form-control" value="{{ $data['row']->religion }}" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Admission Date</label>
-                                        <input id="admission_date" name="admission_date" placeholder="" type="text" class="form-control default-date-picker" value="{{ $data['row']->admission_date }}" readonly="readonly" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -152,6 +129,29 @@
 
                                         </select>
 
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Religion</label>
+                                        <input id="religion" name="religion" placeholder="" type="text" class="form-control" value="{{ $data['row']->religion }}" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Admission Number</label> <small class="req"> *</small>
+                                        <input id="admission_no" name="admission_no" placeholder="" type="text" class="form-control" value="{{ $data['row']->admission_no }}" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Admission Date</label>
+                                        <input id="admission_date" name="admission_date" placeholder="" type="text" class="form-control default-date-picker" value="{{ $data['row']->admission_date }}" readonly="readonly" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>

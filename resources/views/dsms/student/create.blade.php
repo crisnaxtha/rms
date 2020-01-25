@@ -18,7 +18,7 @@
                   </span>
                 </header>
                 <div class="panel-body">
-                        {{-- @include('dcms.includes.flash-message') --}}
+                        @include('dsms.includes.flash_message_error')
                     <div class=" form">
                         <form id="form1" action="{{ route($_base_route.'.store') }}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
                             @csrf
@@ -57,15 +57,8 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Admission Number</label> <small class="req"> *</small>
-                                        <input autofocus="" id="admission_no" name="admission_no" placeholder="" type="text" class="form-control" value="" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Roll Number</label>
-                                        <input id="roll_no" name="roll_no" placeholder="" type="text" class="form-control" value="" />
+                                        <label for="exampleInputEmail1">Symbol Number</label><small class="req"> *</small>
+                                        <input autofocus="" id="roll_no" name="roll_no" placeholder="" type="text" class="form-control" value="" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -73,6 +66,13 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Student Name</label><small class="req"> *</small>
                                         <input id="firstname" name="firstname" placeholder="" type="text" class="form-control" value="" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Date Of Birth</label><small class="req"> *</small>
+                                        <input id="dob" name="dob" placeholder="" type="text" class="form-control default-date-picker" value="" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -87,20 +87,13 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="exampleInputFile">Gender</label><small class="req"> *</small>
+                                        <label for="exampleInputFile">Gender</label>
                                         <select class="form-control" name="gender">
                                             <option value="">Select</option>
                                             @foreach(dm_gender() as $row)
                                             <option value="{{ $row }}">{{ $row }}</option>
                                             @endforeach
                                         </select>
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Date Of Birth</label><small class="req"> *</small>
-                                        <input id="dob" name="dob" placeholder="" type="text" class="form-control default-date-picker" value="" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -118,22 +111,6 @@
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Religion</label>
-                                        <input id="religion" name="religion" placeholder="" type="text" class="form-control" value="" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Admission Date</label>
-                                        <input id="admission_date" name="admission_date" placeholder="" type="text" class="form-control default-date-picker" value="{{ date('Y-m-d') }}" readonly="readonly" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
                                 <div class="col-md-3 col-xs-12">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Blood Group</label>
@@ -145,6 +122,29 @@
 
                                         </select>
 
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Religion</label>
+                                        <input id="religion" name="religion" placeholder="" type="text" class="form-control" value="" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Admission Number</label>
+                                        <input id="admission_no" name="admission_no" placeholder="" type="text" class="form-control" value="" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Admission Date</label>
+                                        <input id="admission_date" name="admission_date" placeholder="" type="text" class="form-control default-date-picker" value="{{ date('Y-m-d') }}" readonly="readonly" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
