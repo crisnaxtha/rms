@@ -15,7 +15,7 @@
                    Add {{ $_panel }}
                 </header>
                 <div class="panel-body">
-                        @include('dsms.includes.flash-message')
+                        @include('dsms.includes.flash_message_error')
                     <div class=" form">
                         @if(isset($data['single']))
                             @include($_view_path.'.includes.form-edit')

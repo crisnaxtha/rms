@@ -46,6 +46,12 @@ class ExamListController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+        ],
+        [
+            'title.required' => 'You must enter the Exam name!',
+        ]);
         $row = $this->model;
         $row->title = $request->title;
         $row->description = $request->description;
@@ -92,6 +98,12 @@ class ExamListController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+        ],
+        [
+            'title.required' => 'You must enter the Exam name!',
+        ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
         $row->description = $request->description;
