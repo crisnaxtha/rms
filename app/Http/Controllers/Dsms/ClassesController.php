@@ -49,9 +49,11 @@ class ClassesController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+        ]);
         $row = $this->model;
         $row->title = $request->title;
-        // $row->group = $request->group;
         $row->save();
 
         if($row->save()){
@@ -95,9 +97,11 @@ class ClassesController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+        ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
-        // $row->group = $request->group;
         $row->save();
 
         if($row->save()){
