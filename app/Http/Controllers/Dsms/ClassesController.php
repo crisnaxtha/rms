@@ -51,6 +51,9 @@ class ClassesController extends DM_BaseController
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
+        ],
+        [
+            'title.required' => 'You have enter the CLASS name!',
         ]);
         $row = $this->model;
         $row->title = $request->title;
@@ -99,7 +102,11 @@ class ClassesController extends DM_BaseController
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',
+        ],
+        [
+            'title.required' => 'You have enter the CLASS name!',
         ]);
+
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
         $row->save();

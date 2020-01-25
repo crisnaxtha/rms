@@ -45,6 +45,20 @@ class SubjectsController extends DM_BaseController
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'credit_hour' => 'required|integer',
+            'theory_full_marks' => 'required|integer',
+            'practical_full_marks' => 'integer|nullable',
+        ],
+        [
+            'title.required' => 'You must enter the SUBJECT name!',
+            'credit_hour.required' => 'You must enter the SUBJECT credit Hour',
+            'credit_hour.integer' => 'Credit Hour must be INTEGER',
+            'theory_full_marks.required' => 'You must enter the SUBJECT THEORY FULL MARKS',
+            'theory_full_marks.integer' => 'Theory Full Marks must be INTEGER',
+            'practical_full_marks.integer' => 'Practical Full Marks must be INTEGER'
+        ]);
         $row = $this->model;
         $row->title = $request->title;
         $row->theory_full_marks = $request->theory_full_marks;
@@ -93,6 +107,20 @@ class SubjectsController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'credit_hour' => 'required|integer',
+            'theory_full_marks' => 'required|integer',
+            'practical_full_marks' => 'integer|nullable',
+        ],
+        [
+            'title.required' => 'You must enter the SUBJECT name!',
+            'credit_hour.required' => 'You must enter the SUBJECT credit Hour',
+            'credit_hour.integer' => 'Credit Hour must be INTEGER',
+            'theory_full_marks.required' => 'You must enter the SUBJECT THEORY FULL MARKS',
+            'theory_full_marks.integer' => 'Theory Full Marks must be INTEGER',
+            'practical_full_marks.integer' => 'Practical Full Marks must be INTEGER'
+        ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
         $row->theory_full_marks = $request->theory_full_marks;
