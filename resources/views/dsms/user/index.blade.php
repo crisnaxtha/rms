@@ -11,10 +11,10 @@
     <div class="col-sm-12">
        <section class="panel">
           <header class="panel-heading">
-             {{ $_panel }}
+            @include('dsms.includes.buttons.button-create')
+            {{ $_panel }}
           </header>
           <div class="panel-body">
-                @include('dsms.includes.buttons.button-create')
                 @include('dsms.includes.flash-message')
             <div class="adv-table">
                 <table  class="display table table-bordered table-striped" id="dynamic-table">

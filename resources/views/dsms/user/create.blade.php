@@ -6,10 +6,10 @@
         <div class="col-lg-8 col-md-8 col-xs-12">
             <section class="panel">
                 <header class="panel-heading">
-                    <h3>{{ $_panel }}</h3>
+                        @include('dsms.includes.buttons.button-back')
+                        {{ $_panel }}
                 </header>
                 <div class="panel-body">
-                        @include('dsms.includes.buttons.button-back')
                         @include('dsms.includes.flash_message_error')
 
                     <form class="" action="{{ route('register') }}" method="POST">
@@ -38,8 +38,8 @@
                                 <div class="form-group">
                                     <input type="password" class="form-control" name="password_confirmation" placeholder="{{__('dsms_lang.register.re_password') }}" >
                                 </div>
-                                <button class="btn btn-success" type="submit">{{__('dsms_lang.register.register') }}</button>
-                                <a href="{{ URL::route($_base_route.'.index') }}"><button class="btn btn-danger" type="button">{{__('Cancel') }}</button></a>
+                                <button class="btn btn-success btn-xs" type="submit">{{__('dsms_lang.register.register') }}</button>
+                                <a href="{{ URL::route($_base_route.'.index') }}"><button class="btn btn-danger btn-xs" type="button">{{__('Cancel') }}</button></a>
 
 
 
