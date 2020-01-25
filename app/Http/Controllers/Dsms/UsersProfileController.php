@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Dcms;
+namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Dcms\DM_BaseController;
+use App\Http\Controllers\DM_BaseController;
 use App\User;
-use App\Model\Dcms\Eloquent\DM_Post;
-use App\Model\Dcms\Tracker;
+use App\Model\Dsms\Eloquent\DM_General;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsersProfileController extends DM_BaseController
 {
     protected $panel = 'Profile';
-    protected $base_route = 'dcms.user_profile';
-    protected $view_path ='dcms.user_profile';
+    protected $base_route = 'dsms.user_profile';
+    protected $view_path ='dsms.user_profile';
     protected $model;
     protected $table;
     protected $folder = 'profile';
@@ -24,7 +23,7 @@ class UsersProfileController extends DM_BaseController
     /**
      * Constructor
      */
-    public function __construct(User $user, Tracker $tracker, DM_Post $dm_post) {
+    public function __construct(User $user) {
         $this->middleware('auth');
         // $this->middleware('permission:user-list', ['only' => ['index']]);
         // $this->middleware('permission:user-create', ['only' => ['create','store']]);
@@ -32,8 +31,6 @@ class UsersProfileController extends DM_BaseController
         // $this->middleware('permission:user-delete', ['only' => ['destroy']]);
         $this->model = $user;
         $this->model = $user;
-        $this->tracker = $tracker::hit();
-        $this->lang_id = $dm_post::setLanguage();
         $this->folder_path = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
 
     }
@@ -138,7 +135,7 @@ class UsersProfileController extends DM_BaseController
             $row->save();
             session()->flash('alert-success', 'Password changed successfully.');
             Auth::logout();
-            return redirect()->route('dcms.login');
+            return redirect()->route('login');
         }
         else{
             session()->flash('alert-warning', 'Password did not match.');

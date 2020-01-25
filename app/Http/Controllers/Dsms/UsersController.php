@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Dcms;
+namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Dcms\DM_BaseController;
+use App\Http\Controllers\DM_BaseController;
 use App\User;
-use App\Model\Dcms\Eloquent\DM_Post;
-use App\Model\Dcms\Tracker;
-use App\Model\Dcms\Role;
+use App\Model\Dsms\Role;
+use App\Model\Dsms\Eloquent\DM_General;
 
 class UsersController extends DM_BaseController
 {
     protected $panel = 'Users';
-    protected $base_route = 'dcms.user';
-    protected $view_path ='dcms.user';
+    protected $base_route = 'dsms.user';
+    protected $view_path ='dsms.user';
     protected $model;
     protected $table;
 

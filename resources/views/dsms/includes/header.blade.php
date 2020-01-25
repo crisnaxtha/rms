@@ -40,8 +40,8 @@
                       @if(route::has('dsms.user_profile.show'))
                       <li><a href="{{ route('dsms.user_profile.show') }}"><i class=" fa fa-user"></i>Profile</a></li>
                       @endif
-                      {{-- <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li> --}}
-                      {{-- <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li> --}}
+                      <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                      <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
                       <li><a href="{{ route('logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
                   </ul>
               </li>

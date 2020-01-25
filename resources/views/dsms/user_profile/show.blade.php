@@ -1,9 +1,9 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 
 @section('content')
 <!-- page start-->
 <div class="row">
-    @include('dcms.user_profile.includes.user-pic')
+    @include('dsms.user_profile.includes.user-pic')
     <aside class="profile-info col-lg-9">
         <section class="panel">
             <div class="bio-graph-heading">

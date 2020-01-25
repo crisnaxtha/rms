@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Dcms;
+namespace App\Http\Controllers\Dsms;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Dcms\DM_BaseController;
-use App\Model\Dcms\Role;
-use App\Model\Dcms\Permission;
-use App\Model\Dcms\Tracker;
-use App\Model\Dcms\Eloquent\DM_Post;
+use App\Http\Controllers\DM_BaseController;
+use App\Model\Dsms\Role;
+use App\Model\Dsms\Permission;
+use App\Model\Dsms\Eloquent\DM_General;
 use DB;
 use Illuminate\Support\Facades\Validator;
 use Session;
@@ -15,8 +14,8 @@ use Session;
 class RoleController extends DM_BaseController
 {
     protected $panel = 'Role';
-    protected $base_route = 'dcms.role';
-    protected $view_path ='dcms.role';
+    protected $base_route = 'dsms.role';
+    protected $view_path ='dsms.role';
     protected $model;
     protected $table;
 

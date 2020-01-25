@@ -1,9 +1,9 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 
 @section('content')
  <!-- page start-->
  <div class="row">
-    @include('dcms.user_profile.includes.user-pic')
+    @include('dsms.user_profile.includes.user-pic')
     <aside class="profile-info col-lg-9">
         <section class="panel">
             <div class="bio-graph-heading">
@@ -14,7 +14,7 @@
                 <div class=" form">
                         <?php
                         dm_hpostform(URL::route($_base_route.'.update'), 'PUT');
-                        dm_hinputUpdate('file', 'avatar', 'Avatar', '', '');
+                        // dm_hinputUpdate('file', 'avatar', 'Avatar', '', '');
                         dm_hinputUpdate('text','name', "Name", $row->name);
                         dm_hinputUpdate('text','email', "Email", $row->email);
                         dm_hinputUpdate('text','phone', "Phone", $row->phone);
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </section>
-        @include('dcms.user_profile.includes.change-password')        
+        @include('dsms.user_profile.includes.change-password')
     </aside>
 </div>
 <!-- page end-->
@@ -32,6 +32,6 @@
 @endsection
 
 @section('js')
-@include('dcms.includes.flash-message') 
+@include('dsms.includes.flash-message')
 
 @endsection

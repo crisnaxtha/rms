@@ -2,7 +2,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">{{ __('Reset Password') }}</div>
         <div class="panel-body">
-            <form class="form-horizontal" role="form" method="POST" action="{{ route('dcms.user_profile.password.change') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ route('dsms.user_profile.password.change') }}">
                 @csrf
                 <div class="form-group">
                     <label  class="col-lg-2 control-label">Current Password</label>

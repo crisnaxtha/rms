@@ -5,9 +5,9 @@
                 <a href="#">
                     <img alt="" src="{{ asset(Auth::user()->avatar) }}" >
                 </a>
-            @else 
+            @else
                 <a href="#">
-                    <img alt="" src="{{ asset('assets/dcms/img/lochan.png') }}" >
+                    <img alt="" src="{{ asset('assets/dsms/img/lochan.png') }}" >
                 </a>
             @endif
             <h1>{{ Auth::user()->name }}</h1>
@@ -15,10 +15,10 @@
         </div>
 
         <ul class="nav nav-pills nav-stacked">
-            @if(route::has('dcms.user_profile.show'))
-            <li class="{{ (Route::current()->getName() == 'dcms.user_profile.show') ? 'active' : '' }}"><a href="{{ URL::route('dcms.user_profile.show') }}"> <i class="fa fa-user"></i> Profile</a></li>
+            @if(route::has('dsms.user_profile.show'))
+            <li class="{{ (Route::current()->getName() == 'dsms.user_profile.show') ? 'active' : '' }}"><a href="{{ URL::route('dsms.user_profile.show') }}"> <i class="fa fa-user"></i> Profile</a></li>
             @endif
-            <li class="{{ (Route::current()->getName() == 'dcms.user_profile.edit') ? 'active' : ''  }}"><a href="{{ URL::route('dcms.user_profile.edit') }}"> <i class="fa fa-edit"></i> Edit profile</a></li>
+            <li class="{{ (Route::current()->getName() == 'dsms.user_profile.edit') ? 'active' : ''  }}"><a href="{{ URL::route('dsms.user_profile.edit') }}"> <i class="fa fa-edit"></i> Edit profile</a></li>
         </ul>
 
     </section>
