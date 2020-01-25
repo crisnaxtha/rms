@@ -32,8 +32,8 @@ class CreateUsersTable extends Migration
             $table->string('gender')->default('');
             $table->string('blood_group')->default('');
             $table->string('nationality')->default('');
-            $table->string('phone_number')->unique()->default('');
-            $table->string('address')->default('');
+            $table->string('phone_number')->unique()->nullable();
+            $table->string('address')->nullable();
             $table->text('bio')->nullable();
             $table->integer('section_id')->unsigned()->nullable();
             $table->integer('forgotten_password_time')->nullable();

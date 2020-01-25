@@ -40,9 +40,15 @@
                       @if(route::has('dsms.user_profile.show'))
                       <li><a href="{{ route('dsms.user_profile.show') }}"><i class=" fa fa-user"></i>Profile</a></li>
                       @endif
-                      <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                      <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                      @if(route::has('dsms.role.index'))
+                      <li><a href="{{ route('dsms.role.index') }}"><i class="fa fa-cog"></i>Roles</a></li>
+                      @endif
+                      @if(route::has('dsms.user.index'))
+                      <li><a href="{{ route('dsms.user.index') }}"><i class="fa fa-users"></i> Users</a></li>
+                      @endif
+                      @if(route::has('logout'))
                       <li><a href="{{ route('logout') }}"><i class="fa fa-key"></i> Log Out</a></li>
+                      @endif
                   </ul>
               </li>
               <!-- user login dropdown end -->

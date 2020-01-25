@@ -19,7 +19,7 @@ class RoleController extends DM_BaseController
     protected $model;
     protected $table;
 
-    public function __construct(Request $request,Role $model, Tracker $tracker, DM_Post $dm_post, Permission $permission) {
+    public function __construct(Request $request,Role $model, Permission $permission) {
         $this->middleware('auth');
         // $this->middleware('permission:role-list', ['only' => ['index']]);
         // $this->middleware('permission:role-create', ['only' => ['create','store']]);
@@ -27,9 +27,6 @@ class RoleController extends DM_BaseController
         // $this->middleware('permission:role-delete', ['only' => ['destroy']]);
         // $this->middleware('permission:assign-permission', ['only' => ['destroy']]);
         $this->model = $model;
-        $this->tracker = $tracker::hit();
-        $this->dm_post = $dm_post;
-        $this->lang_id = $dm_post::setLanguage();
         $this->permission = $permission;
     }
 
@@ -40,7 +37,6 @@ class RoleController extends DM_BaseController
      */
     public function index()
     {
-        $this->tracker;
         $data['rows'] = $this->model::all();
         return view(parent::loadView($this->view_path.'.index'), compact('data'));
     }
@@ -52,7 +48,6 @@ class RoleController extends DM_BaseController
      */
     public function create()
     {
-        $this->tracker;
         return view(parent::loadView($this->view_path.'.create'));
     }
 
@@ -94,7 +89,6 @@ class RoleController extends DM_BaseController
      */
     public function edit($id)
     {
-        $this->tracker;
         $data['row'] = $this->model::findOrFail($id);
         return view(parent::loadView($this->view_path.'.edit'), compact('data'));
     }
@@ -108,7 +102,6 @@ class RoleController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
-        $this->tracker;
         if($this->model->updateData($id, $request->name, $request->status)){
             session()->flash('alert-success', $this->panel.' Successfully Store');
         }else {
@@ -125,7 +118,6 @@ class RoleController extends DM_BaseController
      */
     public function destroy($id)
     {
-        $this->tracker;
         $this->model::destroy($id);
     }
 

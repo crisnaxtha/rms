@@ -1,4 +1,4 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 
 @section('content')
 
@@ -9,22 +9,22 @@
                     <h3>{{ $_panel }}</h3>
                 </header>
                 <div class="panel-body">
-                        @include('dcms.includes.buttons.button-back')
-                        @include('dcms.includes.flash-message') 
+                        @include('dsms.includes.buttons.button-back')
+                        @include('dsms.includes.flash-message')
 
-                    <form class="" action="{{ route('dcms.user.update', ['id' => $row->id]) }}" method="PUT" enctype="multipart/form-data">
+                    <form class="" action="{{ route('dsms.user.update', ['id' => $row->id]) }}" method="PUT" enctype="multipart/form-data">
                             {{ method_field('PUT'), csrf_field() }}
-                            {{-- <h2 class="form-signin-heading">{{__('dcms_lang.register.info') }}</h2> --}}
+                            {{-- <h2 class="form-signin-heading">{{__('dsms_lang.register.info') }}</h2> --}}
                             <div class="">
                                 <p>Enter your personal details below</p>
                                 <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-                                    <input type="text" class="form-control" name="name" placeholder="{{__('dcms_lang.register.name') }}" value="{{ $row->name }}"  autofocus>
+                                    <input type="text" class="form-control" name="name" placeholder="{{__('dsms_lang.register.name') }}" value="{{ $row->name }}"  autofocus>
                                     @if( $errors->has('name'))
                                     <span class="help-block">{{ $errors->first('name') }}</span>
                                     @endif
                                 </div>
                                 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
-                                    <input type="email" class="form-control" name="email" placeholder="{{__('dcms_lang.register.email') }}" value="{{ $row->email }}" disabled>
+                                    <input type="email" class="form-control" name="email" placeholder="{{__('dsms_lang.register.email') }}" value="{{ $row->email }}" disabled>
                                     @if( $errors->has('email'))
                                     <span class="help-block">{{ $errors->first('email') }}</span>
                                     @endif
@@ -33,12 +33,12 @@
 
                                 @if(isset($roles))
                                 <div class="form-group">
-                                    <label name="role" for="inputSuccess">{{__('dcms_lang.register.role') }}</label>
+                                    <label name="role" for="inputSuccess">{{__('dsms_lang.register.role') }}</label>
                                         <select name="role_id" class="form-control m-bot15">
                                             @if($row->role_id)
-                                            <option value="{{ $row->role_id }}">{{ $row->Role->name   }}</option> 
-                                            @endif                                           
-                                           @foreach($roles as $role) 
+                                            <option value="{{ $row->role_id }}">{{ $row->Role->name   }}</option>
+                                            @endif
+                                           @foreach($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                             @endforeach
                                         </select>
@@ -53,14 +53,14 @@
                                 <div class="checkbox">
                                     <label>
                                         <input type="hidden" name="status" value=0>
-                                        <input type="checkbox" name="status" value=1 @if($row->status){{ "checked" }} @endif>{{__('dcms_lang.register.status') }}
+                                        <input type="checkbox" name="status" value=1 @if($row->status){{ "checked" }} @endif>{{__('dsms_lang.register.status') }}
                                     </label>
                                 </div>
 
-                                <button class="btn btn-success" type="submit">{{__('dcms_lang.register.register') }}</button>
-                                <a href="{{ URL::route($_base_route.'.index') }}"><button class="btn btn-danger" type="button">{{__('Cancel') }}</button></a>
+                                <button class="btn btn-success btn-xs" type="submit">{{__('dsms_lang.register.register') }}</button>
+                                <a href="{{ URL::route($_base_route.'.index') }}"><button class="btn btn-danger btn-xs" type="button">{{__('Cancel') }}</button></a>
 
-                              
+
 
                             </div>
 

@@ -6,7 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -37,7 +39,17 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
+    }
+
+     /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        return view('dsms.404');
     }
 
     /**
@@ -70,8 +82,14 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function showRegistrationForm()
+    public function register(Request $request)
     {
-        // return view('dcms.auth.register');
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        session()->flash('alert-success', 'User Successfully Added');
+
+        return redirect()->route('dsms.user.index');
     }
 }

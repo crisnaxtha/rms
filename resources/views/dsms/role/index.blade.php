@@ -1,7 +1,7 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 @section('css')
        <!--dynamic table-->
-       @include('dcms.includes.datatable-assets.css')
+       @include('dsms.includes.datatable-assets.css')
 
 @endsection
 
@@ -14,8 +14,8 @@
              {{ $_panel }}
           </header>
           <div class="panel-body">
-                @include('dcms.includes.buttons.button-create')
-                @include('dcms.includes.flash-message')
+                @include('dsms.includes.buttons.button-create')
+                @include('dsms.includes.flash-message')
             <div class="adv-table">
                 <table  class="display table table-bordered table-striped" id="dynamic-table">
                    <thead>
@@ -38,9 +38,9 @@
                               <?php dm_flag($row->status) ?>
                         </td>
                            <td>
-                              @include('dcms.role.includes.buttons.edit-assign')
-                              @include('dcms.includes.buttons.button-edit')
-                              @include('dcms.includes.buttons.button-delete')
+                              @include('dsms.role.includes.buttons.edit-assign')
+                              @include('dsms.includes.buttons.button-edit')
+                              @include('dsms.includes.buttons.button-delete')
                            </td>
                         </tr>
                         @endforeach
@@ -56,5 +56,5 @@
 
 @section('js')
 
-@include('dcms.includes.datatable-assets.js')
+@include('dsms.includes.datatable-assets.js')
 @endsection

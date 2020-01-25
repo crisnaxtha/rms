@@ -1,7 +1,7 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 @section('css')
        <!--dynamic table-->
-       @include('dcms.includes.datatable-assets.css')
+       @include('dsms.includes.datatable-assets.css')
 
 @endsection
 
@@ -14,8 +14,8 @@
              {{ $_panel }}
           </header>
           <div class="panel-body">
-                @include('dcms.includes.buttons.button-create')
-                @include('dcms.includes.flash-message')
+                @include('dsms.includes.buttons.button-create')
+                @include('dsms.includes.flash-message')
             <div class="adv-table">
                 <table  class="display table table-bordered table-striped" id="dynamic-table">
                    <thead>
@@ -24,8 +24,6 @@
                          <th>User's Name</th>
                          <th>Email</th>
                          <th>Created Date</th>
-                         <th>Last Login</th>
-                         <th>IP Address</th>
                          <th>Role</th>
                          <th>Status</th>
                          <th>Action</th>
@@ -34,25 +32,24 @@
                    <tbody>
                      @if(isset($data['rows']))
                         @foreach($data['rows'] as $row)
-
+                        @if($row->id == 1) @else
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
                            <td>{{ $row->name }}</td>
                            <td>{{ $row->email }}</td>
                            <td>{{ $row->created_at}}<br><strong>[{{ $row->created_at->diffForHumans() }}]</strong></td>
-                           <td><?php dm_flag($row->last_login_at) ?>{{ $row->last_login_at }}@if(isset($row->last_login_at))<br><strong>[{{ $row->last_login_at->diffForHumans() }}]</strong>@endif</td>
-                           <td><?php dm_flag($row->last_login_ip) ?>{{ $row->last_login_ip }}</td>
                            <td>@if($row->role_id){{ $row->Role->name }}@else {{ "No Role Assign" }}@endif</td>
                            <td><?php dm_flag($row->status) ?></td>
                            <td>
                               @if(Auth::user()->id == $row->id)
                                  <button class="btn btn-danger btn-xs"> Self </button>
                               @else
-                                 @include('dcms.includes.buttons.button-edit')
-                                 @include('dcms.includes.buttons.button-delete')
+                                 @include('dsms.includes.buttons.button-edit')
+                                 @include('dsms.includes.buttons.button-delete')
                               @endif
                            </td>
                         </tr>
+                        @endif
                         @endforeach
                      @endif
                    </tbody>
@@ -66,6 +63,6 @@
 
 @section('js')
 
-@include('dcms.includes.datatable-assets.js')
+@include('dsms.includes.datatable-assets.js')
 
 @endsection

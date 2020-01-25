@@ -1,7 +1,7 @@
-@extends('dcms.layouts.app')
+@extends('dsms.layouts.app')
 @section('css')
        <!--dynamic table-->
-       @include('dcms.includes.datatable-assets.css')
+       @include('dsms.includes.datatable-assets.css')
 
 @endsection
 
@@ -13,15 +13,15 @@
         <div class="panel">
             <div class="panel-heading">
                 Assign Permission
-                <button class="btn btn-success"><a rel="group_1" href="#select_all">Select All</a></button>
-                 <button class="btn btn-danger"><a rel="group_1" href="#select_none">Select None</a></button>
-                 <button class="btn btn-warning"><a rel="group_1" href="#invert_selection">Invert Selection</a></button>
+                <a rel="group_1" href="#select_all" class="btn btn-success btn-xs">Select All</a>
+                <a rel="group_1" href="#select_none" class="btn btn-danger btn-xs">Select None</a>
+                <a rel="group_1" href="#invert_selection" class="btn btn-warning btn-xs">Invert Selection</a>
             </div>
             <div class="panel-body">
-                    @include('dcms.includes.buttons.button-back')
+                    @include('dsms.includes.buttons.button-back')
                 <div class="form" id="group_1">
-                    <form class="cmxform form-horizontal tasi-form" id="signupForm" method="POST" action="{{ route('dcms.role.assign.update',['id' => $data['row']->id])}}">
-                        @csrf 
+                    <form class="cmxform form-horizontal tasi-form" id="signupForm" method="POST" action="{{ route('dsms.role.assign.update',['id' => $data['row']->id])}}">
+                        @csrf
                         @if(count($data['permission']))
                         @foreach($data['permission'] as $row)
                         @if(array_key_exists($row->id, $data['p_id']))
@@ -39,8 +39,8 @@
                         @endif
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-10">
-                                <button class="btn btn-danger" type="submit">Save</button>
-                                <button class="btn btn-default" type="button">Cancel</button>
+                                <button class="btn btn-danger btn-xs" type="submit">Save</button>
+                                <button class="btn btn-default btn-xs" type="button">Cancel</button>
                             </div>
                         </div>
                     </form>
@@ -52,8 +52,8 @@
 @endsection
 
 @section('js')
-@include('dcms.includes.datatable-assets.js')
-@include('dcms.includes.flash-message') 
+@include('dsms.includes.datatable-assets.js')
+@include('dsms.includes.flash-message')
 <script type="text/javascript">
     $(document).ready( function() {
         // Select all

@@ -19,7 +19,7 @@ class UsersController extends DM_BaseController
     /**
      * Constructor
      */
-    public function __construct(User $user, Tracker $tracker, DM_Post $dm_post, Role $role) {
+    public function __construct(User $user, Role $role) {
         $this->middleware('auth');
         // $this->middleware('permission:user-list', ['only' => ['index']]);
         // $this->middleware('permission:user-create', ['only' => ['create','store']]);
@@ -27,8 +27,7 @@ class UsersController extends DM_BaseController
         // $this->middleware('permission:user-delete', ['only' => ['destroy']]);
         $this->model = $user;
         $this->role = $role;
-        $this->tracker = $tracker::hit();
-        $this->lang_id = $dm_post::setLanguage();
+
     }
     /**
      * Display a listing of the resource.
@@ -37,7 +36,6 @@ class UsersController extends DM_BaseController
      */
     public function index()
     {
-        $this->tracker;
         $data['rows'] = $this->model::all();
         return view(parent::loadView($this->view_path.'.index'), compact('data'));
     }
@@ -49,7 +47,6 @@ class UsersController extends DM_BaseController
      */
     public function create()
     {
-        $this->tracker;
         return view(parent::loadView($this->view_path.'.create'));
     }
 
@@ -83,7 +80,6 @@ class UsersController extends DM_BaseController
      */
     public function edit($id)
     {
-        $this->tracker;
         $row = $this->model::findOrFail($id);
         $roles = $this->role::where('status', '=', 1)->get();
         return view(parent::loadView($this->view_path.'.edit'), compact('row', 'roles'));
@@ -98,7 +94,6 @@ class UsersController extends DM_BaseController
      */
     public function update(Request $request, $id)
     {
-        $this->tracker;
         $row = $this->model::findOrFail($id);
         $row->name = $request->name;
         $row->role_super = $request->role_super;
@@ -120,7 +115,6 @@ class UsersController extends DM_BaseController
      */
     public function destroy($id)
     {
-        $this->tracker;
         $this->model::destroy($id);
     }
 }
