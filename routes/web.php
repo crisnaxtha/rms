@@ -158,6 +158,46 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
 
         });
 
+         /**
+         * User Profile Routes
+         */
+        Route::group(['prefix' => 'user_profile', 'as'=>'user_profile.'], function () {
+            Route::get('',                                      ['as'=>'index',              'uses'=>'UsersProfileController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'UsersProfileController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'UsersProfileController@store']);
+            Route::get('show',                                  ['as'=>'show',              'uses'=>'UsersProfileController@show']);
+            Route::get('edit',                                  ['as'=>'edit',              'uses'=>'UsersProfileController@edit']);
+            Route::put('',                                      ['as'=>'update',              'uses'=>'UsersProfileController@update']);
+            Route::delete('',                                   ['as'=>'destroy',              'uses'=>'UsersProfileController@destroy']);
+            Route::post('',                                     ['as'=>'password.change',        'uses'=>'UsersProfileController@changePassword']);
+        });
+
+        /**
+         * User Routes
+         */
+        Route::group(['prefix' => 'user', 'as'=>'user.', ], function () {
+            Route::get('',                                      ['as'=>'index',              'uses'=>'UsersController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'UsersController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'UsersController@store']);
+            Route::get('{user}/edit',                           ['as'=>'edit',              'uses'=>'UsersController@edit']);
+            Route::get('{user}',                                ['as'=>'update',              'uses'=>'UsersController@update']);
+            Route::delete('{user}',                             ['as'=>'destroy',              'uses'=>'UsersController@destroy']);
+        });
+
+        // Role Route
+
+        Route::group(['prefix' => 'role', 'as'=>'role.',], function () {
+            Route::get('',                                      ['as'=>'index',              'uses'=>'RoleController@index']);
+            Route::get('create',                                ['as'=>'create',              'uses'=>'RoleController@create']);
+            Route::post('',                                     ['as'=>'store',              'uses'=>'RoleController@store']);
+            Route::get('{role}/edit',                           ['as'=>'edit',              'uses'=>'RoleController@edit']);
+            Route::put('{role}',                                ['as'=>'update',              'uses'=>'RoleController@update']);
+            Route::delete('{role}',                             ['as'=>'destroy',              'uses'=>'RoleController@destroy']);
+            Route::get('assign_permission/{id}',                 ['as'=>'assign',                'uses'=>'RoleController@assignPermission']);
+            Route::post('assign_permission/update/{id}',          ['as'=>'assign.update',        'uses'=>'RoleController@updateAssignPermission']);
+        });
+
+
     });
 
 });
