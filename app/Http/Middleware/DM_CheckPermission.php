@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-use App\DM_UnauthorizedException;
+use App\Exceptions\DM_UnauthorizedException;
 use Auth;
 use Closure;
 

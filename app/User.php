@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Model\Dcms\Role;
+use App\DM_Traits\HasPermission;
 
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use HasPermission;
     /**
      * The attributes that are mass assignable.
      *
