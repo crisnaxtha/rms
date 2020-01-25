@@ -25,10 +25,6 @@ class UsersProfileController extends DM_BaseController
      */
     public function __construct(User $user) {
         $this->middleware('auth');
-        // $this->middleware('permission:user-list', ['only' => ['index']]);
-        // $this->middleware('permission:user-create', ['only' => ['create','store']]);
-        // $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-        // $this->middleware('permission:user-delete', ['only' => ['destroy']]);
         $this->model = $user;
         $this->model = $user;
         $this->folder_path = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;

@@ -22,6 +22,11 @@ class AssignSectionController extends DM_BaseController
     protected $view_path = 'dsms.assign_section';
 
     public function __construct(Request $request, School $model, Section $model_1, Subject $model_2, MyClass $model_3, DM_General $model_g){
+        $this->middleware('auth');
+        $this->middleware('permission:assign-section-list', ['only' => ['index']]);
+        $this->middleware('permission:assign-section-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:affiliated-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:assign-section-delete', ['only' => ['destroy']]);
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;

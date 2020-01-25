@@ -16,6 +16,11 @@ class AssignClassesController extends DM_BaseController
     protected $view_path = 'dsms.assign_class';
 
     public function __construct(Request $request, School $model, MyClass $model_1, DM_General $model_g){
+        $this->middleware('auth');
+        $this->middleware('permission:assign-class-list', ['only' => ['index']]);
+        $this->middleware('permission:assign-class-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:affiliated-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:assign-class-delete', ['only' => ['destroy']]);
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_g = $model_g;

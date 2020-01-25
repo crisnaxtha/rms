@@ -14,6 +14,11 @@ class SectionsController extends DM_BaseController
     protected $view_path = 'dsms.section';
 
     public function __construct(Request $request, Section $model){
+        $this->middleware('auth');
+        $this->middleware('permission:section-list', ['only' => ['index']]);
+        $this->middleware('permission:section-create', ['only' => ['create','store']]);
+        $this->middleware('permission:section-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:section-delete', ['only' => ['destroy']]);
         $this->model = $model;
     }
 

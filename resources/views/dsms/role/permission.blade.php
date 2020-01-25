@@ -30,8 +30,8 @@
                         @php $selected_checked_modules = ""; @endphp
                         @endif
                         <div class="">
-                            <label for="" class="control-label col-lg-2 col-sm-3">{{ $row['name'] }}</label>
-                            <div class="col-lg-10 col-sm-9">
+                            <label for="" class="control-label col-lg-8 col-sm-9">{{ $row['name'] }}</label>
+                            <div class="col-lg-4 col-sm-3">
                                 <input name="permission[]" type="checkbox" style="width: 20px" class="checkbox form-control" id="" value="{{ $row['id'] }}" {{ $selected_checked_modules }}/>
                             </div>
                         </div>

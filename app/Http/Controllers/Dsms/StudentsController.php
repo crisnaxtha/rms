@@ -23,6 +23,11 @@ class StudentsController extends DM_BaseController
     protected $prefix_path_image = '/upload_file/images/student/';
 
     public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3){
+        $this->middleware('auth');
+        $this->middleware('permission:student-list', ['only' => ['index']]);
+        $this->middleware('permission:student-create', ['only' => ['create','store']]);
+        $this->middleware('permission:student-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:student-delete', ['only' => ['destroy']]);
         $this->model = $model;
         $this->model_g = $model_g;
         $this->model_1 = $model_1;

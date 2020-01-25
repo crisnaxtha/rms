@@ -14,6 +14,11 @@ class GradesController extends DM_BaseController
     protected $view_path = 'dsms.grade';
 
     public function __construct(Request $request, Grade $model){
+        $this->middleware('auth');
+        $this->middleware('permission:grade-list', ['only' => ['index']]);
+        $this->middleware('permission:grade-create', ['only' => ['create','store']]);
+        $this->middleware('permission:grade-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:grade-delete', ['only' => ['destroy']]);
         $this->model = $model;
     }
 

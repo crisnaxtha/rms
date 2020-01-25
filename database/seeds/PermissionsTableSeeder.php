@@ -221,6 +221,31 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Student Delete',
                 'slug' => Str::slug('Student Delete'),
                 'order' => 5,
+            ],
+            [
+                'name' => 'Subject List',
+                'slug' => Str::slug('Subject List'),
+                'order' => 1,
+            ],
+            [
+                'name' => 'Subject Create',
+                'slug' => Str::slug('Subject Create'),
+                'order' => 2,
+            ],
+            [
+                'name' => 'Subject Edit',
+                'slug' => Str::slug('Subject Edit'),
+                'order' => 3,
+            ],
+            [
+                'name' => 'Subject Show',
+                'slug' => Str::slug('Subject Show'),
+                'order' => 4,
+            ],
+            [
+                'name' => 'Subject Delete',
+                'slug' => Str::slug('Subject Delete'),
+                'order' => 5,
             ]
         ]);
     }
