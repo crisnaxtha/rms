@@ -25,8 +25,8 @@
 
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
-                        <button type="submit" class="btn btn-info">Save</button>
-                        <button type="button" class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-info btn-xs">Save</button>
+                        <button type="button" class="btn btn-default btn-xs">Cancel</button>
                     </div>
                 </div>
             </form>

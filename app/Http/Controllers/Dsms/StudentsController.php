@@ -130,7 +130,7 @@ class StudentsController extends DM_BaseController
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'first_name' => 'required|max:255',
+            'firstname' => 'required|max:255',
             'dob' => 'required',
             'roll_no' => 'required',
             'school_id' => 'required',
@@ -138,7 +138,7 @@ class StudentsController extends DM_BaseController
             'section_id' => 'required',
         ],
         [
-            'first_name.required' => 'You must enter the STUDENT name!',
+            'firstname.required' => 'You must enter the STUDENT name!',
             'dob.required' => 'You must enter the DATE OF BIRTH name!',
             'roll_no.required' => 'You must enter the SYMBOL NO.!',
         ]);
@@ -214,7 +214,7 @@ class StudentsController extends DM_BaseController
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'first_name' => 'required|max:255',
+            'firstname' => 'required|max:255',
             'dob' => 'required',
             'roll_no' => 'required',
             'school_id' => 'required',
@@ -222,7 +222,7 @@ class StudentsController extends DM_BaseController
             'section_id' => 'required',
         ],
         [
-            'first_name.required' => 'You must enter the STUDENT name!',
+            'firstname.required' => 'You must enter the STUDENT name!',
             'dob.required' => 'You must enter the DATE OF BIRTH name!',
             'roll_no.required' => 'You must enter the SYMBOL NO.!',
         ]);
