@@ -109,7 +109,17 @@
                             @if(isset($rows))
                             @foreach($rows as $row )
                             <td>
-                                {{ $row['theory_get_marks'] }} | {{ $row['practical_get_marks'] }}
+                                @if($row['theory_attendance'] == 'ABS')
+                                <em style="color:red">{{ "Abs" }}</em>
+                                @else
+                                {{ $row['theory_get_marks'] }}
+                                @endif
+                                |
+                                @if($row['practical_attendance'] == 'ABS')
+                                <em style="color:red">{{ "Abs" }}</em>
+                                @else
+                                {{ $row['practical_get_marks'] }}
+                                @endif
                             </td>
                             {{-- <td>( {{ $row['exam_schedules_id'] }})</td> --}}
                             @endforeach
