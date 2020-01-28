@@ -107,7 +107,7 @@
                    <thead>
                       <tr>
                             <th>#</th>
-                            <th>Admission No</th>
+                            <th>Symbol No</th>
                             <th>Name</th>
                             <th>Class</th>
                             <th>DoB</th>
@@ -120,7 +120,7 @@
                         @foreach($data['rows'] as $row)
                         <tr class="gradeX" id="{{ $row->id }}">
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $row->admission_no }}</td>
+                            <td>{{ $row->roll_no }}</td>
                             <td>{{ $row->first_name }}</td>
                             <td>@php $cs = dm_schoolClassSection($row->school_class_section_id) @endphp {{ $cs->class_title  }}({{ $cs->sec_title }})</td>
                             {{-- <td>{{ $row->father_name }}</td> --}}

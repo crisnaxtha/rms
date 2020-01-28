@@ -135,58 +135,59 @@ class ExamResultsController extends DM_BaseController
         $data = $request->data;
         // dd($data);
         foreach($data as $rows) {
-                foreach($rows as $row){
+            foreach($rows as $row){
+                $marks['exam_schedule_id'] = $row['exam_schedule_id'];
+                $marks['student_id'] = $row['student_id'];
 
-                    $marks['exam_schedule_id'] = $row['exam_schedule_id'];
-                    $marks['student_id'] = $row['student_id'];
-                    if(isset($row['th_attendance'])){
-                        $marks['theory_marks'] = NULL;
+                if(isset($row['th_attendance'])){
+                    $marks['theory_marks'] = NULL;
+                    $marks['theory_grade'] = NULL;
+                }else {
+                    $marks['theory_marks'] = $this->model_g::checkTheoryMarks($marks['exam_schedule_id'], $row['theory_marks']);
+                    $grade_point = $this->model_g->getTheoryGrade($marks['exam_schedule_id'],$marks['theory_marks']);
+                    // dd($grade_point);
+                    if(isset($grade_point[0])){
+                        $marks['theory_grade'] = $grade_point[0];
+                    }else {
                         $marks['theory_grade'] = NULL;
-                    }else {
-                        $marks['theory_marks'] = $this->model_g::checkTheoryMarks($marks['exam_schedule_id'], $row['theory_marks']);
-                        $grade_point = $this->model_g->getTheoryGrade($marks['exam_schedule_id'],$marks['theory_marks']);
-                        if(isset($grade_point[0])){
-                            $marks['theory_grade'] = $grade_point[0];
-                        }else {
-                            $marks['theory_grade'] = NULL;
-                        }
-                        $row['th_attendance'] = "Pre";
                     }
-                    if(isset($row['pr_attendance'])){
-                        $marks['practical_marks'] = NULL;
+                    $row['th_attendance'] = "Pre";
+                }
+                if(isset($row['pr_attendance'])){
+                    $marks['practical_marks'] = NULL;
+                    $marks['practical_grade'] = NULL;
+                }else {
+                    $marks['practical_marks'] = $this->model_g::checkPracticalMarks($marks['exam_schedule_id'], $row['practical_marks']);;
+                    $grade_point = $this->model_g->getPracticalGrade($marks['exam_schedule_id'],$marks['practical_marks']);
+
+                    if(isset($grade_point[0])){
+                        $marks['practical_grade'] = $grade_point[0];
+                    }else {
                         $marks['practical_grade'] = NULL;
-                    }else {
-                        $marks['practical_marks'] = $this->model_g::checkPracticalMarks($marks['exam_schedule_id'], $row['practical_marks']);;
-                        $grade_point = $this->model_g->getPracticalGrade($marks['exam_schedule_id'],$marks['practical_marks']);
-
-                        if(isset($grade_point[0])){
-                            $marks['practical_grade'] = $grade_point[0];
-                        }else {
-                            $marks['practical_grade'] = NULL;
-                        }
-                        $row['pr_attendance'] = "Pre";
                     }
+                    $row['pr_attendance'] = "Pre";
+                }
 
-                    if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
-                        $marks['total_marks'] = $marks['theory_marks'] + $marks['practical_marks'];
-                        $grade_point = $this->model_g->getFinalGrade($marks['exam_schedule_id'],$marks['total_marks']);
-                        if(isset($grade_point[0])){
-                            $marks['final_grade'] = $grade_point[0];
-                        }else {
-                            $marks['final_grade'] = NULL;
-                        }
-                        if(isset($grade_point[1])){
-                            $marks['grade_point'] = $grade_point[1];
-                        }else {
-                            $marks['grade_point'] = NULL;
-                        }
-                        $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($marks['exam_schedule_id'], $marks['grade_point']);
+                if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
+                    $marks['total_marks'] = $marks['theory_marks'] + $marks['practical_marks'];
+                    $grade_point = $this->model_g->getFinalGrade($marks['exam_schedule_id'],$marks['total_marks']);
+                    if(isset($grade_point[0])){
+                        $marks['final_grade'] = $grade_point[0];
                     }else {
-                        $marks['total_marks'] = NULL;
                         $marks['final_grade'] = NULL;
-                        $marks['grade_point'] = NULL;
-                        $marks['grade_credit_hour'] = NULL;
                     }
+                    if(isset($grade_point[1])){
+                        $marks['grade_point'] = $grade_point[1];
+                    }else {
+                        $marks['grade_point'] = NULL;
+                    }
+                    $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($marks['exam_schedule_id'], $marks['grade_point']);
+                }else {
+                    $marks['total_marks'] = NULL;
+                    $marks['final_grade'] = NULL;
+                    $marks['grade_point'] = NULL;
+                    $marks['grade_credit_hour'] = NULL;
+                }
 
                 $old_data =  DB::table('exam_results')->where('exam_schedules_id', '=', $marks['exam_schedule_id'])->where('student_id', '=', $marks['student_id'])->first();
                 if(isset($old_data)){
@@ -228,51 +229,6 @@ class ExamResultsController extends DM_BaseController
         // die;
         session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.create');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function printMarksheet($exam_id, $school_id, $class_id, $section_id, $student_id) {

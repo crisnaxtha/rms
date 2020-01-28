@@ -215,7 +215,7 @@
         row += '<table class="table table-bordered">';
         row += '<thead>';
         row += '<tr>';
-        row += '<th>#</th>';
+        // row += '<th>#</th>';
         row += '<th>Subject</th>';
         row += '<th>Date</th>';
         row += '<th>Start Time</th>';
@@ -228,7 +228,7 @@
         row += '<tbody>';
         row += '<tr>';
         for (const [key, val] of Object.entries(value)) {
-        row += '<th scope="row">1</th>';
+        // row += '<th scope="row">1</th>';
         row += '<td>' + val['sub_title'] +'</td>';
         row += '<td>' + val['date_of_exam'] +'</td>';
         row += '<td>' + val['start_to'] +'</td>';

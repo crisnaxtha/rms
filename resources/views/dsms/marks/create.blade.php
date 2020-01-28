@@ -123,7 +123,7 @@
                                                 <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][th_attendance]" value="ABS">Abs</label>
                                             </div>
                                             <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows[$rows_array_key[$i]]['std_id']}}">
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->sub_id }}">
+                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->exam_sch_id }}">
                                             <label for="">Th</label>
                                             <input type="text" name="data[{{ $key }}][{{ $loop->index}}][theory_marks]" class="form-control input-sm" id="" value="@if(isset($rows[$rows_array_key[$i]]['theory_get_marks'])) {{ $rows[$rows_array_key[$i]]['theory_get_marks'] }} @else  @endif" placeholder="Enter Theory Marks">
                                             <div class="checkbox">
@@ -152,7 +152,7 @@
                                                 <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][th_attendance]" value="ABS">Abs</label>
                                             </div>
                                             <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows->id }}">
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->sub_id }}">
+                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->exam_sch_id }}">
                                             <label for="">Th</label>
                                             <input type="text" name="data[{{ $key }}][{{ $loop->index}}][theory_marks]" class="form-control input-sm" id="" placeholder="Enter Theory Marks">
                                             <div class="checkbox">
