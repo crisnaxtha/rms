@@ -136,7 +136,12 @@ class AssignSubjectsController extends DM_BaseController
      */
     public function destroy(Request $request)
     {
-        DB::table('school_class_section_subjects')->where('id', '=', $request->id)->delete();
+        if($request->ajax()){
+            $data = DB::table('school_class_section_subjects')->where('id', '=', $request->id)->delete();
+            return $data;
+        }else {
+            return false;
+        }
     }
 
     public function getSchoolClassSection(Request $request) {

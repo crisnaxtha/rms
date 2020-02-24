@@ -162,7 +162,7 @@ function GetDynamicTextBox(value) {
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
         row += '<div class="col-md-8">';
-        row += '<select id="subject_id_' + value + '" name="subject_id[]" class="form-control" >';
+        row += '<select id="subject_id_' + value + '" name="subject_id[]" class="form-control" required>';
         row += '<option value="">Select</option>';
         @foreach($data['subject'] as $row)
             row += '<option value="{{ $row->id }}">{{ $row->title }}</option>';
@@ -172,7 +172,7 @@ function GetDynamicTextBox(value) {
 
         row += '</div>';
         row += '</div>';
-        row += '<div class="col-md-2"><button id="btnRemove" style="" class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus-square"></i></button></div>';
+        row += '<div class="col-md-2"><button id="btnRemove" style="" class="btn btn-xs btn-danger btnRemove" type="button"><i class="fa fa-minus-square"></i></button></div>';
         row += '</div>';
         return row;
     }
@@ -233,7 +233,7 @@ function GetDynamicTextBox(value) {
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Subject</label>';
         row += '<div class="col-md-8">';
-        row += '<select id="subject_id_' + i + '" name="subject_id[]" class="form-control" >';
+        row += '<select id="subject_id_' + i + '" name="subject_id[]" class="form-control" required>';
         row += '<option value="">Select</option>';
         @foreach($data['subject'] as $row)
             var selected = "";
@@ -246,7 +246,7 @@ function GetDynamicTextBox(value) {
         row += '</div>';
         row += '</div>';
         row += '</div>';
-        row += '<div class="col-md-2"><button id="btnDelete" style="" class="btnDelete btn btn-xs btn-danger" type="button" data-id='+ row_id +' ><i class="fa fa-minus-square"></i></button></div>';
+        row += '<div class="col-md-2"><button  id="btnDelete" style="" class="btnDelete btn btn-xs btn-danger btnDelete" type="button" data-id='+ row_id +' ><i class="fa fa-minus-square"></i></button></div>';
         row += '</div>';
         $("#TextBoxContainer").append(row);
     }
@@ -261,10 +261,12 @@ function GetDynamicTextBox(value) {
         $('.save_button').hide();
     }
 
-    $(document).on('click', '#btnRemove', function () {
+    $(document).on('click', '.btnRemove', function () {
         $(this).parents('.form-group').remove();
     });
-    $(document).on('click', '#btnDelete', function() {
+    $(document).on('click', '.btnDelete', function() {
+        $(this).parents('.form-group').remove();
+
         var id = $(this).data('id');
         // alert(id);
         $.ajax({
@@ -276,8 +278,6 @@ function GetDynamicTextBox(value) {
             },
             success: function(response){
                 console.log(response);
-                $(this).parents('.form-group').remove();
-
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.log(jqXHR.responseText);
