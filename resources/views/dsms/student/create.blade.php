@@ -3,6 +3,7 @@
 @section('css')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/assets/bootstrap-datetimepicker/css/datetimepicker.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/nepali-datepicker/nepaliDatePicker.min.css')}}" />
 @endsection
 
 
@@ -66,6 +67,13 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Student Name</label><small class="req"> *</small>
                                         <input id="firstname" name="firstname" placeholder="" type="text" class="form-control" value="" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Date Of Birth(BS)</label><small class="req"> *</small>
+                                        <input id="dob_bs" name="dob_bs" placeholder="" type="text" class="form-control nepali-picker" value="२०६०-१-१" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -242,11 +250,18 @@
 
 </script>
 <script type="text/javascript" src="{{asset('assets/dsms/assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+{{-- <script type="text/javascript" src="{{asset('assets/dsms/nepali-datepicker/jquery-1.12.4.min.js')}}"></script> --}}
+<script type="text/javascript" src="{{asset('assets/dsms/nepali-datepicker/jquery.nepaliDatePicker.min.js')}}"></script>
 <script>
 $('.default-date-picker').datepicker({
     format: 'yyyy-mm-dd',
     autoclose: true
 });
-
+</script>
+<script>
+$(".nepali-picker").nepaliDatePicker({
+	dateFormat: "%y-%m-%d",
+	closeOnDateSelect: true
+});
 </script>
 @endsection
