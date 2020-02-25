@@ -28,7 +28,8 @@ class CreateStudentsTable extends Migration
             $table->string('province')->nullable();
             $table->string('city')->nullable();
             $table->string('religion')->nullable();
-            $table->date('dob')->nullable();
+            $table->string('dob_bs')->nullable();
+            $table->date('dob_ad')->nullable();
             $table->string('gender')->nullable();
             $table->text('current_address')->nullable();
             $table->text('permanent_address')->nullable();
