@@ -151,7 +151,6 @@ class StudentsController extends DM_BaseController
         $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
         $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
 
-
         $row = $this->model;
         $row->school_class_section_id = $school_class_section->id;
         $row->admission_no = $request->admission_no;
@@ -159,7 +158,7 @@ class StudentsController extends DM_BaseController
         $row->first_name = $request->firstname;
         // $row->last_name = $request->lastname;
         $row->gender = $request->gender;
-        $row->dob_bs = DM_nepali_data::get_nepali_data($request->dob_bs);
+        $row->dob_bs = get_nepali_data($request->dob_bs);
         $row->dob_ad = $this->bsToAd($request->dob_bs);
         $row->religion = $request->religion;
         $row->mobile_no = $request->mobileno;

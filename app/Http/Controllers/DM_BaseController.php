@@ -166,7 +166,7 @@ class DM_BaseController extends Controller
 
     public function bsToAd($dob_bs) {
         // Nepali date conversion
-        $nepali_date = DM_nepali_data::get_nepali_data($dob_bs);
+        $nepali_date = get_nepali_data($dob_bs);
         $dat_att =  preg_split('/-/',$nepali_date);
         $english_date = $this->nepali_calender->nep_to_eng($dat_att[0],$dat_att[1],$dat_att[2]);
         $eng_date = date('Y-m-d', mktime(0,0,0, $english_date['month'],$english_date['date'],$english_date['year']));
