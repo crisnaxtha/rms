@@ -26,7 +26,7 @@ class GradeSheetController extends DM_BaseController
     }
 
     public function getGeneralSetting(){
-        $row = $this->model::firstOrFail();
+        $row = $this->model::first();
         if(!isset($row) || !is_object($row) ) {
             $data = $this->model;
             $data->title_1 = null;

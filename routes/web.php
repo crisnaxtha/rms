@@ -152,11 +152,8 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
 
 
             Route::get('marksheet/{exam_id}/{school_id}/{class_id}/{section_id}/{student_id}',
-
-            ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printMarksheet']);
-
-
-        });
+                ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printMarksheet']);
+            });
 
          /**
          * User Profile Routes
@@ -198,21 +195,21 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
         });
 
         /**
-     * DB backup Routes
-     */
-    Route::group(['prefix' => 'database', 'as'=>'database.', ], function () {
-        Route::get('',                                      ['as'=>'index',              'uses'=>'DatabasesBackupController@index']);
-        Route::get('download',                              ['as'=>'download',           'uses'=>'DatabasesBackupController@databaseDownload']);
-        Route::get('backup',                                ['as'=>'backup',             'uses'=>'DatabasesBackupController@databaseBackup']);
-    });
+         * DB backup Routes
+         */
+        Route::group(['prefix' => 'database', 'as'=>'database.', ], function () {
+            Route::get('',                                      ['as'=>'index',              'uses'=>'DatabasesBackupController@index']);
+            Route::get('download',                              ['as'=>'download',           'uses'=>'DatabasesBackupController@databaseDownload']);
+            Route::get('backup',                                ['as'=>'backup',             'uses'=>'DatabasesBackupController@databaseBackup']);
+        });
 
-      /**
-     * Setting Routes
-     */
-    Route::group(['as'=>'setting.', 'prefix'=>'setting'], function(){
-            Route::get('',                      ['as' =>'index',     'uses'=>'GradeSheetController@getGeneralSetting']);
-            Route::post('{setting}',            ['as' =>'store',     'uses'=>'GradeSheetController@updateGeneralSetting']);
-    });
+        /**
+         * Setting Routes
+         */
+        Route::group(['as'=>'setting.', 'prefix'=>'setting'], function(){
+                Route::get('',                      ['as' =>'index',     'uses'=>'GradeSheetController@getGeneralSetting']);
+                Route::post('{setting}',            ['as' =>'store',     'uses'=>'GradeSheetController@updateGeneralSetting']);
+        });
 
     });
 

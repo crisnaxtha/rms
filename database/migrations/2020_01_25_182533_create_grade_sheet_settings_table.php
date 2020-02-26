@@ -22,6 +22,7 @@ class CreateGradeSheetSettingsTable extends Migration
             $table->string('title_5')->nullable();
             $table->text('logo_1')->nullable();
             $table->text('logo_2')->nullable();
+            $table->string('print_date')->nullable();
             $table->timestamps();
         });
     }
