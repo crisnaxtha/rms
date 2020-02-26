@@ -9,6 +9,8 @@ use App\Model\Dsms\School;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Eloquent\DM_General;
+use App\DM_libraries\DM_nepali_calendar;
+use App\DM_libraries\DM_nepali_data;
 use DB;
 
 class StudentsController extends DM_BaseController
@@ -22,7 +24,7 @@ class StudentsController extends DM_BaseController
     protected $folder = 'student';
     protected $prefix_path_image = '/upload_file/images/student/';
 
-    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3){
+    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3, DM_nepali_calendar $nepali_calender){
         $this->middleware('auth');
         $this->middleware('permission:student-list', ['only' => ['index']]);
         $this->middleware('permission:student-create', ['only' => ['create','store']]);
@@ -33,6 +35,7 @@ class StudentsController extends DM_BaseController
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
         $this->model_3 = $model_3;
+        $this->nepali_calender = $nepali_calender;
         $this->folder_path_image = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
     }
     /**
@@ -129,24 +132,25 @@ class StudentsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'firstname' => 'required|max:255',
-            'dob' => 'required',
-            'roll_no' => 'required',
-            'school_id' => 'required',
-            'class_id' => 'required',
-            'section_id' => 'required',
-        ],
-        [
-            'firstname.required' => 'You must enter the STUDENT name!',
-            'dob.required' => 'You must enter the DATE OF BIRTH name!',
-            'roll_no.required' => 'You must enter the SYMBOL NO.!',
-        ]);
+        // $validatedData = $request->validate([
+        //     'firstname' => 'required|max:255',
+        //     'dob' => 'required',
+        //     'roll_no' => 'required',
+        //     'school_id' => 'required',
+        //     'class_id' => 'required',
+        //     'section_id' => 'required',
+        // ],
+        // [
+        //     'firstname.required' => 'You must enter the STUDENT name!',
+        //     'dob.required' => 'You must enter the DATE OF BIRTH name!',
+        //     'roll_no.required' => 'You must enter the SYMBOL NO.!',
+        // ]);
         $data['school_id'] = $request->school_id;
         $data['class_id'] = $request->class_id;
         $data['section_id'] = $request->section_id;
         $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
         $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+
 
         $row = $this->model;
         $row->school_class_section_id = $school_class_section->id;
@@ -155,7 +159,8 @@ class StudentsController extends DM_BaseController
         $row->first_name = $request->firstname;
         // $row->last_name = $request->lastname;
         $row->gender = $request->gender;
-        $row->dob = $request->dob;
+        $row->dob_bs = DM_nepali_data::get_nepali_data($request->dob_bs);
+        $row->dob_ad = $this->bsToAd($request->dob_bs);
         $row->religion = $request->religion;
         $row->mobile_no = $request->mobileno;
         $row->email = $request->email;

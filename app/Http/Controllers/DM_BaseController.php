@@ -10,12 +10,14 @@ use App;
 use App\Model\Dcms\Language;
 use Intervention\Image\Facades\Image as Image;
 use Illuminate\Support\Facades\File;
+use App\DM_libraries\DM_nepali_calendar;
+use App\DM_libraries\DM_nepali_data;
 
 class DM_BaseController extends Controller
 {
     protected $lang;
-    public function __construct() {
-
+    public function __construct(DM_nepali_calendar $nepali_calender) {
+        $this->nepali_calender = $nepali_calender;
     }
     /**
      * loads the default view for every model
@@ -160,5 +162,14 @@ class DM_BaseController extends Controller
             }
             return false;
         }
+    }
+
+    public function bsToAd($dob_bs) {
+        // Nepali date conversion
+        $nepali_date = DM_nepali_data::get_nepali_data($dob_bs);
+        $dat_att =  preg_split('/-/',$nepali_date);
+        $english_date = $this->nepali_calender->nep_to_eng($dat_att[0],$dat_att[1],$dat_att[2]);
+        $eng_date = date('Y-m-d', mktime(0,0,0, $english_date['month'],$english_date['date'],$english_date['year']));
+        return $eng_date;
     }
 }

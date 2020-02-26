@@ -77,13 +77,13 @@
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                {{-- <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Date Of Birth</label><small class="req"> *</small>
                                         <input id="dob" name="dob" placeholder="" type="text" class="form-control default-date-picker" value="" />
                                         <span class="text-danger"></span>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Last Name</label>

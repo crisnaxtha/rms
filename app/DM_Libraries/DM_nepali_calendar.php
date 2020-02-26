@@ -1,4 +1,6 @@
 <?php
+namespace App\DM_libraries;
+
 	class DM_nepali_calendar
 	{
 		// Data for nepali date
@@ -331,7 +333,7 @@
 			{
 				// Month data.
 				$month  = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-				
+
 				// Month for leap year
 				$lmonth = array(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 				$def_eyy     = 1944;	// initial english date.
@@ -388,7 +390,7 @@
 				while ($total_eDays != 0)
 				{
 					$a = $this->_bs[$i][$j];
-					
+
 					$total_nDays++;		//count the days
 					$day++;				//count the days interms of 7 days
 					if ($total_nDays > $a)
@@ -397,24 +399,24 @@
 						$total_nDays = 1;
 						$j++;
 					}
-					
+
 					if ($day > 7)
 					{
 						$day = 1;
 					}
-					
+
 					if ($m > 12)
 					{
 						$y++;
 						$m = 1;
 					}
-					
+
 					if ($j > 12)
 					{
 						$j = 1;
 						$i++;
 					}
-					
+
 					$total_eDays--;
 				}
 				$numDay = $day;
@@ -538,7 +540,7 @@
 					}
 					$total_nDays--;
 				}
-				
+
 				$numDay = $day;
 				$this->_eng_date['year']    = $y;
 				$this->_eng_date['month']   = $m;
