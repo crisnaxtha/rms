@@ -3,6 +3,8 @@
 @section('css')
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/assets/bootstrap-datetimepicker/css/datetimepicker.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('assets/dsms/nepali-datepicker/nepaliDatePicker.min.css')}}" />
+
 @endsection
 
 
@@ -78,8 +80,11 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Date Of Birth</label><small class="req"> *</small>
-                                        <input id="dob" name="dob" placeholder="" type="text" class="form-control default-date-picker" value="{{ $data['row']->dob }}" />
+                                        <label for="exampleInputEmail1">Date Of Birth(BS)</label><small class="req"> *</small>
+                                        @if(isset($data['row']->dob_bs))
+                                            @php $date_bs = get_nepali_data($data['row']->dob_bs);@endphp
+                                        @endif
+                                        <input id="dob_bs" name="dob_bs" placeholder="" type="text" class="form-control nepali-picker" value="@if(isset($date_bs)){{ $date_bs }}@else @endif" />
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
@@ -185,11 +190,19 @@
 
 @section('js')
 <script type="text/javascript" src="{{asset('assets/dsms/assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/dsms/nepali-datepicker/jquery.nepaliDatePicker.min.js')}}"></script>
+
 <script>
 $('.default-date-picker').datepicker({
     format: 'yyyy-mm-dd',
     autoclose: true
 });
+</script>
+<script>
+    $(".nepali-picker").nepaliDatePicker({
+        dateFormat: "%y-%m-%d",
+        closeOnDateSelect: true
+    });
 </script>
 <!--select2-->
 <script type="text/javascript">

@@ -12,7 +12,13 @@
                     </a>
                 @else
                     <a href="#">
-                        <img alt="" src="{{ asset('assets/dsms/img/lochan.png') }}" >
+                        @if($data['row']->gender == "Male")
+                        <img alt="" src="{{ asset('assets/dsms/img/student/student-3.png') }}" >
+                        @elseif($data['row']->gender == "Female")
+                        <img alt="" src="{{ asset('assets/dsms/img/student/student-2.png') }}" >
+                        @else
+                        <img alt="" src="{{ asset('assets/dsms/img/student/student-1.png') }}" >
+                        @endif
                     </a>
                 @endif
                 <h1>{{ $data['row']->first_name }} {{ $data['row']->last_name }}</h1>

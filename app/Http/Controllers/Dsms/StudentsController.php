@@ -132,19 +132,19 @@ class StudentsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'firstname' => 'required|max:255',
-        //     'dob' => 'required',
-        //     'roll_no' => 'required',
-        //     'school_id' => 'required',
-        //     'class_id' => 'required',
-        //     'section_id' => 'required',
-        // ],
-        // [
-        //     'firstname.required' => 'You must enter the STUDENT name!',
-        //     'dob.required' => 'You must enter the DATE OF BIRTH name!',
-        //     'roll_no.required' => 'You must enter the SYMBOL NO.!',
-        // ]);
+        $validatedData = $request->validate([
+            'firstname' => 'required|max:255',
+            'dob_bs' => 'required',
+            'roll_no' => 'required',
+            'school_id' => 'required',
+            'class_id' => 'required',
+            'section_id' => 'required',
+        ],
+        [
+            'firstname.required' => 'You must enter the STUDENT !',
+            'dob_bs.required' => 'You must enter the DATE OF BIRTH !',
+            'roll_no.required' => 'You must enter the SYMBOL NO.!',
+        ]);
         $data['school_id'] = $request->school_id;
         $data['class_id'] = $request->class_id;
         $data['section_id'] = $request->section_id;
@@ -219,7 +219,7 @@ class StudentsController extends DM_BaseController
     {
         $validatedData = $request->validate([
             'firstname' => 'required|max:255',
-            'dob' => 'required',
+            'dob_bs' => 'required',
             'roll_no' => 'required',
             'school_id' => 'required',
             'class_id' => 'required',
@@ -227,19 +227,25 @@ class StudentsController extends DM_BaseController
         ],
         [
             'firstname.required' => 'You must enter the STUDENT name!',
-            'dob.required' => 'You must enter the DATE OF BIRTH name!',
+            'dob_bs.required' => 'You must enter the DATE OF BIRTH name!',
             'roll_no.required' => 'You must enter the SYMBOL NO.!',
         ]);
 
-        $class_section_id = $this->model_g::getClassSectionId($request->class_id, $request->section_id);
+        $data['school_id'] = $request->school_id;
+        $data['class_id'] = $request->class_id;
+        $data['section_id'] = $request->section_id;
+        $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+        $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+
         $row = $this->model::findOrFail($id);
-        $row->class_section_id = $class_section_id->id;
+        $row->school_class_section_id = $school_class_section->id;
         $row->admission_no = $request->admission_no;
         $row->roll_no = $request->roll_no;
         $row->first_name = $request->firstname;
         // $row->last_name = $request->lastname;
         $row->gender = $request->gender;
-        $row->dob = $request->dob;
+        $row->dob_bs = get_nepali_data($request->dob_bs);
+        $row->dob_ad = $this->bsToAd($request->dob_bs);
         $row->religion = $request->religion;
         $row->mobile_no = $request->mobileno;
         $row->email = $request->email;

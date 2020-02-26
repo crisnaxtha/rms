@@ -250,7 +250,6 @@
 
 </script>
 <script type="text/javascript" src="{{asset('assets/dsms/assets/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
-{{-- <script type="text/javascript" src="{{asset('assets/dsms/nepali-datepicker/jquery-1.12.4.min.js')}}"></script> --}}
 <script type="text/javascript" src="{{asset('assets/dsms/nepali-datepicker/jquery.nepaliDatePicker.min.js')}}"></script>
 <script>
 $('.default-date-picker').datepicker({
@@ -259,9 +258,9 @@ $('.default-date-picker').datepicker({
 });
 </script>
 <script>
-$(".nepali-picker").nepaliDatePicker({
-	dateFormat: "%y-%m-%d",
-	closeOnDateSelect: true
-});
+    $(".nepali-picker").nepaliDatePicker({
+        dateFormat: "%y-%m-%d",
+        closeOnDateSelect: true
+    });
 </script>
 @endsection
