@@ -50,9 +50,12 @@ class StudentsController extends DM_BaseController
             $data['school_id'] = $request->school_id;
             $data['class_id'] = $request->class_id;
             $data['section_id'] = $request->section_id;
-            $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
-            $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
-
+            if(isset($data['school_id']) && isset($data['class_id'])){
+                $school_class = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+                if(isset($school_class) && isset($data['section_id'])){
+                    $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
+                }
+            }
             if(isset($school_class_section)) {
                 $school_class_section_id = $school_class_section->id;
             }else {

@@ -124,7 +124,7 @@
                             <td>{{ $row->first_name }}</td>
                             <td>@php $cs = dm_schoolClassSection($row->school_class_section_id) @endphp {{ $cs->class_title  }}({{ $cs->sec_title }})</td>
                             {{-- <td>{{ $row->father_name }}</td> --}}
-                            <td>{{ $row->dob }}</td>
+                            <td>{{ $row->dob_bs }}</td>
                             <td>{{ $row->mobile_no }}</td>
                             <td>{{ $row->gender }}</td>
                             <td>
