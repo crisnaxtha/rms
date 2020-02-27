@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
 use DB;
 
-class GradeSheetController extends DM_BaseController
+class GradeSheetSettingController extends DM_BaseController
 {
     protected $model;
     protected $base_route = 'dsms.setting';

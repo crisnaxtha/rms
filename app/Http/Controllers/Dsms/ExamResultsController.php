@@ -8,6 +8,7 @@ use App\Model\Dsms\ExamResult;
 use App\Model\Dsms\Eloquent\DM_General;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Exam;
+use App\Model\Dsms\GradeSheetSetting;
 use App\Model\Dsms\Student;
 use App\Model\Dsms\School;
 use App\Model\Dsms\Section;
@@ -19,7 +20,7 @@ class ExamResultsController extends DM_BaseController
     protected $base_route ='dsms.marks';
     protected $view_path = 'dsms.marks';
 
-    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5, DM_General $model_g){
+    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, DM_General $model_g){
         $this->middleware('auth');
         $this->middleware('permission:mark-register-list', ['only' => ['index']]);
         $this->middleware('permission:mark-register-create', ['only' => ['create','store']]);
@@ -31,6 +32,7 @@ class ExamResultsController extends DM_BaseController
         $this->model_3 = $model_3;
         $this->model_4 = $model_4;
         $this->model_5 = $model_5;
+        $this->model_6 = $model_6;
         $this->model_g = $model_g;
     }
     /**
@@ -69,6 +71,7 @@ class ExamResultsController extends DM_BaseController
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
             // dd($data['old_std_result']);
             // dd($data['std_result']);
+            $data['ms_setting'] = $this->model_6::first();
 
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
@@ -250,8 +253,9 @@ class ExamResultsController extends DM_BaseController
         foreach($data['exam_schedule'] as $exam) {
                 array_push($data['result'], $this->model_g::getStudentResult($exam->exam_sch_id, $data['student_id']));
         }
+        $data['ms_setting'] = $this->model_6::first();
+
         // dd($data['result']);
         return view($this->loadView($this->view_path.'.gradesheet'), compact('data'));
-
     }
 }

@@ -16,15 +16,19 @@
             <div class="col-md-12 ">
                 <div class="col-md-2">
                     <div class="pull-left">
+                        @if(isset($data['ms_setting']->logo_1))
+                        <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="100" height="100">
+                        @else
                         <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="100" height="100">
+                        @endif
                     </div>
                 </div>
                 <div class="col-md-8" style="top:-26px;">
                     <div class="pull-center">
-                        <h3><b>Thulung Dudhkoshi Rular Municipality</b></h3>
-                        <h6>Basic Level Examination</h6>
-                        <h6>Mukli, Solikhumbu</h6>
-                        <h4><b>Basic Education Completion Examination</b></h4>
+                        <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
+                        <h6>{{ $data['ms_setting']->title_2 }}</h6>
+                        <h6>{{ $data['ms_setting']->title_3 }}</h6>
+                        <h4><b>{{ $data['ms_setting']->title_4 }}</b></h4>
                         <h5>@foreach($data['class'] as $cl) @if($cl->id == $data['class_id']) {{ $cl->title }} @endif @endforeach</h5>
                         <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                     </div>
@@ -32,14 +36,18 @@
 
                 <div class="col-md-2 logo">
                     <div class="pull-right">
+                        @if(isset($data['ms_setting']->logo_1))
+                        <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="100" height="100">
+                        @else
                         <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="100" height="100">
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="para">
-            <p>The grade secured by <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> Date of Birth <b>{{ dm_getStudent($data['student_id'])->dob }}</b> Symbol number <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b> of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
+            <p>The grade secured by <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> Date of Birth <b>{{ dm_getStudent($data['student_id'])->dob_bs }}</b> Symbol number <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b> of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
             </p>
         </div>
 
@@ -172,7 +180,7 @@
 
         <div class="signature">
             <div class="col-md-3">
-                <date> Date:2067/02/02</date>
+                <date> Date:{{ $data['ms_setting']->print_date }}</date>
             </div>
             <div class="col-md-2">
                 <p>Prepared by</p>

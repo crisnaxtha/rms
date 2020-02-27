@@ -207,8 +207,8 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
          * Setting Routes
          */
         Route::group(['as'=>'setting.', 'prefix'=>'setting'], function(){
-                Route::get('',                      ['as' =>'index',     'uses'=>'GradeSheetController@getGeneralSetting']);
-                Route::post('{setting}',            ['as' =>'store',     'uses'=>'GradeSheetController@updateGeneralSetting']);
+                Route::get('',                      ['as' =>'index',     'uses'=>'GradeSheetSettingController@getGeneralSetting']);
+                Route::post('{setting}',            ['as' =>'store',     'uses'=>'GradeSheetSettingController@updateGeneralSetting']);
         });
 
     });

@@ -141,7 +141,7 @@
 <!--Assign Subject block end-->
 
 <!--print block -->
-@include('dsms.marks.includes.marksheet')
+@include('dsms.marks.includes.gradesheet')
 <!--print block -->
 @endsection
 
