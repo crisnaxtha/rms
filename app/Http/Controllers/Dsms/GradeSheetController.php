@@ -19,7 +19,7 @@ class GradeSheetController extends DM_BaseController
 
     public function __construct(GradeSheetSetting $model){
         $this->middleware('auth');
-        $this->middleware('permission:header-setting', ['only' => ['getGeneralSetting', 'updateGeneralSetting']]);
+        // $this->middleware('permission:header-setting', ['only' => ['getGeneralSetting', 'updateGeneralSetting']]);
         $this->model = $model;
         $this->folder_path = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR .'images'. DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
 
@@ -36,24 +36,28 @@ class GradeSheetController extends DM_BaseController
     }
 
     public function updateGeneralSetting(Request $request, $id){
-        $request->validate([
-            'name' => 'required|max:225',
-            'slogan' => 'max:225',
-            'title' => 'required|max:225',
-            'description' => 'required',
-            'meta' => 'required',
-            'logo' => 'image',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|max:225',
+        //     'slogan' => 'max:225',
+        //     'title' => 'required|max:225',
+        //     'description' => 'required',
+        //     'meta' => 'required',
+        //     'logo' => 'image',
+        // ]);
         $row = $this->model::findOrFail($id);
-        $row->site_name = $request->name;
-        $row->site_slogan = $request->slogan;
-        $row->site_title = $request->title;
-        $row->site_description = $request->description;
-        $row->meta_keyword = $request->meta;
-        if($request->hasFile('logo')){
-            $row->logo = parent::uploadFile($this->folder_path, $this->image_prefix_path, 'logo', $request);
+        $row->title_1 = $request->title_1;
+        $row->title_2 = $request->title_2;
+        $row->title_3 = $request->title_3;
+        $row->title_4 = $request->title_4;
+        $row->title_5 = $request->title_5;
+        $row->print_date = get_nepali_data($request->print_date);
+
+        if($request->hasFile('logo_1')){
+            $row->logo_1 = parent::uploadFile($this->folder_path, $this->image_prefix_path, 'logo_1', $request);
         }
-        $row->language = $request->language;
+        if($request->hasFile('logo_2')){
+            $row->logo_2 = parent::uploadFile($this->folder_path, $this->image_prefix_path, 'logo_2', $request);
+        }
         $row->save();
         session()->flash('alert-success', $this->panel.' Successfully added');
         return back();

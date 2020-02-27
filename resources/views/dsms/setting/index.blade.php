@@ -24,7 +24,7 @@
                                     <div class="col-md-2">
                                         <div class="pull-left">
                                             <img src="{{asset($row->logo_1)}}" alt="logo" width="100" height="100">
-                                            @php dm_hinputUpdate('file', 'logo_1', 'Favicon', '', ''); @endphp
+                                            @php dm_hinputUpdate('file', 'logo_1', 'Logo 1', '', ''); @endphp
                                         </div>
                                     </div>
                                     <div class="col-md-8" style="top:-26px;">
@@ -38,7 +38,7 @@
                                             <h4><b>Basic Education Completion Examination</b></h4>
                                             <h4><b>@php dm_hinputUpdate('text','title_4', "Marksheet Heading", $row->title_4); @endphp</b></h4>
                                             <h5></h5>
-                                            <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
+                                            {{-- <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4> --}}
                                         </div>
                                     </div>
 
@@ -51,12 +51,12 @@
                                 </div>
                             </div>
 
-                            <div class="para">
+                            {{-- <div class="para">
                                 <p>The grade secured by <b></b> Date of Birth <b></b> Symbol number <b></b> of<b> </b> in basic education completion examination given below.
                                 </p>
-                            </div>
+                            </div> --}}
 
-                            <table>
+                            {{-- <table>
                                 <thead>
                                     <tr>
                                         <td rowspan="2">S.N.</td>
@@ -83,11 +83,11 @@
                                         <td colspan="9"><b></b></td>
                                     </tr>
                                 </tfoot>
-                            </table>
+                            </table> --}}
 
                             </br>
 
-                            <table>
+                            {{-- <table>
                                 <thead>
                                     <tr>
                                         <td>Interval in percent</td>
@@ -139,23 +139,22 @@
                                         <td style="font-size: 11px;"> Very Good</td>
                                         <td style="font-size: 11px;">Good</td>
                                         <td style="font-size: 11px;">Satisfactory </tdstyle="font-size: 11px;">
-                                            <td style="font-size: 11px;">Acceptable </td>
-                                            <td style="font-size: 11px;">Partially acceptable</td>
-                                            <td style="font-size: 11px;">Insufficient</td>
-                                            <td style="font-size: 11px;">Very Insufficient</td>
-
+                                        <td style="font-size: 11px;">Acceptable </td>
+                                        <td style="font-size: 11px;">Partially acceptable</td>
+                                        <td style="font-size: 11px;">Insufficient</td>
+                                        <td style="font-size: 11px;">Very Insufficient</td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table> --}}
                             </br>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="pull-left" style="margin-left: 30px;">
                                     <div class="box" style="height:80px;width:100px;border: 1px solid black;">
                                         <p style="text-align: center; margin-top: 55px;"> School Seal</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             </br>
 
                             <div class="signature">
@@ -164,15 +163,15 @@
                                          Date:2067/02/02
                                          <div class="form-group">
                                             <label for="exampleInputEmail1">Date Of Birth(BS)</label><small class="req"> *</small>
-                                            @if(isset($data['row']->dob_bs))
-                                                @php $date_bs = get_nepali_data($data['row']->print_date);@endphp
+                                            @if(isset($row->print_date))
+                                                @php $date_bs = get_nepali_data($row->print_date);@endphp
                                             @endif
-                                            <input id="dob_bs" name="dob_bs" placeholder="" type="text" class="form-control nepali-picker" value="@if(isset($date_bs)){{ $date_bs }}@else @endif" />
+                                            <input id="print_date" name="print_date" placeholder="" type="text" class="form-control nepali-picker" value="@if(isset($date_bs)){{ $date_bs }}@endif" />
                                             <span class="text-danger"></span>
                                         </div>
                                     </date>
                                 </div>
-                                <div class="col-md-2">
+                                {{-- <div class="col-md-2">
                                     <p>Prepared by</p>
                                 </div>
                                 <div class="col-md-2">
@@ -185,8 +184,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <p>Chairperson</p>
-
-                                </div>
+                                </div> --}}
                             </div>
 
                         </page>
@@ -200,25 +198,10 @@
             </section>
         </div>
     </div>
-    <?php
-
-
-    ?>
-
 @endsection
 
 @section('js')
-
-<script src="{{asset('assets/dcms/js/jquery.tagsinput.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/dsms/nepali-datepicker/jquery.nepaliDatePicker.min.js')}}"></script>
-
-<script>
-    CKEDITOR.replace('description', options);
-    $(function() {
-// Tags Input
-$(".meta").tagsInput();
-});
-</script>
 <script>
     $(".nepali-picker").nepaliDatePicker({
         dateFormat: "%y-%m-%d",
