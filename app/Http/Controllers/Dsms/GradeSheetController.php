@@ -53,9 +53,17 @@ class GradeSheetController extends DM_BaseController
         $row->print_date = get_nepali_data($request->print_date);
 
         if($request->hasFile('logo_1')){
+            $file_path = getcwd().'/'. $row->logo_1;
+            if(is_file($file_path)){
+                unlink($file_path);
+            }
             $row->logo_1 = parent::uploadFile($this->folder_path, $this->image_prefix_path, 'logo_1', $request);
         }
         if($request->hasFile('logo_2')){
+            $file_path = getcwd().'/'. $row->logo_2;
+            if(is_file($file_path)){
+                unlink($file_path);
+            }
             $row->logo_2 = parent::uploadFile($this->folder_path, $this->image_prefix_path, 'logo_2', $request);
         }
         $row->save();
