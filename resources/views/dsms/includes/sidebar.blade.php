@@ -8,11 +8,14 @@
             @endif
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' || $_panel == 'Assign Subject' || $_panel == 'School' || $_panel == 'Assign Section' || $_panel == 'Assign Class') ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Session' ||$_panel == 'Class' || $_panel == 'Section' || $_panel == 'Subject' || $_panel == 'Assign Subject' || $_panel == 'School' || $_panel == 'Assign Section' || $_panel == 'Assign Class') ? 'active' : '' }}">
                     <i class="fa fa-book"></i>
                     <span>{{ __('Academics') }}</span>
                 </a>
                 <ul class="sub">
+                    @if(Route::has('dsms.session.index'))
+                    <li><a class="{{ ($_panel == 'Session') ? 'active' : '' }}" href="{{ URL::route('dsms.session.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Session')}}</span></a></li>
+                    @endif
                     @if(Route::has('dsms.school.index'))
                     <li><a class="{{ ($_panel == 'School') ? 'active' : '' }}" href="{{ URL::route('dsms.school.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('School')}}</span></a></li>
                     @endif

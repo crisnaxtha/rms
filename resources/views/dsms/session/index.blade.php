@@ -40,7 +40,7 @@
                    <thead>
                       <tr>
                          <th>#</th>
-                         <th>Class Number/ Name</th>
+                         <th>Sessions</th>
                          {{-- <th>Class Group</th> --}}
                          <th>Action</th>
                       </tr>
