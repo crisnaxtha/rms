@@ -50,8 +50,7 @@
                         @foreach($data['rows'] as $row)
                         <tr class="gradeX" id="{{ $row->id }}">
                            <td>{{ $loop->iteration }}</td>
-                           <td>{{ $row->title }}</td>
-                           {{-- <td>{{ $row->group }}</td> --}}
+                           <td>{{ $row->session }}</td>
                            <td>
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')

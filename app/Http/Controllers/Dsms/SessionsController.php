@@ -60,10 +60,7 @@ class SessionsController extends DM_BaseController
             'session.required' => 'You must enter the Session name!',
         ]);
         $row = $this->model;
-        $row->title = $request->title;
-        $row->code = $request->code;
-        $row->established = $request->established;
-        $row->description = $request->description;
+        $row->session = $request->session;
         $row->save();
 
         if($row->save()){
@@ -108,16 +105,13 @@ class SessionsController extends DM_BaseController
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'title' => 'required|max:255',
+            'session' => 'required|max:255',
         ],
         [
-            'title.required' => 'You must enter the SCHOOL name!',
+            'session.required' => 'You must enter the SCHOOL name!',
         ]);
         $row = $this->model::findOrFail($id);
-        $row->title = $request->title;
-        $row->code = $request->code;
-        $row->established = $request->established;
-        $row->description = $request->description;
+        $row->session = $request->session;
         $row->save();
 
         if($row->save()){
