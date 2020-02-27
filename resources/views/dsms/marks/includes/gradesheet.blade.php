@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="para">
-                            <p>The grade secured by <b>{{ dm_getStudent($key)->first_name }}</b> Date of Birth <b>{{ dm_getStudent($key)->dob_bs }}</b> Symbol number <b>{{ dm_getStudent($key)->roll_no }}</b> of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
+                                    <p>The grade secured by <b>{{ dm_getStudent($key)->first_name }}</b> Date of Birth <b>{{ dm_getStudent($key)->dob_bs }}&nbsp;BS({{ dm_getStudent($key)->dob_ad }}&nbsp;AD)</b> Symbol number <b>{{ dm_getStudent($key)->roll_no }}</b> of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
                             </p>
                         </div>
 
