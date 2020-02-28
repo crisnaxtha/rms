@@ -12,6 +12,7 @@ use App\Model\Dsms\GradeSheetSetting;
 use App\Model\Dsms\Student;
 use App\Model\Dsms\School;
 use App\Model\Dsms\Section;
+use App\Model\Dsms\Session;
 use DB;
 
 class ExamResultsController extends DM_BaseController
@@ -20,7 +21,7 @@ class ExamResultsController extends DM_BaseController
     protected $base_route ='dsms.marks';
     protected $view_path = 'dsms.marks';
 
-    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, DM_General $model_g){
+    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, Session $model_7, DM_General $model_g){
         $this->middleware('auth');
         $this->middleware('permission:mark-register-list', ['only' => ['index']]);
         $this->middleware('permission:mark-register-create', ['only' => ['create','store']]);
@@ -33,6 +34,7 @@ class ExamResultsController extends DM_BaseController
         $this->model_4 = $model_4;
         $this->model_5 = $model_5;
         $this->model_6 = $model_6;
+        $this->model_7 = $model_7;
         $this->model_g = $model_g;
     }
     /**
@@ -42,12 +44,15 @@ class ExamResultsController extends DM_BaseController
      */
     public function index(Request $request)
     {
+        $this->panel = "Grades View";
         if ($request->isMethod('post')){
+            $data['sessions'] = $this->model_7::all();
             $data['school'] = $this->model_4::all();
             $data['class'] = $this->model_1::where('status', '=', 1)->get();
             $data['section'] = $this->model_5::where('status', '=', 1)->get();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
 
+            $data['session_id'] = $request->session_id;
             $data['school_id'] = $request->school_id;
             $data['class_id'] = $request->class_id;
             $data['section_id'] = $request->section_id;
@@ -57,7 +62,7 @@ class ExamResultsController extends DM_BaseController
             $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
             $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
             // dd($data['exam_schedule']);
-            $data['student'] = $this->model_2::where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
             $i = 0;
             $j = 0;
             $data['old_std_result'] = array();
@@ -76,9 +81,10 @@ class ExamResultsController extends DM_BaseController
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
         else {
-        $data['school'] = $this->model_4::all();
-        $data['exam'] = $this->model_3::where('status', '=', 1)->get();
-        return view($this->loadView($this->view_path.'.index'), compact('data'));
+            $data['sessions'] = $this->model_7::all();
+            $data['school'] = $this->model_4::all();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
     }
 
@@ -90,11 +96,13 @@ class ExamResultsController extends DM_BaseController
     public function create(Request $request)
     {
         if ($request->isMethod('post')){
+            $data['sessions'] = $this->model_7::all();
             $data['school'] = $this->model_4::all();
             $data['class'] = $this->model_1::where('status', '=', 1)->get();
             $data['section'] = $this->model_5::where('status', '=', 1)->get();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
 
+            $data['session_id'] = $request->session_id;
             $data['school_id'] = $request->school_id;
             $data['class_id'] = $request->class_id;
             $data['section_id'] = $request->section_id;
@@ -105,7 +113,8 @@ class ExamResultsController extends DM_BaseController
 
             $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
             // dd($data['exam_schedule']);
-            $data['student'] = $this->model_2::where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+
             $i = 0;
             $j = 0;
             $data['old_std_result'] = array();
