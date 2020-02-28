@@ -8,6 +8,7 @@ use App\Model\Dsms\Student;
 use App\Model\Dsms\School;
 use App\Model\Dsms\MyClass;
 use App\Model\Dsms\Section;
+use App\Model\Dsms\Session;
 use App\Model\Dsms\Eloquent\DM_General;
 use App\DM_libraries\DM_nepali_calendar;
 use App\DM_libraries\DM_nepali_data;
@@ -24,7 +25,7 @@ class StudentsController extends DM_BaseController
     protected $folder = 'student';
     protected $prefix_path_image = '/upload_file/images/student/';
 
-    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3, DM_nepali_calendar $nepali_calender){
+    public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3, DM_nepali_calendar $nepali_calender, Session $model_4){
         $this->middleware('auth');
         $this->middleware('permission:student-list', ['only' => ['index']]);
         $this->middleware('permission:student-create', ['only' => ['create','store']]);
@@ -35,6 +36,7 @@ class StudentsController extends DM_BaseController
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;
         $this->model_3 = $model_3;
+        $this->model_4 = $model_4;
         $this->nepali_calender = $nepali_calender;
         $this->folder_path_image = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
     }
@@ -47,6 +49,7 @@ class StudentsController extends DM_BaseController
     {
         $this->panel = "Student Details";
         if ($request->isMethod('post')){
+            $data['session_id'] = $request->session_id;
             $data['school_id'] = $request->school_id;
             $data['class_id'] = $request->class_id;
             $data['section_id'] = $request->section_id;
@@ -63,11 +66,14 @@ class StudentsController extends DM_BaseController
             }
 
             $data['query'] = $request->search_text;
+            $data['sessions'] = $this->model_4::all();
             $data['school'] = $this->model_3::all();
             $data['class'] = $this->model_1::where('status', '=', 1)->get();
             $data['section'] = $this->model_2::where('status', '=', 1)->get();
-            if(isset($school_class_section_id) && isset($data['query'])){
+
+            if(isset($data['session_id']) && isset($school_class_section_id) && isset($data['query'])){
             $data['rows'] = $this->model::where('status', '=', 1)
+                                ->orWhere('session_id', '=', $data['session_id'])
                                 ->orWhere('school_class_section_id', '=', $school_class_section_id)
                                 ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
                                 ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
@@ -78,12 +84,12 @@ class StudentsController extends DM_BaseController
                                 ->where('religion', 'LIKE', '%'. $data['query'].'%')
                                 ->where('gender', 'LIKE', '%'. $data['query'].'%')
                                 ->get();
-            }else if(isset($school_class_section_id) && !isset($data['query'])){
+            }else if(isset($school_class_section_id) && !isset($data['query']) && !isset($data['session_id'])){
                 $data['rows'] = $this->model::where('status', '=', 1)
                                 ->Where('school_class_section_id', '=', $school_class_section_id)
                                 ->get();
             }
-            else if(!isset($school_class_section_id) && isset($data['query'])){
+            else if(!isset($school_class_section_id) && isset($data['query']) && !isset($data['session_id'])){
                 $data['rows'] = $this->model::where('status', '=', 1)
                                 ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
                                 ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
@@ -110,6 +116,7 @@ class StudentsController extends DM_BaseController
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
         else {
+            $data['sessions'] = $this->model_4::all();
             $data['school'] = $this->model_3::all();
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
@@ -123,6 +130,7 @@ class StudentsController extends DM_BaseController
     public function create()
     {
         $this->panel = "Student Admission";
+        $data['sessions'] = $this->model_4::all();
         $data['school'] = $this->model_3::all();
         return view($this->loadView($this->view_path.'.create'), compact('data'));
     }
@@ -155,6 +163,7 @@ class StudentsController extends DM_BaseController
         $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
 
         $row = $this->model;
+        $row->session_id = $request->session_id;
         $row->school_class_section_id = $school_class_section->id;
         $row->admission_no = $request->admission_no;
         $row->roll_no = $request->roll_no;
@@ -204,6 +213,7 @@ class StudentsController extends DM_BaseController
     {
         $this->panel = "Student Details";
         $data['row'] = $this->model::findOrFail($id);
+        $data['sessions'] = $this->model_4::all();
         $data['school'] = $this->model_3::all();
         $data['class'] = $this->model_1::where('status', '=', 1)->get();
         $data['section'] = $this->model_2::where('status', '=', 1)->get();
@@ -241,6 +251,7 @@ class StudentsController extends DM_BaseController
         $school_class_section = $this->model_g::getSchoolClassSection($school_class->id, $data['section_id']);
 
         $row = $this->model::findOrFail($id);
+        $row->session_id = $request->session_id;
         $row->school_class_section_id = $school_class_section->id;
         $row->admission_no = $request->admission_no;
         $row->roll_no = $request->roll_no;
@@ -299,6 +310,7 @@ class StudentsController extends DM_BaseController
             if(($handle = fopen($path, "r")) !== FALSE) {
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                     $this->model::create([
+                        'session_id'        => $request->session_id,
                         'school_class_section_id'  => $school_class_section_id,
                         'admission_no'      => $data[0],
                         'roll_no'           => $data[1],
@@ -319,6 +331,7 @@ class StudentsController extends DM_BaseController
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }
         else {
+            $data['sessions'] = $this->model_4::all();
             $data['school'] = $this->model_3::all();
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }

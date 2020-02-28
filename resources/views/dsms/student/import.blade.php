@@ -88,7 +88,20 @@
                 @csrf
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="">Session</label>
+                                <select class="dropdown-school" name="session_id" id="session_id" required>
+                                    <option value="">Select</option>
+                                    @if(isset($data['sessions']))
+                                    @foreach($data['sessions'] as $row)
+                                        <option value="{{ $row->id }}">{{ $row->session }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="">School</label>
                                 <select class="dropdown-school" name="school_id" id="school_id" required>
@@ -101,7 +114,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="">Class</label>
                                 <select class="dropdown-class" name="class_id" id="class_id" required>
@@ -109,7 +122,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label class="">Section</label>
                                 <select class="dropdown-section" name="section_id" id="section_id" required>

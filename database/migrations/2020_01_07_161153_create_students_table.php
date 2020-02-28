@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id');
-            // $table->unsignedInteger('school_id')->nullable();
+            $table->unsignedInteger('session_id')->nullable();
             $table->unsignedInteger('school_class_section_id');
             $table->string('admission_no')->nullable();
             $table->string('roll_no')->nullable();
@@ -56,6 +56,8 @@ class CreateStudentsTable extends Migration
             $table->boolean('status')->default(1);
             $table->foreign('school_class_section_id')->references('id')->on('school_class_sections')
                     ->onDelete('cascade');
+            $table->foreign('session_id')->references('id')->on('sessions')
+                        ->onDelete('cascade');
             $table->timestamps();
         });
     }
