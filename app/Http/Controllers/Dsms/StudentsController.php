@@ -11,8 +11,9 @@ use App\Model\Dsms\Section;
 use App\Model\Dsms\Session;
 use App\Model\Dsms\Eloquent\DM_General;
 use App\DM_libraries\DM_nepali_calendar;
-use App\DM_libraries\DM_nepali_data;
 use DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 
 class StudentsController extends DM_BaseController
 {
@@ -37,6 +38,7 @@ class StudentsController extends DM_BaseController
         $this->model_2 = $model_2;
         $this->model_3 = $model_3;
         $this->model_4 = $model_4;
+        // $this->excel = $excel;
         $this->nepali_calender = $nepali_calender;
         $this->folder_path_image = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
     }
@@ -288,7 +290,6 @@ class StudentsController extends DM_BaseController
         $this->model::destroy($id);
     }
 
-
     public function import(Request $request) {
         $this->panel = "Student Admission";
 
@@ -306,27 +307,31 @@ class StudentsController extends DM_BaseController
             }
 
             $path = $request->file('file')->getRealPath();
-            $row = 1;
-            if(($handle = fopen($path, "r")) !== FALSE) {
-                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $object = IOFactory::load($path);
+            foreach($object->getWorksheetIterator() as $worksheet)
+			{
+                $highestRow = $worksheet->getHighestRow();
+				$highestColumn = $worksheet->getHighestColumn();
+				for($row=2; $row<=$highestRow; $row++)
+				{
                     $this->model::create([
                         'session_id'        => $request->session_id,
                         'school_class_section_id'  => $school_class_section_id,
-                        'admission_no'      => $data[0],
-                        'roll_no'           => $data[1],
-                        'first_name'        => $data[2],
-                        'dob_bs'            => date("Y-m-d", strtotime($data[3])),
-                        'dob_ad'            => $this->bsToAd(date("Y-m-d", strtotime($data[3]))),
-                        'religion'          => $data[4],
-                        'mobile_no'         => $data[5],
-                        'email'             => $data[6],
-                        'admission_date'    => date("Y-m-d", strtotime($data[7])),
-                        'blood_group'       => $data[8],
-                        'gender'            => $data[9],
+                        'admission_no'      => $worksheet->getCellByColumnAndRow(1, $row)->getValue(),
+                        'roll_no'           => $worksheet->getCellByColumnAndRow(2, $row)->getValue(),
+                        'first_name'        => $worksheet->getCellByColumnAndRow(3, $row)->getValue(),
+                        'dob_bs'            => date("Y-m-d", ExcelDate::excelToTimestamp(($worksheet->getCellByColumnAndRow(4, $row)->getValue()))),
+                        'dob_ad'            => $this->bsToAdEng(date("Y-m-d", ExcelDate::excelToTimestamp(($worksheet->getCellByColumnAndRow(4, $row)->getValue())))),
+                        'religion'          => $worksheet->getCellByColumnAndRow(5, $row)->getValue(),
+                        'mobile_no'         => $worksheet->getCellByColumnAndRow(6, $row)->getValue(),
+                        'email'             => $worksheet->getCellByColumnAndRow(7, $row)->getValue(),
+                        'admission_date'    => date("Y-m-d", ExcelDate::excelToTimestamp(($worksheet->getCellByColumnAndRow(8, $row)->getValue()))),
+                        'blood_group'       => $worksheet->getCellByColumnAndRow(9, $row)->getValue(),
+                        'gender'            => $worksheet->getCellByColumnAndRow(10, $row)->getValue(),
                     ]);
-                }
-            fclose($handle);
-            }
+
+				}
+			}
             session()->flash('alert-success', $this->panel.' Successfully Imported');
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }

@@ -172,4 +172,12 @@ class DM_BaseController extends Controller
         $eng_date = date('Y-m-d', mktime(0,0,0, $english_date['month'],$english_date['date'],$english_date['year']));
         return $eng_date;
     }
+
+    public function bsToAdEng($dob_bs) {
+        // Nepali date conversion
+        $dat_att =  preg_split('/-/',$dob_bs);
+        $english_date = $this->nepali_calender->nep_to_eng($dat_att[0],$dat_att[1],$dat_att[2]);
+        $eng_date = date('Y-m-d', mktime(0,0,0, $english_date['month'],$english_date['date'],$english_date['year']));
+        return $eng_date;
+    }
 }

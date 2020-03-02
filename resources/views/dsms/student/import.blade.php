@@ -11,13 +11,13 @@
             <div class="panel-heading">
                 Select Criteria
                 <div class="pull-right">
-                    <a href="{{ asset('upload_file/students/import_student_sample_file.csv') }}">
+                    <a href="{{ asset('upload_file/students/import_student_sample_file.xlsx') }}">
                         <button class="btn btn-primary btn-xs"><i class="fa fa-download"></i> Download Sample Import File</button>
                     </a>
                 </div>
             </div>
             <div class="panel-body">
-                <br/> 1. Your CSV data should be in the format below. The first line of your CSV file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems.
+                <br/> 1. Your Excel data should be in the format below. The first line of your Excel file should be the column headers as in the table example. Also make sure that your file is UTF-8 to avoid unnecessary encoding problems.
                 <br/> 2. If the column you are trying to import is date make sure that is formatted in format Y-m-d (2018-06-06).
                 <br/> 3. Duplicate "Admission Number" (unique) and "Roll Number" (unique in class) rows will not be imported.
                 <br/> 4. For student "Gender" use Male, Female value.
@@ -39,7 +39,7 @@
 
                             <th><span class=text-red>*</span><span>Gender</span></th>
 
-                            <th><span>Date Of Birth</span></th>
+                            <th><span>Date Of Birth ( BS )</span></th>
 
                             <th><span>Religion</span></th>
 
