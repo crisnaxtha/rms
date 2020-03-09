@@ -86,33 +86,33 @@ class StudentsController extends DM_BaseController
                                 ->where('religion', 'LIKE', '%'. $data['query'].'%')
                                 ->where('gender', 'LIKE', '%'. $data['query'].'%')
                                 ->get();
-            }else if(isset($school_class_section_id) && !isset($data['query']) && !isset($data['session_id'])){
+            }else if(isset($school_class_section_id) && !isset($data['query']) && isset($data['session_id'])){
                 $data['rows'] = $this->model::where('status', '=', 1)
                                 ->Where('school_class_section_id', '=', $school_class_section_id)
                                 ->get();
             }
             else if(!isset($school_class_section_id) && isset($data['query']) && !isset($data['session_id'])){
                 $data['rows'] = $this->model::where('status', '=', 1)
-                                ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
-                                ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
-                                ->where('first_name', 'LIKE', '%'. $data['query'].'%')
-                                ->where('last_name', 'LIKE', '%'. $data['query'].'%')
-                                ->where('mobile_no', 'LIKE', '%'. $data['query'].'%')
-                                ->where('email', 'LIKE', '%'. $data['query'].'%')
-                                ->where('religion', 'LIKE', '%'. $data['query'].'%')
-                                ->where('gender', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('admission_date', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('roll_no', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('first_name', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('last_name', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('mobile_no', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('email', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('religion', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('gender', 'LIKE', '%'. $data['query'].'%')
                                 ->get();
             }
             else {
                 $data['rows'] = $this->model::where('status', '=', 1)
-                                ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
-                                ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
-                                ->where('first_name', 'LIKE', '%'. $data['query'].'%')
-                                ->where('last_name', 'LIKE', '%'. $data['query'].'%')
-                                ->where('mobile_no', 'LIKE', '%'. $data['query'].'%')
-                                ->where('email', 'LIKE', '%'. $data['query'].'%')
-                                ->where('religion', 'LIKE', '%'. $data['query'].'%')
-                                ->where('gender', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('admission_date', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('roll_no', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('first_name', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('last_name', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('mobile_no', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('email', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('religion', 'LIKE', '%'. $data['query'].'%')
+                                ->orWhere('gender', 'LIKE', '%'. $data['query'].'%')
                                 ->get();
             }
             return view($this->loadView($this->view_path.'.index'), compact('data'));
