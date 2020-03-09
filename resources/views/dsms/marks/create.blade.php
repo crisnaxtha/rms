@@ -92,7 +92,7 @@
         <!--Assign Subject block-->
 <div class="row" id="box_display">
     <div class="col-md-12">
-        @if(isset($data['exam_schedule']))
+        @if(isset($data['school_class_section_subjects']))
         <section class="panel">
             <header class="panel-heading">
                 Exam List
@@ -110,8 +110,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Student</th>
-                                @if(isset($data['exam_schedule']))
-                                @foreach($data['exam_schedule'] as $row)
+                                @if(isset($data['school_class_section_subjects']))
+                                @foreach($data['school_class_section_subjects'] as $row)
                                 <th>{{ $row->sub_title }}</th>
                                 {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
                                 @endforeach
@@ -128,8 +128,8 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $key }}</td>
                                     @php $i = 0; @endphp
-                                    @if(isset($data['exam_schedule']))
-                                    @foreach($data['exam_schedule'] as $row)
+                                    @if(isset($data['school_class_section_subjects']))
+                                    @foreach($data['school_class_section_subjects'] as $row)
                                     <td>
                                         <div class="form-group">
                                             <div class="checkbox">
@@ -157,8 +157,8 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $rows->first_name }}</td>
                                     @php $i = 0; @endphp
-                                    @if(isset($data['exam_schedule']))
-                                    @foreach($data['exam_schedule'] as $row)
+                                    @if(isset($data['school_class_section_subjects']))
+                                    @foreach($data['school_class_section_subjects'] as $row)
                                     <td>
                                         <div class="form-group">
                                             <div class="checkbox">

@@ -111,23 +111,23 @@ class ExamResultsController extends DM_BaseController
             $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
             $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
 
-            $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
-            // dd($data['exam_schedule']);
+            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_section']->id);
+            // dd($data['school_class_section_subjects']);
             $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
             // dd($data['student']);
 
             $i = 0;
             $j = 0;
             $data['old_std_result'] = array();
-            foreach($data['exam_schedule'] as $exam) {
+            foreach($data['school_class_section_subjects'] as $subject) {
                 foreach($data['student'] as $student) {
-                    array_push($data['old_std_result'], $this->model_g::getStudentResult($exam->exam_sch_id, $student->id));
+                    array_push($data['old_std_result'], $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $subject->id));
                     $j++;
                 }
                 $i++;
             }
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
-            dd($data['std_result']);
+            // dd($data['std_result']);
             return view($this->loadView($this->view_path.'.create'), compact('data'));
         }
         else {

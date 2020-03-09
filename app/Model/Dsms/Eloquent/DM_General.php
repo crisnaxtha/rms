@@ -58,14 +58,14 @@ class DM_General extends Model
 
     public static function joinSchoolClassSection($school_class_section_id) {
         $data = DB::table('school_class_sections')
-            ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
-            ->join('school_classes', 'school_class_sections.school_class_id', '=', 'school_classes.id')
-            ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
-            ->join('schools', 'school_classes.school_id', '=', 'schools.id')
-            ->where('school_class_sections.id', '=', $school_class_section_id)
-            ->select('school_class_sections.*','schools.id as school_id', 'my_classes.id as class_id', 'my_classes.title as class_title', 'sections.title as sec_title', 'sections.id as sec_id')
-            ->first();
-    return $data;
+                ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
+                ->join('school_classes', 'school_class_sections.school_class_id', '=', 'school_classes.id')
+                ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
+                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+                ->where('school_class_sections.id', '=', $school_class_section_id)
+                ->select('school_class_sections.*','schools.id as school_id', 'my_classes.id as class_id', 'my_classes.title as class_title', 'sections.title as sec_title', 'sections.id as sec_id')
+                ->first();
+        return $data;
     }
 
     public static function getSchoolClassSectionSubject($school_class_section_id, $subject_id) {
@@ -77,32 +77,6 @@ class DM_General extends Model
         return $data;
     }
 
-    //return multiple exam schedule based on school_class_section_id
-    public static function getExamSchedules($school_class_section_id) {
-        $data = DB::table('school_class_section_subjects')
-                ->join('subjects', 'school_class_section_subjects.subject_id', '=', 'subjects.id')
-                ->join('exam_schedules', 'school_class_section_subjects.id', '=', 'exam_schedules.school_class_section_subject_id' )
-                ->join('exams', 'exam_schedules.exam_id', '=', 'exams.id')
-                ->where('school_class_section_subjects.school_class_section_id', '=', $school_class_section_id)
-                ->where('school_class_section_subjects.status', '=', 1)
-                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.theory_full_marks as theory_marks', 'subjects.practical_full_marks as practical_marks', 'subjects.credit_hour',  'exam_schedules.*' , 'exams.title as exm_title')
-                ->get();
-        return $data;
-    }
-
-    //return group of single exam schedule based on exam id and school_class_section_id
-    public static function getExamSchedule($school_class_section_id, $exam_id) {
-        $data = DB::table('school_class_section_subjects')
-                ->join('subjects', 'school_class_section_subjects.subject_id', '=', 'subjects.id')
-                ->join('exam_schedules', 'school_class_section_subjects.id', '=', 'exam_schedules.school_class_section_subject_id' )
-                ->join('exams', 'exam_schedules.exam_id', '=', 'exams.id')
-                ->where('school_class_section_subjects.school_class_section_id', '=', $school_class_section_id)
-                ->where('exam_schedules.exam_id', '=', $exam_id)
-                ->where('school_class_section_subjects.status', '=', 1)
-                ->select('school_class_section_subjects.*', 'subjects.title as sub_title', 'subjects.id as sub_id', 'subjects.theory_full_marks as theory_marks', 'subjects.practical_full_marks as practical_marks', 'subjects.credit_hour', 'exam_schedules.id as exam_sch_id' , 'exams.title as exm_title')
-                ->get();
-        return $data;
-    }
 
     public static function getExamResult($school_class_section_id, $exam_id) {
         $data = DB::table('exam_results')
@@ -127,12 +101,14 @@ class DM_General extends Model
         return $data;
     }
 //get single result of student based on exam schedule id and student id
-    public static function getStudentResult($exam_schedule_id, $student_id) {
+    public static function getStudentResult($session_id, $exam_id, $student_id, $subject_id) {
         $data = DB::table('students')
                 ->leftJoin('exam_results', 'students.id', '=', 'exam_results.student_id')
                 ->where('students.id', '=', $student_id)
-                ->where('exam_results.exam_schedules_id','=', $exam_schedule_id)
-                ->select('students.id as std_id', 'students.first_name','students.last_name', 'exam_results.*')
+                ->where('exam_results.session_id','=', $session_id)
+                ->where('exam_results.exam_id','=', $exam_id)
+                ->where('exam_results.school_class_section_subject_id','=', $subject_id)
+                ->select('students.id as student_id', 'students.first_name','students.last_name', 'exam_results.*')
                 ->first();
         return $data;
     }
