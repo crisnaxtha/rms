@@ -13,7 +13,7 @@ class SubjectsController extends DM_BaseController
     protected $view_path = 'dsms.subject';
 
     public function __construct(Request $request, Subject $model){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:subject-list', ['only' => ['index']]);
         $this->middleware('permission:subject-create', ['only' => ['create','store']]);
         $this->middleware('permission:subject-edit', ['only' => ['edit','update']]);

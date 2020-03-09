@@ -16,7 +16,7 @@ class ClassesController extends DM_BaseController
     protected $view_path = 'dsms.class';
 
     public function __construct(Request $request, MyClass $model, Section $model_2){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:class-list', ['only' => ['index']]);
         $this->middleware('permission:class-create', ['only' => ['create','store']]);
         $this->middleware('permission:class-edit', ['only' => ['edit','update']]);

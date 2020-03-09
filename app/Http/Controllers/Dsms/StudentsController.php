@@ -27,7 +27,7 @@ class StudentsController extends DM_BaseController
     protected $prefix_path_image = '/upload_file/images/student/';
 
     public function __construct(Request $request, Student $model, DM_General $model_g, MyClass $model_1, Section $model_2, School $model_3, DM_nepali_calendar $nepali_calender, Session $model_4){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:student-list', ['only' => ['index']]);
         $this->middleware('permission:student-create', ['only' => ['create','store']]);
         $this->middleware('permission:student-edit', ['only' => ['edit','update']]);

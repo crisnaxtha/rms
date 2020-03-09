@@ -20,6 +20,7 @@ class HomeController extends DM_BaseController
     protected $view_path = 'dsms';
 
     public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5, Subject $model_6, DM_General $model_g){
+        $this->middleware(['auth', 'status']);
         $this->model = $model;
         $this->model_1 = $model_1;
         $this->model_2 = $model_2;

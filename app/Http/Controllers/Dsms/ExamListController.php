@@ -14,7 +14,7 @@ class ExamListController extends DM_BaseController
     protected $view_path = 'dsms.exam';
 
     public function __construct(Request $request, Exam $model, DM_General $model_g){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:exam-list', ['only' => ['index']]);
         $this->middleware('permission:exam-create', ['only' => ['create','store']]);
         $this->middleware('permission:exam-edit', ['only' => ['edit','update']]);

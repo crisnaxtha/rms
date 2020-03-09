@@ -15,7 +15,7 @@ class SessionsController extends DM_BaseController
     protected $view_path = 'dsms.session';
 
     public function __construct(Request $request, Session $model, DM_General $model_g){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         // $this->middleware('permission:school-list', ['only' => ['index']]);
         // $this->middleware('permission:school-create', ['only' => ['create','store']]);
         // $this->middleware('permission:school-edit', ['only' => ['edit','update']]);

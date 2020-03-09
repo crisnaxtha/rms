@@ -19,7 +19,7 @@ class ExamScheduleController extends DM_BaseController
     protected $view_path = 'dsms.exam_schedule';
 
     public function __construct(Request $request, ExamSchedule $model, MyClass $model_1, Subject $model_2, Exam $model_3, School $model_4, DM_General $model_g){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:exam-schedule-list', ['only' => ['index']]);
         $this->middleware('permission:exam-schedule-create', ['only' => ['create','store']]);
         // $this->middleware('permission:affiliated-edit', ['only' => ['edit','update']]);

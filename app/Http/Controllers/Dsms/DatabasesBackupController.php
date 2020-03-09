@@ -22,7 +22,7 @@ class DatabasesBackupController extends DM_BaseController
     protected $dbBackup;
 
     public function __construct(DM_db_backup_library $DB_Backup) {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:database-table-list', ['only' => ['index']]);
         $this->middleware('permission:database-backup-download', ['only' => ['databaseDownload']]);
         $this->middleware('permission:database-backup-in-server', ['only' => ['databaseBackup']]);

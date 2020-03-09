@@ -20,8 +20,7 @@ class RoleController extends DM_BaseController
     protected $table;
 
     public function __construct(Request $request,Role $model, Permission $permission) {
-        $this->middleware('auth');
-        $this->middleware('super');
+        $this->middleware(['auth', 'status', 'super']);
 
         $this->model = $model;
         $this->permission = $permission;

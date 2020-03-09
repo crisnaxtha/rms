@@ -18,7 +18,7 @@ class SchoolsController extends DM_BaseController
     protected $view_path = 'dsms.school';
 
     public function __construct(Request $request, School $model, MyClass $model_2, DM_General $model_g){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:school-list', ['only' => ['index']]);
         $this->middleware('permission:school-create', ['only' => ['create','store']]);
         $this->middleware('permission:school-edit', ['only' => ['edit','update']]);

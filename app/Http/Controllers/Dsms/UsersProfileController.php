@@ -24,7 +24,7 @@ class UsersProfileController extends DM_BaseController
      * Constructor
      */
     public function __construct(User $user) {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->model = $user;
         $this->model = $user;
         $this->folder_path = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;

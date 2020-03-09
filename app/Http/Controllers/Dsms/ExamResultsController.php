@@ -22,7 +22,7 @@ class ExamResultsController extends DM_BaseController
     protected $view_path = 'dsms.marks';
 
     public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, Session $model_7, DM_General $model_g){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:mark-register-list', ['only' => ['index']]);
         $this->middleware('permission:mark-register-create', ['only' => ['create','store']]);
         // $this->middleware('permission:affiliated-edit', ['only' => ['edit','update']]);

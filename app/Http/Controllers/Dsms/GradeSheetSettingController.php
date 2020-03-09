@@ -18,7 +18,7 @@ class GradeSheetSettingController extends DM_BaseController
     protected $image_prefix_path = 'upload_file/images/setting/';
 
     public function __construct(GradeSheetSetting $model){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         // $this->middleware('permission:header-setting', ['only' => ['getGeneralSetting', 'updateGeneralSetting']]);
         $this->model = $model;
         $this->folder_path = getcwd() . DIRECTORY_SEPARATOR . 'upload_file' . DIRECTORY_SEPARATOR .'images'. DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR;
