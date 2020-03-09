@@ -114,6 +114,7 @@ class ExamResultsController extends DM_BaseController
             $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
             // dd($data['exam_schedule']);
             $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            // dd($data['student']);
 
             $i = 0;
             $j = 0;
@@ -125,14 +126,15 @@ class ExamResultsController extends DM_BaseController
                 }
                 $i++;
             }
-            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'first_name');
-            // dd($data['std_result']);
+            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
+            dd($data['std_result']);
             return view($this->loadView($this->view_path.'.create'), compact('data'));
         }
         else {
-        $data['school'] = $this->model_4::all();
-        $data['exam'] = $this->model_3::where('status', '=', 1)->get();
-        return view($this->loadView($this->view_path.'.create'), compact('data'));
+            $data['sessions'] = $this->model_7::all();
+            $data['school'] = $this->model_4::all();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            return view($this->loadView($this->view_path.'.create'), compact('data'));
         }
     }
 

@@ -25,10 +25,14 @@
                 </div>
                 <div class="col-md-8" style="top:-26px;">
                     <div class="pull-center">
+                        @if(isset($ata['ms_setting']))
                         <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
                         <h6>{{ $data['ms_setting']->title_2 }}</h6>
                         <h6>{{ $data['ms_setting']->title_3 }}</h6>
                         <h4><b>{{ $data['ms_setting']->title_4 }}</b></h4>
+                        @else
+                        <h1>Set Grade Setting First</h1>
+                        @endif
                         <h5>@foreach($data['class'] as $cl) @if($cl->id == $data['class_id']) {{ $cl->title }} @endif @endforeach</h5>
                         <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                     </div>
