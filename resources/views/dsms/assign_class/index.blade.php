@@ -86,7 +86,10 @@
                 {
                     console.log(data);
                         var response = data;
-                        if (response && response.length > 0) {
+                        if(response.length == 0){
+                            alert("No Data Found !!");
+                        }
+                        else if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {
                                 var class_id = response[i].class_id;
                                 console.log(response[i].class_id);

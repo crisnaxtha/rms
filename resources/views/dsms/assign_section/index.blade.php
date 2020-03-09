@@ -122,7 +122,10 @@ $(document).on('change', '#school_id', function (e) {
                 {
                     console.log(data);
                         var response = data;
-                        if (response && response.length > 0) {
+                        if(response.length == 0){
+                            alert("No Data Found !!");
+                        }
+                        else if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {
                                 var section_id = response[i].section_id;
                                 console.log(response[i].section_id);
