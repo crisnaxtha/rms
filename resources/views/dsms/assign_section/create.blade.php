@@ -192,7 +192,7 @@ function GetDynamicTextBox(value) {
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Section</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="section_id_' + i + '" name="section_id[]" class="form-control" >';
+        row += '<select id="section_id_' + i + '" name="section_id[]" class="form-control" required>';
         row += '<option value="">Select</option>';
         @foreach($data['section'] as $row)
             var selected = "";
@@ -224,6 +224,7 @@ function GetDynamicTextBox(value) {
         $(this).parents('.form-group').remove();
     });
     $(document).on('click', '#btnDelete', function() {
+        $(this).parents('.form-group').remove();
         var id = $(this).data('id');
         // alert(id);
         $.ajax({

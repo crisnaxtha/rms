@@ -86,7 +86,7 @@ function GetDynamicTextBox(value) {
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Class</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="class_id_' + value + '" name="class_id[]" class="form-control" >';
+        row += '<select id="class_id_' + value + '" name="class_id[]" class="form-control" required>';
         row += '<option value="">Select</option>';
         @foreach($data['class'] as $row)
             row += '<option value="{{ $row->id }}">{{ $row->title }}</option>';
@@ -153,7 +153,7 @@ function GetDynamicTextBox(value) {
         row += '<div class="form-group row">';
         row += '<label for="inputValue" class="col-md-1 control-label">Class</label>';
         row += '<div class="col-md-4">';
-        row += '<select id="class_id_' + i + '" name="class_id[]" class="form-control" >';
+        row += '<select id="class_id_' + i + '" name="class_id[]" class="form-control" required>';
         row += '<option value="">Select</option>';
         @foreach($data['class'] as $row)
             var selected = "";
@@ -185,6 +185,7 @@ function GetDynamicTextBox(value) {
         $(this).parents('.form-group').remove();
     });
     $(document).on('click', '#btnDelete', function() {
+        $(this).parents('.form-group').remove();
         var id = $(this).data('id');
         $.ajax({
             type: 'DELETE',
