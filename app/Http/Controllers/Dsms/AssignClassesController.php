@@ -16,7 +16,7 @@ class AssignClassesController extends DM_BaseController
     protected $view_path = 'dsms.assign_class';
 
     public function __construct(Request $request, School $model, MyClass $model_1, DM_General $model_g){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'status']);
         $this->middleware('permission:assign-class-list', ['only' => ['index']]);
         $this->middleware('permission:assign-class-create', ['only' => ['create','store']]);
         // $this->middleware('permission:affiliated-edit', ['only' => ['edit','update']]);

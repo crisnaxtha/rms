@@ -100,9 +100,12 @@ return [
         ],
     ],
 
-    //This is extra middleware for auth
-    'middleware_email' => [
-        'email' => 'lochan2075@gmail.com',
-    ]
+    // =================================::: LAL ::: =====================================
 
+    //This is extra middleware for auth
+    'dm_middleware_email' => [
+        'email' => 'lochan2075@gmail.com',
+    ],
+
+    'dm_active' => sha1(date(date('Y'))),
 ];

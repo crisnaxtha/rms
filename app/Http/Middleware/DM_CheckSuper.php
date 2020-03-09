@@ -18,7 +18,7 @@ class DM_CheckSuper
     {
         // dd(config('auth.middleware_email'));
         if(Auth::check()){
-            if(Auth::user()->email == config('auth.middleware_email.email')){
+            if(Auth::user()->email == config('auth.dm_middleware_email.email')){
                 return $next($request);
             }
             session()->flash('alert-warning', 'You have no authority to access !!!');
