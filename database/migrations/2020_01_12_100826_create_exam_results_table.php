@@ -18,7 +18,9 @@ class CreateExamResultsTable extends Migration
             // $table->unsignedInteger('school_id')->nullable();
             $table->string('theory_attendance')->nullable();
             $table->string('practical_attendance')->nullable();
-            $table->unsignedInteger('exam_schedules_id')->nullable();
+            $table->unsignedInteger('session_id')->nullable();
+            $table->unsignedInteger('school_class_section_id')->nullable();
+            $table->unsignedInteger('exam_id')->nullable();
             $table->unsignedInteger('student_id')->nullable();
             $table->float('theory_get_marks', 10, 2)->nullable();
             $table->string('theory_grade')->nullable();
@@ -30,7 +32,11 @@ class CreateExamResultsTable extends Migration
             $table->float('grade_credit_hour', 10,2)->nullable();
             $table->text('description')->nullable();
             $table->boolean('status')->nullable();
-            $table->foreign('exam_schedules_id')->references('id')->on('exam_schedules')
+            $table->foreign('session_id')->references('id')->on('sessions')
+                    ->onDelete('cascade');
+            $table->foreign('school_class_section_id')->references('id')->on('school_class_sections')
+                    ->onDelete('cascade');
+            $table->foreign('exam_id')->references('id')->on('exams')
                     ->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('students')
                     ->onDelete('cascade');

@@ -50,9 +50,6 @@
                     @if(Route::has('dsms.exam.index'))
                     <li><a class="{{ ($_panel == 'Exam') ? 'active' : '' }}" href="{{ URL::route('dsms.exam.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Exam List')}}</span></a></li>
                     @endif
-                    @if(Route::has('dsms.exam_schedule.index'))
-                    <li><a class="{{ ($_panel == 'Exam Schedule') ? 'active' : '' }}" href="{{ URL::route('dsms.exam_schedule.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Exam Schedule')}}</span></a></li>
-                    @endif
                     @if(Route::has('dsms.marks.create'))
                     <li><a class="{{ ($_panel == 'Marks Register') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Register')}}</span></a></li>
                     @endif
