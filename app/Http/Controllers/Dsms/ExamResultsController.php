@@ -113,20 +113,24 @@ class ExamResultsController extends DM_BaseController
 
             $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_section']->id);
             // dd($data['school_class_section_subjects']);
-            $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            // $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            $data['student'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_section']->id);
             // dd($data['student']);
 
-            $i = 0;
-            $j = 0;
-            $data['old_std_result'] = array();
-            foreach($data['school_class_section_subjects'] as $subject) {
-                foreach($data['student'] as $student) {
-                    array_push($data['old_std_result'], $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $subject->id));
-                    $j++;
-                }
-                $i++;
-            }
-            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
+
+            // $data['old_std_result'] = array();
+            // foreach($data['student'] as $student) {
+            //         $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->subject_id);
+            //         if(isset($s_result)){
+            //         array_push($data['old_std_result'], $s_result);
+            //         }else {
+
+            //             array_push($data['old_std_result'], $this->model_g::joinStudentResult($student->id));
+            //         }
+            //         dump($data['old_std_result']);
+            // }
+            // die;
+            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter(json_decode(json_encode($data['student'])))), 'id');
             // dd($data['std_result']);
             return view($this->loadView($this->view_path.'.create'), compact('data'));
         }

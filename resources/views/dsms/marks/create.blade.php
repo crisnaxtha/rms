@@ -113,7 +113,6 @@
                                 @if(isset($data['school_class_section_subjects']))
                                 @foreach($data['school_class_section_subjects'] as $row)
                                 <th>{{ $row->sub_title }}</th>
-                                {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
                                 @endforeach
                                 @endif
                                 </tr>
@@ -121,12 +120,12 @@
                             <tbody id="TableContainer">
                             {{-- If Data is already exist in exam_result table then this code of block is called  --}}
                                 @if(count($data['std_result']) != 0)
-                                {{-- @php dd($data['std_result']) @endphp --}}
+                                {{-- @php dd($data['std_result']); @endphp --}}
                                 @foreach($data['std_result'] as $key => $rows)
                                 @php $rows_array_key = array_keys($rows); @endphp
                                 <tr class="gradeX" id="">
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $key }}</td>
+                                    <td>{{ dm_getStudent($key)->first_name }}</td>
                                     @php $i = 0; @endphp
                                     @if(isset($data['school_class_section_subjects']))
                                     @foreach($data['school_class_section_subjects'] as $row)
@@ -135,8 +134,8 @@
                                             <div class="checkbox">
                                                 <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][th_attendance]" value="ABS">Abs</label>
                                             </div>
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows[$rows_array_key[$i]]['std_id']}}">
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->exam_sch_id }}">
+                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows[$rows_array_key[$i]]['id']}}">
+                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][subject_id]" value="{{ $row->subject_id }}">
                                             <label for="">Th</label>
                                             <input type="text" name="data[{{ $key }}][{{ $loop->index}}][theory_marks]" class="form-control input-sm" id="" value="@if(isset($rows[$rows_array_key[$i]]['theory_get_marks'])) {{ $rows[$rows_array_key[$i]]['theory_get_marks'] }} @else  @endif" placeholder="Enter Theory Marks">
                                             <div class="checkbox">

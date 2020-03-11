@@ -135,7 +135,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleInputFile">Select CSV File</label><small class="req"> *</small>
+                                <label for="exampleInputFile">Select Excel File</label><small class="req"> *</small>
                                 <div>
                                     <input class="filestyle form-control" type='file' name='file' id="file" size='20' />
                                     <span class="text-danger"></span></div>
