@@ -135,6 +135,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'StudentsController@destroy']);
 
             Route::any('import',                               ['as'=>'import',                'uses'=>'StudentsController@import']);
+            Route::any('get_students',                         ['as'=>'getStudents',                'uses'=>'StudentsController@getSchoolClassSectionStudents']);
         });
 
         Route::group(['as'=> 'marks.', 'prefix' => 'marks'], function(){

@@ -341,4 +341,12 @@ class StudentsController extends DM_BaseController
             return view($this->loadView($this->view_path.'.import'), compact('data'));
         }
     }
+
+    public function getSchoolClassSectionStudents(Request $request) {
+        if($request->ajax()){
+            $school_class_sec_id = $request->school_class_sec_id;
+            $data = $this->model_g::getSchoolClassSectionStudents($school_class_sec_id);
+            return $data;
+        }
+    }
 }

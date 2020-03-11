@@ -68,12 +68,31 @@ class DM_General extends Model
         return $data;
     }
 
+    public static function joinAllSchoolClassSection() {
+        $data = DB::table('school_class_sections')
+                ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
+                ->join('school_classes', 'school_class_sections.school_class_id', '=', 'school_classes.id')
+                ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
+                ->join('schools', 'school_classes.school_id', '=', 'schools.id')
+                ->select('school_class_sections.*','schools.id as school_id', 'schools.title as school_title', 'my_classes.id as class_id', 'my_classes.title as class_title', 'sections.title as sec_title', 'sections.id as sec_id')
+                ->get();
+        return $data;
+    }
+
     public static function getSchoolClassSectionSubject($school_class_section_id, $subject_id) {
         $data = DB::table('school_class_section_subjects')
                     ->where('school_class_section_id', '=', $school_class_section_id)
                     ->where('subject_id', '=', $subject_id)
                     ->where('status', '=', 1)
                     ->first();
+        return $data;
+    }
+
+    public static function getSchoolClassSectionStudents($school_class_sec_id) {
+        $data = DB::table('students')
+                    ->where('students.school_class_section_id', '=', $school_class_sec_id)
+                    ->select('students.id', 'students.first_name')
+                    ->get();
         return $data;
     }
 

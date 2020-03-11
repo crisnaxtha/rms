@@ -15,7 +15,7 @@ use App\Model\Dsms\Section;
 use App\Model\Dsms\Session;
 use DB;
 
-class ExamResultsController extends DM_BaseController
+class ExamResultsController_Bak extends DM_BaseController
 {
     protected $panel = 'Marks Register';
     protected $base_route ='dsms.marks';
@@ -98,16 +98,39 @@ class ExamResultsController extends DM_BaseController
         if ($request->isMethod('post')){
 
             $data['sessions'] = $this->model_7::all();
+            $data['school'] = $this->model_4::all();
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+            $data['section'] = $this->model_5::where('status', '=', 1)->get();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
 
             $data['session_id'] = $request->session_id;
+            $data['school_id'] = $request->school_id;
+            $data['class_id'] = $request->class_id;
+            $data['section_id'] = $request->section_id;
             $data['exam_id'] = $request->exam_id;
-            $data['school_class_sec_id'] = $request->school_class_sec_id;
 
-            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+            $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
+            $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
+
+            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_section']->id);
             // dd($data['school_class_section_subjects']);
-            $data['student'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
+            // $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
+            $data['student'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_section']->id);
             // dd($data['student']);
+
+
+            // $data['old_std_result'] = array();
+            // foreach($data['student'] as $student) {
+            //         $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->subject_id);
+            //         if(isset($s_result)){
+            //         array_push($data['old_std_result'], $s_result);
+            //         }else {
+
+            //             array_push($data['old_std_result'], $this->model_g::joinStudentResult($student->id));
+            //         }
+            //         dump($data['old_std_result']);
+            // }
+            // die;
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter(json_decode(json_encode($data['student'])))), 'id');
             // dd($data['std_result']);
             return view($this->loadView($this->view_path.'.create'), compact('data'));

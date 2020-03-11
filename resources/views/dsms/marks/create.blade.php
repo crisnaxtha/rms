@@ -42,42 +42,39 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-7">
                             <div class="form-group">
-                                <label class="">School</label>
-                                <select class="dropdown-school" name="school_id" id="school_id" required>
+                                <label class="">School-Class-Section</label>
+                                <select class="dropdown-school" name="school_class_sec_id" id="school_class_sec_id" required>
                                     <option value="">Select</option>
-                                    @if(isset($data['school']))
-                                    @foreach($data['school'] as $row)
-                                        <option value="{{ $row->id }}" @if(isset($data['school_id'])) @if($data['school_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
+                                    @if(isset($data['school_class_sec']))
+                                    @foreach($data['school_class_sec'] as $row)
+                                        <option value="{{ $row->id }}" @if(isset($data['school_class_sec_id'])) @if($data['school_class_sec_id'] == $row->id) selected @endif @endif >{{ $row->school_title }}-({{ $row->class_title }})-({{ $row->sec_title }})</option>
                                     @endforeach
                                     @endif
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="">Class</label>
-                                <select class="dropdown-class" name="class_id" id="class_id" required>
+                                <label class="">Students</label>
+                                <select class="dropdown-exam" name="student_id" id="student_id" required>
                                     <option value="">Select</option>
-                                    @if(isset($data['class']))
-                                    @foreach($data['class'] as $row)
-                                    <option value="{{ $row->id }}" @if(isset($data['class_id'])) @if($data['class_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
-                                    @endforeach
-                                    @endif
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                    </div>
+                    Subjects
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="">Section</label>
-                                <select class="dropdown-section" name="section_id" id="section_id" required>
+                                <label class="">Students</label>
+                                <select class="dropdown-exam" name="student_id" id="student_id" required>
                                     <option value="">Select</option>
-                                    @if(isset($data['section']))
-                                    @foreach($data['section'] as $row)
-                                    <option value="{{ $row->id }}" @if(isset($data['section_id'])) @if($data['section_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
-                                    @endforeach
-                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -100,91 +97,11 @@
             <div class="panel-body">
                 <form action="{{ route($_base_route.'.store') }}" method="POST" class="">
                     @csrf
-                    <input type="hidden" value="0" id="post_school_id" name="school_id">
-                    <input type="hidden" value="0" id="post_class_id" name="class_id">
-                    <input type="hidden" value="0" id="post_section_id" name="section_id">
-                    <input type="hidden" value="0" id="post_exam_id" name="exam_id">
+                    <input type="hidden" value="0" id="session_id" name="session_id">
+                    <input type="hidden" value="0" id="exam_id" name="exam_id">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Student</th>
-                                @if(isset($data['school_class_section_subjects']))
-                                @foreach($data['school_class_section_subjects'] as $row)
-                                <th>{{ $row->sub_title }}</th>
-                                @endforeach
-                                @endif
-                                </tr>
-                            </thead>
-                            <tbody id="TableContainer">
-                            {{-- If Data is already exist in exam_result table then this code of block is called  --}}
-                                @if(count($data['std_result']) != 0)
-                                {{-- @php dd($data['std_result']); @endphp --}}
-                                @foreach($data['std_result'] as $key => $rows)
-                                @php $rows_array_key = array_keys($rows); @endphp
-                                <tr class="gradeX" id="">
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ dm_getStudent($key)->first_name }}</td>
-                                    @php $i = 0; @endphp
-                                    @if(isset($data['school_class_section_subjects']))
-                                    @foreach($data['school_class_section_subjects'] as $row)
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][th_attendance]" value="ABS">Abs</label>
-                                            </div>
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows[$rows_array_key[$i]]['id']}}">
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][subject_id]" value="{{ $row->subject_id }}">
-                                            <label for="">Th</label>
-                                            <input type="text" name="data[{{ $key }}][{{ $loop->index}}][theory_marks]" class="form-control input-sm" id="" value="@if(isset($rows[$rows_array_key[$i]]['theory_get_marks'])) {{ $rows[$rows_array_key[$i]]['theory_get_marks'] }} @else  @endif" placeholder="Enter Theory Marks">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][pr_attendance]" value="ABS">Abs</label>
-                                            </div>
-                                            <label for="">Pr</label>
-                                            <input type="text" name="data[{{ $key }}][{{ $loop->index}}][practical_marks]" class="form-control input-sm" id="" value="@if(isset($rows[$rows_array_key[$i]]['practical_get_marks'])) {{ $rows[$rows_array_key[$i]]['practical_get_marks'] }} @else  @endif" placeholder="Enter Pratical Marks">
-                                        </div>
-                                    </td>
-                                    @php $i++; @endphp
-                                    @endforeach
-                                    @endif
-                                </tr>
-                                @endforeach
-                                @else
-                                @foreach($data['student'] as $key => $rows)
-                                <tr class="gradeX" id="">
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $rows->first_name }}</td>
-                                    @php $i = 0; @endphp
-                                    @if(isset($data['school_class_section_subjects']))
-                                    @foreach($data['school_class_section_subjects'] as $row)
-                                    <td>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][th_attendance]" value="ABS">Abs</label>
-                                            </div>
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][student_id]" value="{{ $rows->id }}">
-                                            <input type="hidden" name="data[{{ $key }}][{{ $loop->index}}][exam_schedule_id]" value="{{ $row->exam_sch_id }}">
-                                            <label for="">Th</label>
-                                            <input type="text" name="data[{{ $key }}][{{ $loop->index}}][theory_marks]" class="form-control input-sm" id="" placeholder="Enter Theory Marks">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="data[{{ $key }}][{{ $loop->index}}][pr_attendance]" value="ABS">Abs</label>
-                                            </div>
-                                            <label for="">Pr</label>
-                                            <input type="text" name="data[{{ $key }}][{{ $loop->index}}][practical_marks]" class="form-control input-sm" id="" placeholder="Enter Practical Marks">
-                                        </div>
-                                    </td>
-                                    @php $i++; @endphp
-                                    @endforeach
-                                    @endif
-                                </tr>
-                                @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+
                     </div>
-                    {{-- <div class="form-horizontal" id="TextBoxContainer" role="form">
-                    </div> --}}
                     <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
                 </form>
             </div>
@@ -202,58 +119,37 @@
     $(document).ready(function () {
         $(".dropdown-exam").select2();
         $(".dropdown-school").select2();
-        $(".dropdown-class").select2();
-        $(".dropdown-section").select2();
     });
 </script>
 <script>
-    $(document).on('change', '#school_id', function (e) {
-        $('#class_id').html("");
+$(document).on('change', '#school_class_sec_id', function (e) {
+    $("form#schedule-form").submit();
+});
+</script>
+
+<script>
+
+    $(document).on('change', '#school_class_sec_id', function (e) {
+        $('#student_id').html("");
         // resetForm();
-        var school_id = $(this).val();
-        // alert(school_id);
-        var url = '{{ route('dsms.assign_section.getClass')}}';
+        var school_class_sec_id = $(this).val();
+        var url = '{{ route('dsms.student.getStudents')}}';
         var div_data = '<option value="">Select</option>';
         $.ajax({
             type: "POST",
             url: url,
-            data: {school_id: school_id},
+            data: {school_class_sec_id: school_class_sec_id},
             dataType: "json",
             success: function (data) {
                 console.log(data);
+                if(data.length == 0){
+                    alert("There is no Data !!!");
+                }
                 $.each(data, function (i, obj)
                 {
-                    div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
+                    div_data += "<option value=" + obj.id + ">" + obj.first_name  + "</option>";
                 });
-                $('#class_id').append(div_data);
-            },
-            error: function(jqXHR){
-                console.log(jqXHR.responseJSON);
-            }
-        });
-    });
-</script>
-<script>
-
-    $(document).on('change', '#class_id', function (e) {
-        $('#section_id').html("");
-        // resetForm();
-        var class_id = $(this).val();
-        var school_id = $('#school_id').val();
-        var url = '{{ route('dsms.assign_subject.getSection')}}';
-        var div_data = '<option value="">Select</option>';
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {class_id: class_id, school_id: school_id},
-            dataType: "json",
-            success: function (data) {
-                // console.log(data);
-                $.each(data, function (i, obj)
-                {
-                    div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
-                });
-                $('#section_id').append(div_data);
+                $('#student_id').append(div_data);
             },
             error: function(jqXHR) {
                 console.log(jqXHR.responseText);
@@ -261,10 +157,5 @@
         });
     });
 
-</script>
-<script>
-$(document).on('change', '#section_id', function (e) {
-    $("form#schedule-form").submit();
-});
 </script>
 @endsection
