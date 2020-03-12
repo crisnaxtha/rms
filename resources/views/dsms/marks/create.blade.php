@@ -56,7 +56,6 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -67,6 +66,7 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
                     <div class="row" id="TextBoxContainer">
                         {{-- Here html code will be placed --}}
                     </div>
@@ -89,12 +89,6 @@
     });
 </script>
 <script>
-// $(document).on('change', '#school_class_sec_id', function (e) {
-//     $("form#schedule-form").submit();
-// });
-</script>
-
-<script>
 
     $(document).on('change', '#school_class_sec_id', function (e) {
         $('#student_id').html("");
@@ -110,7 +104,7 @@
             success: function (data) {
                 console.log(data);
                 if(data.length == 0){
-                    alert("There is no Data !!!");
+                    alert("No Students Found !!!");
                 }
                 $.each(data, function (i, obj)
                 {
@@ -141,7 +135,7 @@
                 console.log(data);
                 var response = data;
                 if(response.length == 0){
-                    alert("No Data Found !!");
+                    alert("No Subjects Found !!");
                 }
                 else if (response && response.length > 0) {
                     for (i = 0; i < response.length; ++i) {
@@ -168,8 +162,8 @@
         var row = "";
         row += '<div class="col-lg-12"';
             row += '<fieldset>';
-                row += '<legend>'+ subject_title +':</legend>';
-                row += '<input type="text" name="data['+ i +'][subject_id]" class="form-control" id="data['+ i +'][subject_id]" value="'+ row_id + '">';
+                row += '<legend>'+ (i+1) + '. ' + subject_title +':</legend>';
+                row += '<input type="hidden" name="data['+ i +'][school_class_section_subject_id]" class="form-control" id="data['+ i +'][school_class_section_subject_id]" value="'+ row_id + '">';
 
                     row += '<div class="form-group">';
                         row += '<div class="row">';

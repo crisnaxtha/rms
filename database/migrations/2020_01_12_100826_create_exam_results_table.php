@@ -16,12 +16,13 @@ class CreateExamResultsTable extends Migration
         Schema::create('exam_results', function (Blueprint $table) {
             $table->increments('id');
             // $table->unsignedInteger('school_id')->nullable();
-            $table->string('theory_attendance')->nullable();
-            $table->string('practical_attendance')->nullable();
             $table->unsignedInteger('session_id')->nullable();
             $table->unsignedInteger('school_class_section_subject_id')->nullable();
             $table->unsignedInteger('exam_id')->nullable();
             $table->unsignedInteger('student_id')->nullable();
+
+            $table->string('theory_attendance')->nullable();
+            $table->string('practical_attendance')->nullable();
             $table->float('theory_get_marks', 10, 2)->nullable();
             $table->string('theory_grade')->nullable();
             $table->float('practical_get_marks', 10, 2)->nullable();
