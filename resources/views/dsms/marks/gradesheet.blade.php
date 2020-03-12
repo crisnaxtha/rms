@@ -25,15 +25,15 @@
                 </div>
                 <div class="col-md-8" style="top:-26px;">
                     <div class="pull-center">
-                        @if(isset($ata['ms_setting']))
+                        @if(isset($data['ms_setting']))
                         <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
                         <h6>{{ $data['ms_setting']->title_2 }}</h6>
                         <h6>{{ $data['ms_setting']->title_3 }}</h6>
                         <h4><b>{{ $data['ms_setting']->title_4 }}</b></h4>
                         @else
-                        <h1>Set Grade Setting First</h1>
+                        <h1 style="color:red">Set Grade Setting First</h1>
                         @endif
-                        <h5>@foreach($data['class'] as $cl) @if($cl->id == $data['class_id']) {{ $cl->title }} @endif @endforeach</h5>
+                        <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5>
                         <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="para">
-            <p>The grade secured by <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> Date of Birth <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD){{ dm_getStudent($data['student_id'])->dob_bs }}</b> Symbol number <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b> of<b> @foreach($data['school'] as $sc) @if($sc->id == $data['school_id']) {{ $sc->title }} @endif @endforeach</b> in basic education completion examination given below.
+            <p>The grade secured by <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> Date of Birth <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD)</b> Symbol number <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b> of<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> in basic education completion examination given below.
             </p>
         </div>
 
@@ -86,8 +86,8 @@
                     @endphp
                 <tr>
                     <td rowspan="1">{{ $loop->iteration }}</td>
-                    <td rowspan="1" colspan="3">{{ dm_getSubject($row->exam_schedules_id)->title }}</td>
-                    <td> {{ dm_getSubject($row->exam_schedules_id)->credit_hour }}</td>
+                    <td rowspan="1" colspan="3">{{ dm_getSubject($row->school_class_section_subject_id)->title }}</td>
+                    <td> {{ dm_getSubject($row->school_class_section_subject_id)->credit_hour }}</td>
                     <td> {{  $row->theory_grade }}</td>
                     <td>{{ $row->practical_grade }}</td>
                     <td>{{ $row->final_grade }}</td>

@@ -150,7 +150,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamResultsController@destroy']);
 
 
-            Route::get('marksheet/{exam_id}/{school_id}/{class_id}/{section_id}/{student_id}',
+            Route::get('marksheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
                 ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printMarksheet']);
             });
 

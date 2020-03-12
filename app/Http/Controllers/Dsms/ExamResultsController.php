@@ -216,24 +216,27 @@ class ExamResultsController extends DM_BaseController
         return redirect()->route($this->base_route.'.create');
     }
 
-    public function printMarksheet($exam_id, $school_id, $class_id, $section_id, $student_id) {
+    public function printMarksheet($session_id, $exam_id, $school_class_section_id, $student_id) {
+        $data['session_id'] = $session_id;
         $data['exam_id'] = $exam_id;
-        $data['school_id'] = $school_id;
-        $data['class_id'] = $class_id;
-        $data['section_id'] = $section_id;
+        $data['school_class_sec_id'] = $school_class_section_id;
         $data['student_id'] = $student_id;
 
-        $data['school'] = $this->model_4::all();
-        $data['class'] = $this->model_1::where('status', '=', 1)->get();
-        $data['section'] = $this->model_5::where('status', '=', 1)->get();
+        $data['sessions'] = $this->model_7::all();
         $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+        $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
 
-        $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
-        $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
-        $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
+        $data['school_id'] = $this->model_g::getSchoolAndClass($data['school_class_sec_id'])->school_id;
+        $data['class_id'] = $this->model_g::getSchoolAndClass($data['school_class_sec_id'])->class_id;
+
+        $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+
         $data['result'] = array();
-        foreach($data['exam_schedule'] as $exam) {
-                array_push($data['result'], $this->model_g::getStudentResult($exam->exam_sch_id, $data['student_id']));
+        foreach($data['school_class_section_subjects'] as $subject) {
+            $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $data['student_id'], $subject->id);
+            if(isset($s_result)){
+                array_push($data['result'], $s_result);
+            }
         }
         $data['ms_setting'] = $this->model_6::first();
 

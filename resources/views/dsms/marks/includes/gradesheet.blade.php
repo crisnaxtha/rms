@@ -27,10 +27,14 @@
                                 </div>
                                 <div class="col-md-8" style="top:-26px;">
                                     <div class="pull-center">
+                                        @if(isset($data['ms_setting']))
                                         <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
                                         <h6>{{ $data['ms_setting']->title_2 }}</h6>
                                         <h6>{{ $data['ms_setting']->title_3 }}</h6>
                                         <h4><b>{{ $data['ms_setting']->title_4 }}</b></h4>
+                                        @else
+                                        <h1 style="color:red">Set Grade Setting First</h1>
+                                        @endif
                                         <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5>
                                         <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                                     </div>
