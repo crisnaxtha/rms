@@ -8,6 +8,22 @@ if(!function_exists('dm_schoolClassSection')){
     }
 }
 // For Marksheet Module in to return student
+if(!function_exists('dm_getSession')){
+    function dm_getSession($session_id) {
+        $data = DM_General::getSession($session_id);
+        return $data;
+    }
+}
+
+// For Marksheet Module in to return student
+if(!function_exists('dm_getExam')){
+    function dm_getExam($exam_id) {
+        $data = DM_General::getExam($exam_id);
+        return $data;
+    }
+}
+
+// For Marksheet Module in to return student
 if(!function_exists('dm_getStudent')){
     function dm_getStudent($student_id) {
         $data = DM_General::getStudent($student_id);
@@ -27,6 +43,14 @@ if(!function_exists('dm_getSchool')){
 if(!function_exists('dm_getClass')){
     function dm_getClass($class_id) {
         $data = DM_General::getClass($class_id);
+        return $data;
+    }
+}
+
+// For Marksheet Module in to return class
+if(!function_exists('dm_getSection')){
+    function dm_getSection($section_id) {
+        $data = DM_General::getSection($section_id);
         return $data;
     }
 }

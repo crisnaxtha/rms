@@ -145,9 +145,11 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::any('create',                                ['as'=>'create',              'uses'=>'ExamResultsController@create']);
             Route::post('store',                                ['as'=>'store',              'uses'=>'ExamResultsController@store']);
             Route::get('{id}/show',                             ['as'=>'show',              'uses'=>'ExamResultsController@show']);
-            Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'ExamResultsController@edit']);
-            Route::put('{id}',                                  ['as'=>'update',              'uses'=>'ExamResultsController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'ExamResultsController@destroy']);
+            Route::get('{session_id}/{exam_id}/{school_class_section_id}/{student_id}/edit',
+            ['as'=>'edit',              'uses'=>'ExamResultsController@edit']);
+
+            Route::put('update',                                      ['as'=>'update',              'uses'=>'ExamResultsController@update']);
 
 
             Route::get('marksheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',

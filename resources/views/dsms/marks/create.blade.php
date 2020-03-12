@@ -173,7 +173,7 @@
                                     row += '<label><input type="checkbox" name="data['+ i +'][th_attendance]" id="data['+ i +'][th_attendance]" value="ABS">Theory Abs</label>';
                                 row += '</div>';
                             row += '</div>';
-                            row += '<div class="col-md-2">';
+                            row += '<div class="col-md-4">';
                                 row += '<label for="">Theory Full Marks: '+ subject_th_marks +'</label>';
                                 row += '<input type="text" name="data['+ i +'][theory_marks]" class="form-control" id="data['+ i +'][th_attendance]" placeholder="Enter Theory Marks">';
                             row += '</div>';
@@ -184,7 +184,7 @@
                                 row += '<label><input type="checkbox" name="data['+ i +'][pr_attendance]" value="ABS">Practical Abs</label>';
                                 row += '</div>';
                             row += '</div>';
-                            row += '<div class="col-md-2">';
+                            row += '<div class="col-md-4">';
                                 row += '<label for="">Practical  Full Marks:'+ subject_pr_marks +'</label>';
                                 row += '<input type="text" name="data['+ i +'][practical_marks]" class="form-control" id="data['+ i +'][th_attendance]" placeholder="Enter Theory Marks">';
                             row += '</div>';

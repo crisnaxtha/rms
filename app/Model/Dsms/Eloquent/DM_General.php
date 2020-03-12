@@ -26,11 +26,12 @@ class DM_General extends Model
     }
 
     //return single school based on school class section id
-    public static function getSchoolAndClass($school_class_section_id) {
+    public static function getSchoolClassAndSection($school_class_section_id) {
         $data = DB::table('school_class_sections')
+                ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
                 ->join('school_classes', 'school_class_sections.school_class_id', '=', 'school_classes.id')
                 ->where('school_class_sections.id', '=', $school_class_section_id)
-                ->select('school_classes.school_id', 'school_classes.class_id')
+                ->select('school_classes.school_id', 'school_classes.class_id', 'sections.id as section_id')
                 ->first();
         return $data;
     }
@@ -77,7 +78,7 @@ class DM_General extends Model
                 ->first();
         return $data;
     }
-
+    //get all the School with all class and all section by Join Query
     public static function joinAllSchoolClassSection() {
         $data = DB::table('school_class_sections')
                 ->join('sections', 'school_class_sections.section_id', '=', 'sections.id')
@@ -243,14 +244,22 @@ class DM_General extends Model
         }
         return $grade_point;
     }
-    //return student base on id
-    public static function getStudent($student_id){
-        $data = DB::table('students')
-                ->where('id', '=', $student_id)
+
+    //return Session base on id
+    public static function getSession($session_id){
+        $data = DB::table('sessions')
+                ->where('id', '=', $session_id)
                 ->first();
         return $data;
     }
 
+    //return Session base on id
+    public static function getExam($exam_id){
+    $data = DB::table('exams')
+            ->where('id', '=', $exam_id)
+            ->first();
+    return $data;
+    }
     //return student base on id
     public static function getSchool($school_id){
         $data = DB::table('schools')
@@ -266,4 +275,20 @@ class DM_General extends Model
                 ->first();
         return $data;
     }
+    //return student base on id
+    public static function getSection($section_id){
+    $data = DB::table('sections')
+            ->where('id', '=', $section_id)
+            ->first();
+    return $data;
+    }
+    //return student base on id
+    public static function getStudent($student_id){
+        $data = DB::table('students')
+                ->where('id', '=', $student_id)
+                ->first();
+        return $data;
+    }
+
+
 }
