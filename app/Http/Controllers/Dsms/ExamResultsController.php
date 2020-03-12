@@ -365,6 +365,33 @@ class ExamResultsController extends DM_BaseController
         return redirect()->route($this->base_route.'.index');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, $session_id, $exam_id, $school_class_section_id, $student_id)
+    {
+        if($request->ajax()){
+            $data['session_id'] = $session_id;
+            $data['exam_id'] = $exam_id;
+            $data['school_class_sec_id'] = $school_class_section_id;
+            $data['student_id'] = $student_id;
+
+            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+            foreach($data['school_class_section_subjects'] as $subject) {
+                $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $data['student_id'], $subject->id);
+                if(isset($s_result)){
+                    // var_dump($s_result);
+                    $this->model::destroy($s_result->id);
+
+                }
+            }
+            return true;
+        }
+    }
+
     public function printMarksheet($session_id, $exam_id, $school_class_section_id, $student_id) {
         $data['session_id'] = $session_id;
         $data['exam_id'] = $exam_id;

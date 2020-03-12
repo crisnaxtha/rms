@@ -19,20 +19,21 @@ $(document).on('click','#delete', function () {
             },
             success: function(response){
                 console.log(response);
-                // $($object).parents('tr').remove();
+                $($object).parents('tr').remove();
                 alert('Successfully Deleted!!');
                 location.reload(true);
             },
             error: function(xhr) {
+                $($object).parents('tr').remove();
                 console.log(xhr.responseText); // this line will save you tons of hours while debugging
                // do something here because of error
-              } 
+              }
         });
     }
     else {
 
     }
- 
+
 });
 
 $(document).on('click','#restore', function () {
@@ -66,13 +67,12 @@ $(document).on('click','#restore', function () {
         });
     }
     else {
-    
+
     }
 
 });
 
 $('.dropdown-click').on('click',function() {
     var value=$(this).attr('href');
-            window.location.href = value;  
+            window.location.href = value;
     });
-    

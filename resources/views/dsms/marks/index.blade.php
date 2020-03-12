@@ -115,6 +115,7 @@
                                 @include('dsms.marks.includes.buttons.show')
                                 @include('dsms.marks.includes.buttons.print')
                                 @include('dsms.marks.includes.buttons.edit')
+                                @include('dsms.marks.includes.buttons.delete')
                             </td>
                         </tr>
                         @endforeach
