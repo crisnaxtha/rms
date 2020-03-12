@@ -160,9 +160,9 @@
 
     function appendRow(subject_id,subject_title, subject_th_marks, subject_pr_marks, row_id, i) {
         var row = "";
-        row += '<div class="col-lg-12"';
-            row += '<fieldset>';
-                row += '<legend>'+ (i+1) + '. ' + subject_title +':</legend>';
+        row += '<div class="col-lg-12">';
+            row += '<fieldset class="scheduler-border">';
+                row += '<legend class="scheduler-border">'+ (i+1) + '. ' + subject_title +':</legend>';
                 row += '<input type="hidden" name="data['+ i +'][school_class_section_subject_id]" class="form-control" id="data['+ i +'][school_class_section_subject_id]" value="'+ row_id + '">';
 
                     row += '<div class="form-group">';
