@@ -42,14 +42,40 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-3">
                             <div class="form-group">
-                                <label class="">School-Class-Section</label>
-                                <select class="dropdown-school" name="school_class_sec_id" id="school_class_sec_id" required>
+                                <label class="">School</label>
+                                <select class="dropdown-school" name="school_id" id="school_id" required>
                                     <option value="">Select</option>
-                                    @if(isset($data['school_class_sec']))
-                                    @foreach($data['school_class_sec'] as $row)
-                                        <option value="{{ $row->id }}" @if(isset($data['school_class_sec_id'])) @if($data['school_class_sec_id'] == $row->id) selected @endif @endif >{{ $row->school_title }}-({{ $row->class_title }})-({{ $row->sec_title }})</option>
+                                    @if(isset($data['school']))
+                                    @foreach($data['school'] as $row)
+                                        <option value="{{ $row->id }}" @if(isset($data['school_id'])) @if($data['school_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="">Class</label>
+                                <select class="dropdown-class" name="class_id" id="class_id" required>
+                                    <option value="">Select</option>
+                                    @if(isset($data['class']))
+                                    @foreach($data['class'] as $row)
+                                    <option value="{{ $row->id }}" @if(isset($data['class_id'])) @if($data['class_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="">Section</label>
+                                <select class="dropdown-section" name="section_id" id="section_id" required>
+                                    <option value="">Select</option>
+                                    @if(isset($data['section']))
+                                    @foreach($data['section'] as $row)
+                                    <option value="{{ $row->id }}" @if(isset($data['section_id'])) @if($data['section_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -78,8 +104,8 @@
                       <tr>
                             <th style="font-size: 11px;">#</th>
                             <th style="font-size: 11px;">Student</th>
-                            @if(isset($data['school_class_section_subjects']))
-                            @foreach($data['school_class_section_subjects'] as $row)
+                            @if(isset($data['exam_schedule']))
+                            @foreach($data['exam_schedule'] as $row)
                             <th style="font-size: 11px;">{{ $row->sub_title }}</th>
                             {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
                             @endforeach
@@ -113,7 +139,7 @@
                             @endif
                             <td>
                                 @include('dsms.marks.includes.buttons.show')
-                                {{-- @include('dsms.marks.includes.buttons.print') --}}
+                                @include('dsms.marks.includes.buttons.print')
                             </td>
                         </tr>
                         @endforeach
@@ -143,7 +169,63 @@
     });
 </script>
 <script>
-$(document).on('change', '#school_class_sec_id', function (e) {
+    $(document).on('change', '#school_id', function (e) {
+        $('#class_id').html("");
+        // resetForm();
+        var school_id = $(this).val();
+        // alert(school_id);
+        var url = '{{ route('dsms.assign_section.getClass')}}';
+        var div_data = '<option value="">Select</option>';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {school_id: school_id},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                $.each(data, function (i, obj)
+                {
+                    div_data += "<option value=" + obj.class_id + ">" + obj.class_title  + "</option>";
+                });
+                $('#class_id').append(div_data);
+            },
+            error: function(jqXHR){
+                console.log(jqXHR.responseJSON);
+            }
+        });
+    });
+</script>
+<script>
+
+    $(document).on('change', '#class_id', function (e) {
+        $('#section_id').html("");
+        // resetForm();
+        var class_id = $(this).val();
+        var school_id = $('#school_id').val();
+        var url = '{{ route('dsms.assign_subject.getSection')}}';
+        var div_data = '<option value="">Select</option>';
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {class_id: class_id, school_id: school_id},
+            dataType: "json",
+            success: function (data) {
+                // console.log(data);
+                $.each(data, function (i, obj)
+                {
+                    div_data += "<option value=" + obj.sec_id + ">" + obj.sec_title  + "</option>";
+                });
+                $('#section_id').append(div_data);
+            },
+            error: function(jqXHR) {
+                console.log(jqXHR.responseText);
+            }
+        });
+    });
+
+</script>
+<script>
+$(document).on('change', '#section_id', function (e) {
     $("form#schedule-form").submit();
 });
 </script>

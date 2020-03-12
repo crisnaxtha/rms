@@ -47,31 +47,27 @@ class ExamResultsController extends DM_BaseController
         $this->panel = "Grades View";
         if ($request->isMethod('post')){
             $data['sessions'] = $this->model_7::all();
-            $data['school'] = $this->model_4::all();
-            $data['class'] = $this->model_1::where('status', '=', 1)->get();
-            $data['section'] = $this->model_5::where('status', '=', 1)->get();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
 
             $data['session_id'] = $request->session_id;
-            $data['school_id'] = $request->school_id;
-            $data['class_id'] = $request->class_id;
-            $data['section_id'] = $request->section_id;
             $data['exam_id'] = $request->exam_id;
+            $data['school_class_sec_id'] = $request->school_class_sec_id;
 
-            $data['school_class'] = $this->model_g::getSchoolClassId($data['school_id'], $data['class_id']);
-            $data['school_class_section'] = $this->model_g::getSchoolClassSection($data['school_class']->id, $data['section_id']);
-            $data['exam_schedule'] = $this->model_g::getExamSchedule($data['school_class_section']->id, $data['exam_id']);
-            // dd($data['exam_schedule']);
-            $data['student'] = $this->model_2::where('session_id', '=', $data['session_id'])->where('school_class_section_id', '=', $data['school_class_section']->id)->get();
-            $i = 0;
-            $j = 0;
+            $data['school_id'] = $this->model_g::getSchoolAndClass($data['school_class_sec_id'])->school_id;
+            $data['class_id'] = $this->model_g::getSchoolAndClass($data['school_class_sec_id'])->class_id;
+
+            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+            // dd($data['school_class_section_subjects']);
+
+            $data['students'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
+            // dd($data['students']);
             $data['old_std_result'] = array();
-            foreach($data['exam_schedule'] as $exam) {
-                foreach($data['student'] as $student) {
-                    array_push($data['old_std_result'], $this->model_g::showStudentResult($exam->exam_sch_id, $student->id));
-                    $j++;
+            foreach($data['students'] as $student) {
+                $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->school_class_section_subject_id);
+                if(isset($s_result)){
+                    array_push($data['old_std_result'], $s_result);
                 }
-                $i++;
             }
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
             // dd($data['old_std_result']);
@@ -82,8 +78,8 @@ class ExamResultsController extends DM_BaseController
         }
         else {
             $data['sessions'] = $this->model_7::all();
-            $data['school'] = $this->model_4::all();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
             return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
     }
@@ -95,10 +91,10 @@ class ExamResultsController extends DM_BaseController
      */
     public function create(Request $request)
     {
-        $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
         $data['sessions'] = $this->model_7::all();
-        $data['school'] = $this->model_4::all();
         $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+        $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
+
         return view($this->loadView($this->view_path.'.create'), compact('data'));
     }
 

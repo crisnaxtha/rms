@@ -15,10 +15,26 @@ if(!function_exists('dm_getStudent')){
     }
 }
 
+// For Marksheet Module in to return school
+if(!function_exists('dm_getSchool')){
+    function dm_getSchool($school_id) {
+        $data = DM_General::getSchool($school_id);
+        return $data;
+    }
+}
+
+// For Marksheet Module in to return class
+if(!function_exists('dm_getClass')){
+    function dm_getClass($class_id) {
+        $data = DM_General::getClass($class_id);
+        return $data;
+    }
+}
+
 // For Marksheet Module in to return subject
 if(!function_exists('dm_getSubject')){
-    function dm_getSubject($exam_schedule_id) {
-        $data = DM_General::getSubjectFromExamSchedule($exam_schedule_id);
+    function dm_getSubject($school_class_section_subject_id) {
+        $data = DM_General::getSubjectFromSchoolClassSectionSubjects($school_class_section_subject_id);
         return $data;
     }
 }
