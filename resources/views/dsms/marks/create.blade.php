@@ -13,7 +13,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.create')}}" method="post" enctype="multipart/form-data" id="schedule-form">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.store') }}" method="post" enctype="multipart/form-data" id="schedule-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-2">
@@ -58,58 +58,25 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="">Students</label>
-                                <select class="dropdown-exam" name="student_id" id="student_id" required>
+                                <select class="dropdown-school" name="student_id" id="student_id" required>
                                     <option value="">Select</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    Subjects
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="">Students</label>
-                                <select class="dropdown-exam" name="student_id" id="student_id" required>
-                                    <option value="">Select</option>
-                                </select>
-                            </div>
-                        </div>
+                    <div class="row" id="TextBoxContainer">
+                        {{-- Here html code will be placed --}}
                     </div>
-                    {{-- <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button> --}}
+                    <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-plus"></i> &nbsp; Save</button>
                 </form>
             </div>
         </section>
     </div>
 </div>
 
-        <!--Assign Subject block-->
-<div class="row" id="box_display">
-    <div class="col-md-12">
-        @if(isset($data['school_class_section_subjects']))
-        <section class="panel">
-            <header class="panel-heading">
-                Exam List
-            </header>
-            <div class="panel-body">
-                <form action="{{ route($_base_route.'.store') }}" method="POST" class="">
-                    @csrf
-                    <input type="hidden" value="0" id="session_id" name="session_id">
-                    <input type="hidden" value="0" id="exam_id" name="exam_id">
-                    <div class="table-responsive">
-
-                    </div>
-                    <button class="btn btn-success btn-xs pull-right" id="" type="submit"><i class="fa fa-search"></i> &nbsp; Save</button>
-                </form>
-            </div>
-        </section>
-        @endif
-    </div>
-</div>
-<!--Assign Subject block end-->
 
 @endsection
 
@@ -122,9 +89,9 @@
     });
 </script>
 <script>
-$(document).on('change', '#school_class_sec_id', function (e) {
-    $("form#schedule-form").submit();
-});
+// $(document).on('change', '#school_class_sec_id', function (e) {
+//     $("form#schedule-form").submit();
+// });
 </script>
 
 <script>
@@ -147,7 +114,7 @@ $(document).on('change', '#school_class_sec_id', function (e) {
                 }
                 $.each(data, function (i, obj)
                 {
-                    div_data += "<option value=" + obj.id + ">" + obj.first_name  + "</option>";
+                    div_data += "<option value=" + obj.id + ">" + "Symbol No:" + obj.roll_no +" =========== Name:" + obj.first_name +"=========== DOB:" + obj.dob_bs +"</option>";
                 });
                 $('#student_id').append(div_data);
             },
@@ -157,5 +124,83 @@ $(document).on('change', '#school_class_sec_id', function (e) {
         });
     });
 
+</script>
+<script type="text/javascript">
+
+    $(document).on('change', '#school_class_sec_id', function (e) {
+        $("#TextBoxContainer").html("");
+        var school_class_sec_id = $('#school_class_sec_id').val();
+        var formURL = '{{ route('dsms.subject.getSubject')}}';
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: { school_class_sec_id : school_class_sec_id},
+            dataType: 'json',
+            success: function (data, textStatus, jqXHR)
+            {
+                console.log(data);
+                var response = data;
+                if(response.length == 0){
+                    alert("No Data Found !!");
+                }
+                else if (response && response.length > 0) {
+                    for (i = 0; i < response.length; ++i) {
+                        var subject_id = response[i].subject_id;
+                        var subject_title = response[i].sub_title;
+                        var subject_th_marks = response[i].theory_full_marks;
+                        var subject_pr_marks = response[i].practical_full_marks;
+                        console.log(response[i].subject_id);
+                        var row_id = response[i].id;
+                        console.log(response[i].id);
+                        appendRow(subject_id, subject_title, subject_th_marks, subject_pr_marks, row_id, i);
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                console.log(jqXHR.responseText);
+            }
+        });
+        e.preventDefault();
+    });
+
+    function appendRow(subject_id,subject_title, subject_th_marks, subject_pr_marks, row_id, i) {
+        var row = "";
+        row += '<div class="col-lg-12"';
+            row += '<fieldset>';
+                row += '<legend>'+ subject_title +':</legend>';
+                row += '<input type="text" name="data['+ i +'][subject_id]" class="form-control" id="data['+ i +'][subject_id]" value="'+ row_id + '">';
+
+                    row += '<div class="form-group">';
+                        row += '<div class="row">';
+                            if(subject_th_marks){
+                            row += '<div class="col-md-2">';
+                                row += '<div class="checkbox">';
+                                    row += '<label><input type="checkbox" name="data['+ i +'][th_attendance]" id="data['+ i +'][th_attendance]" value="ABS">Theory Abs</label>';
+                                row += '</div>';
+                            row += '</div>';
+                            row += '<div class="col-md-2">';
+                                row += '<label for="">Theory Full Marks: '+ subject_th_marks +'</label>';
+                                row += '<input type="text" name="data['+ i +'][theory_marks]" class="form-control" id="data['+ i +'][th_attendance]" placeholder="Enter Theory Marks">';
+                            row += '</div>';
+                            }
+                            if(subject_pr_marks){
+                            row += '<div class="col-md-2">';
+                                row += '<div class="checkbox">';
+                                row += '<label><input type="checkbox" name="data['+ i +'][pr_attendance]" value="ABS">Practical Abs</label>';
+                                row += '</div>';
+                            row += '</div>';
+                            row += '<div class="col-md-2">';
+                                row += '<label for="">Practical  Full Marks:'+ subject_pr_marks +'</label>';
+                                row += '<input type="text" name="data['+ i +'][practical_marks]" class="form-control" id="data['+ i +'][th_attendance]" placeholder="Enter Theory Marks">';
+                            row += '</div>';
+                            }
+                        row += '</div>';
+                    row += '</div>';
+            row += '</fieldset>';
+        row += '</div>';
+
+        $("#TextBoxContainer").append(row);
+    }
 </script>
 @endsection

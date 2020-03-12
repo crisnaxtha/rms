@@ -92,6 +92,8 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::get('{id}/edit',                             ['as'=>'edit',              'uses'=>'SubjectsController@edit']);
             Route::put('{id}',                                  ['as'=>'update',              'uses'=>'SubjectsController@update']);
             Route::delete('{id}',                               ['as'=>'destroy',              'uses'=>'SubjectsController@destroy']);
+
+            Route::post('get_subject',                          ['as'=>'getSubject',              'uses'=>'SubjectsController@getSchoolClassSectionSubjects']);
         });
 
         Route::group(['as'=> 'assign_subject.', 'prefix' => 'assign_subject'], function(){

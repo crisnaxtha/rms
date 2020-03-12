@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dsms;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DM_BaseController;
 use App\Model\Dsms\Subject;
+use App\Model\Dsms\Eloquent\DM_General;
 
 class SubjectsController extends DM_BaseController
 {
@@ -12,13 +13,14 @@ class SubjectsController extends DM_BaseController
     protected $base_route ='dsms.subject';
     protected $view_path = 'dsms.subject';
 
-    public function __construct(Request $request, Subject $model){
+    public function __construct(Request $request, Subject $model, DM_General $model_g){
         $this->middleware(['auth', 'status']);
         $this->middleware('permission:subject-list', ['only' => ['index']]);
         $this->middleware('permission:subject-create', ['only' => ['create','store']]);
         $this->middleware('permission:subject-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:subject-delete', ['only' => ['destroy']]);
         $this->model = $model;
+        $this->model_g = $model_g;
     }
 
      /**
@@ -154,6 +156,16 @@ class SubjectsController extends DM_BaseController
 
 
     public function assignAssSubject() {
+
+    }
+
+    public function getSchoolClassSectionSubjects(Request $request) {
+        if($request->ajax()){
+            $school_class_sec_id = $request->school_class_sec_id;
+            $data = $this->model_g::getSchoolClassSectionSubjects($school_class_sec_id);
+            // var_dump($data);
+            return $data;
+        }
 
     }
 }

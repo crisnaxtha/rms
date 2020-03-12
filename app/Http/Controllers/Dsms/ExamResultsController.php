@@ -95,30 +95,11 @@ class ExamResultsController extends DM_BaseController
      */
     public function create(Request $request)
     {
-        if ($request->isMethod('post')){
-
-            $data['sessions'] = $this->model_7::all();
-            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
-
-            $data['session_id'] = $request->session_id;
-            $data['exam_id'] = $request->exam_id;
-            $data['school_class_sec_id'] = $request->school_class_sec_id;
-
-            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
-            // dd($data['school_class_section_subjects']);
-            $data['student'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
-            // dd($data['student']);
-            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter(json_decode(json_encode($data['student'])))), 'id');
-            // dd($data['std_result']);
-            return view($this->loadView($this->view_path.'.create'), compact('data'));
-        }
-        else {
-            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
-            $data['sessions'] = $this->model_7::all();
-            $data['school'] = $this->model_4::all();
-            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
-            return view($this->loadView($this->view_path.'.create'), compact('data'));
-        }
+        $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
+        $data['sessions'] = $this->model_7::all();
+        $data['school'] = $this->model_4::all();
+        $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+        return view($this->loadView($this->view_path.'.create'), compact('data'));
     }
 
     /**
@@ -130,19 +111,18 @@ class ExamResultsController extends DM_BaseController
     public function store(Request $request)
     {
         $data = $request->data;
-        // dd($data);
-        foreach($data as $rows) {
-            foreach($rows as $row){
-                $marks['exam_schedule_id'] = $row['exam_schedule_id'];
-                $marks['student_id'] = $row['student_id'];
+        $marks['session_id'] = $request->session_id;
+        $marks['exam_id'] = $request->exam_id;
+        $marks['school_class_sec_id'] = $request->school_class_sec_id;
+        $marks['student_id'] = $request->student_id;
 
+        foreach($data as $row) {
                 if(isset($row['th_attendance'])){
                     $marks['theory_marks'] = NULL;
                     $marks['theory_grade'] = NULL;
                 }else {
-                    $marks['theory_marks'] = $this->model_g::checkTheoryMarks($marks['exam_schedule_id'], $row['theory_marks']);
-                    $grade_point = $this->model_g->getTheoryGrade($marks['exam_schedule_id'],$marks['theory_marks']);
-                    // dd($grade_point);
+                    $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['subject_id'], $row['theory_marks']);
+                    $grade_point = $this->model_g->getTheoryGrade($row['subject_id'], $marks['theory_marks']);
                     if(isset($grade_point[0])){
                         $marks['theory_grade'] = $grade_point[0];
                     }else {
@@ -154,8 +134,8 @@ class ExamResultsController extends DM_BaseController
                     $marks['practical_marks'] = NULL;
                     $marks['practical_grade'] = NULL;
                 }else {
-                    $marks['practical_marks'] = $this->model_g::checkPracticalMarks($marks['exam_schedule_id'], $row['practical_marks']);;
-                    $grade_point = $this->model_g->getPracticalGrade($marks['exam_schedule_id'],$marks['practical_marks']);
+                    $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['subject_id'], $row['practical_marks']);;
+                    $grade_point = $this->model_g->getPracticalGrade($row['subject_id'], $marks['practical_marks']);
 
                     if(isset($grade_point[0])){
                         $marks['practical_grade'] = $grade_point[0];
@@ -167,7 +147,7 @@ class ExamResultsController extends DM_BaseController
 
                 if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
                     $marks['total_marks'] = $marks['theory_marks'] + $marks['practical_marks'];
-                    $grade_point = $this->model_g->getFinalGrade($marks['exam_schedule_id'],$marks['total_marks']);
+                    $grade_point = $this->model_g->getFinalGrade($row['subject_id'], $marks['total_marks']);
                     if(isset($grade_point[0])){
                         $marks['final_grade'] = $grade_point[0];
                     }else {
@@ -178,7 +158,7 @@ class ExamResultsController extends DM_BaseController
                     }else {
                         $marks['grade_point'] = NULL;
                     }
-                    $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($marks['exam_schedule_id'], $marks['grade_point']);
+                    $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($row['subject_id'], $marks['grade_point']);
                 }else {
                     $marks['total_marks'] = NULL;
                     $marks['final_grade'] = NULL;
@@ -186,13 +166,15 @@ class ExamResultsController extends DM_BaseController
                     $marks['grade_credit_hour'] = NULL;
                 }
 
-                $old_data =  DB::table('exam_results')->where('exam_schedules_id', '=', $marks['exam_schedule_id'])->where('student_id', '=', $marks['student_id'])->first();
+                $old_data =  DB::table('exam_results')->where('session_id', '=', $marks['session_id'])->where('student_id', '=', $marks['student_id'])->where('school_class_section_id', '=', $marks['school_class_sec_id'])->first();
                 if(isset($old_data)){
                     DB::table('exam_results')->where('id', '=', $old_data->id)->update([
+                        'session_id' => $marks['session_id'],
+                        'exam_id' => $marks['exam_id'],
+                        'school_class_section_subject_id' => $marks['subject_id'],
+                        'student_id' => $marks['student_id'],
                         'theory_attendance' => $row['th_attendance'],
                         'practical_attendance' => $row['pr_attendance'],
-                        'exam_schedules_id' => $marks['exam_schedule_id'],
-                        'student_id' => $marks['student_id'],
                         'theory_get_marks' => $marks['theory_marks'],
                         'theory_grade' => $marks['theory_grade'],
                         'practical_get_marks' => $marks['practical_marks'],
@@ -206,10 +188,12 @@ class ExamResultsController extends DM_BaseController
                 }
                 else {
                     DB::table('exam_results')->insert([
+                        'session_id' => $marks['session_id'],
+                        'exam_id' => $marks['exam_id'],
+                        'school_class_section_subject_id' => $marks['subject_id'],
+                        'student_id' => $marks['student_id'],
                         'theory_attendance' => $row['th_attendance'],
                         'practical_attendance' => $row['pr_attendance'],
-                        'exam_schedules_id' => $marks['exam_schedule_id'],
-                        'student_id' => $marks['student_id'],
                         'theory_get_marks' => $marks['theory_marks'],
                         'theory_grade' => $marks['theory_grade'],
                         'practical_get_marks' => $marks['practical_marks'],
@@ -221,9 +205,8 @@ class ExamResultsController extends DM_BaseController
                         'created_at' => date('Y-m-d-h-m-s')
                     ]);
                 }
-            }
+
         }
-        // die;
         session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.create');
     }
