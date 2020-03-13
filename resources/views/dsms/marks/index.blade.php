@@ -1,5 +1,11 @@
 @extends('dsms.layouts.app')
+@section('css')
+ {{-- Js Placed here because it is mandatory for pdf converter --}}
+ <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 
+
+@endsection
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -70,6 +76,10 @@
        <section class="panel">
           <header class="panel-heading">
              {{ $_panel }}
+            <button class="btn btn-info btn-xs" id="all-pdf">
+                <i class="fa fa-arrow-down"></i>
+            </button>
+
           </header>
           <div class="panel-body">
             <div class="adv-table">
@@ -112,6 +122,7 @@
                             @endforeach
                             @endif
                             <td>
+                                {{-- @include('dsms.marks.includes.buttons.pdf') --}}
                                 @include('dsms.marks.includes.buttons.show')
                                 @include('dsms.marks.includes.buttons.print')
                                 @include('dsms.marks.includes.buttons.edit')
@@ -147,6 +158,22 @@
 <script>
 $(document).on('change', '#school_class_sec_id', function (e) {
     $("form#schedule-form").submit();
+});
+</script>
+
+
+<script>
+$(document).on('click', '#all-pdf', function (e) {
+    // myText.removeAttribute("hidden");
+    var pdf = new jsPDF();
+    pdf.html(document.getElementById('all-gradesheet-pdf'), {
+        callback: function (pdf) {
+            var iframe = document.createElement('iframe');
+            // iframe.setAttribute('style', ' height:100%; width:100%');
+            document.body.appendChild(iframe);
+            iframe.src = pdf.save('datauristring');
+        }
+    });
 });
 </script>
 @endsection
