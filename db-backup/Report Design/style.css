@@ -1,0 +1,130 @@
+
+  
+  page {
+  background: white;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+  
+}
+
+page[size="A4"] {  
+  width: 21cm;
+  height: 29.7cm; 
+}
+
+@media print
+{    
+    .demo, .demo *,.hidden
+    {
+        display: none !important;
+    }
+    body {
+      border: none;
+    }
+
+    /* table tbody tr td {
+      font-size: 6px;
+    }
+  
+    
+    table tbody th {
+      font-size: 8px;
+    } */
+
+    .signature .col-md-4::after {
+      background-color: black; 
+      top: 0;
+      content: '';
+      display: block;
+      height: 1px;
+      left: 28%;
+      position: absolute;
+      transform: translate(-50%,0);
+      width: 120px;
+    }
+    
+
+    .signature .col-md-4{
+      margin-right: 100px;
+    }
+}
+
+@media (max-width: 991px) {
+  .signature .col-md-4::after {
+    background-color: black; 
+    top: 0;
+    content: '';
+    display: block;
+    height: 1px;
+    left: 28%;
+    position: absolute;
+    transform: translate(-50%,0);
+    width: 120px;
+  }
+}
+
+td {
+    border: 1px solid #726E6D;
+    /* padding: 7px; */
+    height: 35px;
+    text-align: center;
+  }
+  
+  thead{
+    font-weight:bold;
+    text-align:center;
+    color:black;
+      }
+
+  tbody 
+  
+  table {
+    border-collapse: collapse;
+  }
+
+  table tbody tr td {
+    font-size: 12px;
+  }
+
+  
+  table tbody th {
+    font-size: 12px;
+  }
+  
+  
+  .pull-center{
+    text-align: center;
+   
+}
+
+.signature .col-md-4::after {
+  background-color: black; 
+  top: 0;
+  content: '';
+  display: block;
+  height: 1px;
+  left: 28%;
+  position: absolute;
+  transform: translate(-50%,0);
+  width: 120px;
+}
+
+.signature{
+display: flex;
+}
+
+.para{
+  font-size: 20px;
+}
+
+.para p{
+  line-height: 35px;
+}
+
+
+page[size="A4"][layout="landscape"] {
+  width: 29.7cm;
+  height: 21cm;  
+}

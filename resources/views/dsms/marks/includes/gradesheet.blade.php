@@ -393,7 +393,9 @@
 
         <div class="signature">
             <div class="col-md-3">
+                @if(isset($data['ms_setting']->print_date))
                 <date> Date:{{ $data['ms_setting']->print_date }}</date>
+                @endif
             </div>
             <div class="col-md-2">
                 <p>Prepared by</p>
