@@ -56,7 +56,9 @@ class SubjectsController extends DM_BaseController
             'title' => 'required|max:255',
             'credit_hour' => 'required|integer',
             'theory_full_marks' => 'required|integer',
+            'theory_pass_marks' => 'required|integer',
             'practical_full_marks' => 'integer|nullable',
+            'practical_pass_marks' => 'integer|nullable',
         ],
         [
             'title.required' => 'You must enter the SUBJECT name!',
@@ -64,12 +66,17 @@ class SubjectsController extends DM_BaseController
             'credit_hour.integer' => 'Credit Hour must be INTEGER',
             'theory_full_marks.required' => 'You must enter the SUBJECT THEORY FULL MARKS',
             'theory_full_marks.integer' => 'Theory Full Marks must be INTEGER',
-            'practical_full_marks.integer' => 'Practical Full Marks must be INTEGER'
+            'theory_pass_marks.required' => 'You must enter the SUBJECT THEORY Pass MARKS',
+            'theory_pass_marks.integer' => 'Theory Pass Marks must be INTEGER',
+            'practical_full_marks.integer' => 'Practical Full Marks must be INTEGER',
+            'practical_pass_marks.integer' => 'Practical Full Marks must be INTEGER',
         ]);
         $row = $this->model;
         $row->title = $request->title;
         $row->theory_full_marks = $request->theory_full_marks;
+        $row->theory_pass_marks = $request->theory_pass_marks;
         $row->practical_full_marks = $request->practical_full_marks;
+        $row->practical_pass_marks = $request->practical_pass_marks;
         $row->credit_hour = $request->credit_hour;
         $row->save();
 
@@ -102,6 +109,7 @@ class SubjectsController extends DM_BaseController
     {
         $data['rows'] = $this->model::all();
         $data['single'] = $this->model::findOrFail($id);
+        // dd($data);
         return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
@@ -118,7 +126,9 @@ class SubjectsController extends DM_BaseController
             'title' => 'required|max:255',
             'credit_hour' => 'required|integer',
             'theory_full_marks' => 'required|integer',
+            'theory_pass_marks' => 'required|integer',
             'practical_full_marks' => 'integer|nullable',
+            'practical_pass_marks' => 'integer|nullable',
         ],
         [
             'title.required' => 'You must enter the SUBJECT name!',
@@ -126,12 +136,17 @@ class SubjectsController extends DM_BaseController
             'credit_hour.integer' => 'Credit Hour must be INTEGER',
             'theory_full_marks.required' => 'You must enter the SUBJECT THEORY FULL MARKS',
             'theory_full_marks.integer' => 'Theory Full Marks must be INTEGER',
-            'practical_full_marks.integer' => 'Practical Full Marks must be INTEGER'
+            'theory_pass_marks.required' => 'You must enter the SUBJECT THEORY Pass MARKS',
+            'theory_pass_marks.integer' => 'Theory Pass Marks must be INTEGER',
+            'practical_full_marks.integer' => 'Practical Full Marks must be INTEGER',
+            'practical_pass_marks.integer' => 'Practical Full Marks must be INTEGER',
         ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
         $row->theory_full_marks = $request->theory_full_marks;
+        $row->theory_pass_marks = $request->theory_pass_marks;
         $row->practical_full_marks = $request->practical_full_marks;
+        $row->practical_pass_marks = $request->practical_pass_marks;
         $row->credit_hour = $request->credit_hour;
         $row->save();
 
@@ -152,11 +167,6 @@ class SubjectsController extends DM_BaseController
     public function destroy($id)
     {
         $this->model::destroy($id);
-    }
-
-
-    public function assignAssSubject() {
-
     }
 
     public function getSchoolClassSectionSubjects(Request $request) {

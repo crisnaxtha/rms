@@ -18,7 +18,9 @@ class CreateSubjectsTable extends Migration
             // $table->unsignedInteger('school_id')->nullable();
             $table->string('title')->nullable();
             $table->integer('theory_full_marks')->nullable();
+            $table->integer('theory_pass_marks')->nullable();
             $table->integer('practical_full_marks')->nullable();
+            $table->integer('practical_pass_marks')->nullable();
             $table->integer('credit_hour')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
