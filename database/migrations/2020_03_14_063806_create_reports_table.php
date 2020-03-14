@@ -20,8 +20,9 @@ class CreateReportsTable extends Migration
             $table->unsignedInteger('exam_id')->nullable();
             $table->unsignedInteger('student_id')->nullable();
 
-            $table->float('total_th_marks', 10, 2)->nullable();
-            $table->float('total_pr_marks', 10, 2)->nullable();
+            $table->float('obtain_total_th_marks', 10, 2)->nullable();
+            $table->float('obtain_total_pr_marks', 10, 2)->nullable();
+            $table->float('obtain_total_marks', 10,2)->nullable();
             $table->float('grand_total_marks', 10,2)->nullable();
             $table->float('percentage', 10,1)->nullable();
             $table->float('gpa', 10,1)->nullable();

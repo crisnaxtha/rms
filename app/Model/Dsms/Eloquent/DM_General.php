@@ -10,10 +10,10 @@ class DM_General extends Model
 {
     public static function joinSchoolClass($class_id) {
         $data = DB::table('school_classes')
-            ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
-            ->where('school_classes.school_id', '=', $class_id)
-            ->select('school_classes.*', 'my_classes.id as class_id', 'my_classes.title as class_title')
-            ->get();
+                    ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
+                    ->where('school_classes.school_id', '=', $class_id)
+                    ->select('school_classes.*', 'my_classes.id as class_id', 'my_classes.title as class_title')
+                    ->get();
         return $data;
     }
 

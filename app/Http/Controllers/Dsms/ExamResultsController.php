@@ -13,6 +13,7 @@ use App\Model\Dsms\Student;
 use App\Model\Dsms\School;
 use App\Model\Dsms\Section;
 use App\Model\Dsms\Session;
+use App\Model\Dsms\Report;
 use DB;
 
 class ExamResultsController extends DM_BaseController
@@ -21,7 +22,7 @@ class ExamResultsController extends DM_BaseController
     protected $base_route ='dsms.marks';
     protected $view_path = 'dsms.marks';
 
-    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, Session $model_7, DM_General $model_g){
+    public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, Session $model_7, Report $model_8, DM_General $model_g){
         $this->middleware(['auth', 'status']);
         $this->middleware('permission:mark-register-list', ['only' => ['index']]);
         $this->middleware('permission:mark-register-create', ['only' => ['create','store']]);
@@ -35,6 +36,7 @@ class ExamResultsController extends DM_BaseController
         $this->model_5 = $model_5;
         $this->model_6 = $model_6;
         $this->model_7 = $model_7;
+        $this->model_8 = $model_8;
         $this->model_g = $model_g;
     }
     /**
@@ -188,7 +190,7 @@ class ExamResultsController extends DM_BaseController
                     'final_grade' => $marks['final_grade'],
                     'grade_point' => $marks['grade_point'],
                     'grade_credit_hour' => $marks['grade_credit_hour'],
-                    'created_at' => date('Y-m-d-h-m-s')
+                    'updated_at' => date('Y-m-d-h-m-s')
                 ]);
             }
             else {
@@ -256,16 +258,31 @@ class ExamResultsController extends DM_BaseController
      */
     public function update(Request $request){
         $data = $request->data;
+
+        $marks['obtain_total_th_marks'] = 0;
+        $marks['obtain_total_pr_marks'] = 0;
+        $marks['obtain_total_marks'] = 0;
+        $marks['grand_total_marks'] = 0;
+        $marks['subjects_no'] = count($data);
+
+
         $marks['session_id'] = $request->session_id;
         $marks['exam_id'] = $request->exam_id;
         $marks['school_class_sec_id'] = $request->school_class_sec_id;
         $marks['student_id'] = $request->student_id;
 
         foreach($data as $row) {
+            if(isset($row['school_class_section_subject_id'])){
+                $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
+                $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
+            }
+
+            //check if the student is absent
             if(isset($row['th_attendance'])){
                 $marks['theory_marks'] = NULL;
                 $marks['theory_grade'] = NULL;
             }elseif(isset($row['theory_marks'])) {
+                //check the theory marks
                 $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['school_class_section_subject_id'], $row['theory_marks']);
                 $grade_point = $this->model_g->getTheoryGrade($row['school_class_section_subject_id'], $marks['theory_marks']);
                 if(isset($grade_point[0])){
