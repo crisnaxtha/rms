@@ -116,6 +116,7 @@ class ExamResultsController extends DM_BaseController
         $marks['grand_total_marks'] = 0;
         $marks['total_grade_credit_hour'] = 0;
         $marks['subjects_no'] = count($data);
+        $marks['outcome'] = "PASS";
 
         //get id from form
         $marks['session_id'] = $request->session_id;
@@ -136,6 +137,11 @@ class ExamResultsController extends DM_BaseController
                 $marks['theory_grade'] = NULL;
             }elseif(isset($row['theory_marks'])) {
                 $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['school_class_section_subject_id'], $row['theory_marks']);
+                $th_outcome =  $this->model_g::checkTheoryOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
+                if($th_outcome) {
+                    $marks['outcome'] = "FAIL";
+                }
+
                 $grade_point = $this->model_g->getTheoryGrade($row['school_class_section_subject_id'], $marks['theory_marks']);
                 if(isset($grade_point[0])){
                     $marks['theory_grade'] = $grade_point[0];
@@ -153,9 +159,13 @@ class ExamResultsController extends DM_BaseController
                 $marks['practical_marks'] = NULL;
                 $marks['practical_grade'] = NULL;
             }elseif(isset($row['practical_marks']))  {
-                $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);;
-                $grade_point = $this->model_g->getPracticalGrade($row['school_class_section_subject_id'], $marks['practical_marks']);
+                $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);
+                $pr_outcome =  $this->model_g::checkPracticalOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
+                if($pr_outcome) {
+                    $marks['outcome'] = "FAIL";
+                }
 
+                $grade_point = $this->model_g->getPracticalGrade($row['school_class_section_subject_id'], $marks['practical_marks']);
                 if(isset($grade_point[0])){
                     $marks['practical_grade'] = $grade_point[0];
                 }else {
@@ -217,6 +227,7 @@ class ExamResultsController extends DM_BaseController
                     'final_grade' => $marks['final_grade'],
                     'grade_point' => $marks['grade_point'],
                     'grade_credit_hour' => $marks['grade_credit_hour'],
+                    'description' => $marks['outcome'],
                     'updated_at' => date('Y-m-d-h-m-s')
                 ]);
             }
@@ -235,6 +246,7 @@ class ExamResultsController extends DM_BaseController
                     'total_marks' => $marks['total_marks'],
                     'final_grade' => $marks['final_grade'],
                     'grade_point' => $marks['grade_point'],
+                    'description' => $marks['outcome'],
                     'grade_credit_hour' => $marks['grade_credit_hour'],
                     'created_at' => date('Y-m-d-h-m-s')
                 ]);
@@ -242,8 +254,8 @@ class ExamResultsController extends DM_BaseController
 
         }
         //calculation of the GPA and percentage
-        $marks['gpa'] = $marks['total_grade_credit_hour']/($marks['subjects_no']*4);
-        $marks['percentage'] = ($marks['obtain_total_marks']/$marks['grand_total_marks'])*100;
+        $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['subjects_no']);
+        $marks['percentage'] = dm_calPercentage($marks['obtain_total_marks'], $marks['grand_total_marks']);
 
         $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
                             ->where('exam_id', '=',$marks['exam_id'])
@@ -262,6 +274,7 @@ class ExamResultsController extends DM_BaseController
                 'grand_total_marks' => $marks['grand_total_marks'],
                 'percentage' => $marks['percentage'],
                 'gpa' => $marks['gpa'],
+                'results' => $marks['outcome'],
             ]);
         }
         else {
@@ -276,6 +289,7 @@ class ExamResultsController extends DM_BaseController
                 'grand_total_marks' => $marks['grand_total_marks'],
                 'percentage' => $marks['percentage'],
                 'gpa' => $marks['gpa'],
+                'results' => $marks['outcome'],
             ]);
         }
 
@@ -350,6 +364,11 @@ class ExamResultsController extends DM_BaseController
             }elseif(isset($row['theory_marks'])) {
                 //check the theory marks
                 $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['school_class_section_subject_id'], $row['theory_marks']);
+                $th_outcome =  $this->model_g::checkTheoryOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
+                if($th_outcome) {
+                    $marks['outcome'] = "FAIL";
+                }
+
                 $grade_point = $this->model_g->getTheoryGrade($row['school_class_section_subject_id'], $marks['theory_marks']);
                 if(isset($grade_point[0])){
                     $marks['theory_grade'] = $grade_point[0];
@@ -367,7 +386,12 @@ class ExamResultsController extends DM_BaseController
                 $marks['practical_marks'] = NULL;
                 $marks['practical_grade'] = NULL;
             }elseif(isset($row['practical_marks']))  {
-                $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);;
+                $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);
+                $pr_outcome =  $this->model_g::checkPracticalOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
+                if($pr_outcome) {
+                    $marks['outcome'] = "FAIL";
+                }
+
                 $grade_point = $this->model_g->getPracticalGrade($row['school_class_section_subject_id'], $marks['practical_marks']);
 
                 if(isset($grade_point[0])){
@@ -431,6 +455,7 @@ class ExamResultsController extends DM_BaseController
                     'final_grade' => $marks['final_grade'],
                     'grade_point' => $marks['grade_point'],
                     'grade_credit_hour' => $marks['grade_credit_hour'],
+                    'description' => $marks['outcome'],
                     'created_at' => date('Y-m-d-h-m-s')
                 ]);
             }
@@ -450,6 +475,7 @@ class ExamResultsController extends DM_BaseController
                     'final_grade' => $marks['final_grade'],
                     'grade_point' => $marks['grade_point'],
                     'grade_credit_hour' => $marks['grade_credit_hour'],
+                    'description' => $marks['outcome'],
                     'created_at' => date('Y-m-d-h-m-s')
                 ]);
             }
@@ -457,8 +483,8 @@ class ExamResultsController extends DM_BaseController
         }
 
         //calculation of the GPA and percentage
-        $marks['gpa'] = $marks['total_grade_credit_hour']/($marks['subjects_no']*4);
-        $marks['percentage'] = ($marks['obtain_total_marks']/$marks['grand_total_marks'])*100;
+        $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['subjects_no']);
+        $marks['percentage'] = dm_calPercentage($marks['obtain_total_marks'], $marks['grand_total_marks']);
 
         $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
                             ->where('exam_id', '=',$marks['exam_id'])
@@ -477,6 +503,7 @@ class ExamResultsController extends DM_BaseController
                 'grand_total_marks' => $marks['grand_total_marks'],
                 'percentage' => $marks['percentage'],
                 'gpa' => $marks['gpa'],
+                'results' => $marks['outcome'],
             ]);
         }
         else {
@@ -491,6 +518,7 @@ class ExamResultsController extends DM_BaseController
                 'grand_total_marks' => $marks['grand_total_marks'],
                 'percentage' => $marks['percentage'],
                 'gpa' => $marks['gpa'],
+                'results' => $marks['outcome'],
             ]);
         }
         session()->flash('alert-success', $this->panel.' Successfully Store');

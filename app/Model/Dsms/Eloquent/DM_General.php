@@ -188,6 +188,15 @@ class DM_General extends Model
             return Null;
         }
     }
+    //check if Theory PASS OR FAIL
+    public static function checkTheoryOutcome($school_class_section_subject_id, $theory_marks) {
+        $subject = self::getSubjectFromSchoolClassSec($school_class_section_subject_id);
+        if($subject->theory_pass_marks > $theory_marks){
+            return true;
+        } else {
+            return false;
+        }
+    }
 //check if practical is exist on subject
     public static function checkPracticalMarks($school_class_section_subject_id, $practical_marks) {
         $subject = self::getSubjectFromSchoolClassSec($school_class_section_subject_id);
@@ -197,6 +206,15 @@ class DM_General extends Model
             return NULL;
         }
     }
+  //check if Theory PASS OR FAIL
+  public static function checkPracticalOutcome($school_class_section_subject_id, $practical_marks) {
+    $subject = self::getSubjectFromSchoolClassSec($school_class_section_subject_id);
+    if($subject->practical_pass_marks > $practical_marks){
+        return true;
+    } else {
+        return false;
+    }
+}
 //get theory grade
     public function getTheoryGrade($school_class_section_subject_id, $theory_marks) {
         $subject = self::getSubjectFromSchoolClassSec($school_class_section_subject_id);

@@ -62,4 +62,23 @@ if(!function_exists('dm_getSubject')){
         return $data;
     }
 }
+//return percentage
+if(!function_exists('dm_calPercentage')){
+    function dm_calPercentage($part , $whole) {
+        if(isset($part) && isset($whole)){
+            $data = ($part/$whole)*100;
+            return $data;
+        }
+    }
+}
+//return percentage
+if(!function_exists('dm_calGPA')){
+    function dm_calGPA($total_grade_credit_hour , $subjects_no) {
+        if(isset($total_grade_credit_hour) && isset($subjects_no)){
+            $data = $total_grade_credit_hour/($subjects_no*4);
+            return $data;
+        }
+    }
+}
+
 
