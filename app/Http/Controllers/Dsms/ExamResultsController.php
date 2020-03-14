@@ -109,12 +109,28 @@ class ExamResultsController extends DM_BaseController
     public function store(Request $request)
     {
         $data = $request->data;
+        //initiated for report
+        $marks['obtain_total_th_marks'] = 0;
+        $marks['obtain_total_pr_marks'] = 0;
+        $marks['obtain_total_marks'] = 0;
+        $marks['grand_total_marks'] = 0;
+        $marks['total_grade_credit_hour'] = 0;
+        $marks['subjects_no'] = count($data);
+
+        //get id from form
         $marks['session_id'] = $request->session_id;
         $marks['exam_id'] = $request->exam_id;
         $marks['school_class_sec_id'] = $request->school_class_sec_id;
         $marks['student_id'] = $request->student_id;
 
+
         foreach($data as $row) {
+            //grand total marks of the subjects
+            if(isset($row['school_class_section_subject_id'])){
+                $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
+                $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
+            }
+            //check theory attendance
             if(isset($row['th_attendance'])){
                 $marks['theory_marks'] = NULL;
                 $marks['theory_grade'] = NULL;
@@ -132,7 +148,7 @@ class ExamResultsController extends DM_BaseController
                 $marks['theory_grade'] = NULL;
                 $row['th_attendance'] = NULL;
             }
-
+            //check practical attendance
             if(isset($row['pr_attendance'])){
                 $marks['practical_marks'] = NULL;
                 $marks['practical_grade'] = NULL;
@@ -151,9 +167,10 @@ class ExamResultsController extends DM_BaseController
                 $marks['practical_grade'] = NULL;
                 $row['pr_attendance'] = NULL;
             }
-
+            //check theory marks and practical marks
             if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
-                $marks['total_marks'] = $marks['theory_marks'] + $marks['practical_marks'];
+                //get total marks of single subject
+                $marks['total_marks'] = ($marks['theory_marks'] + $marks['practical_marks']);
                 $grade_point = $this->model_g->getFinalGrade($row['school_class_section_subject_id'], $marks['total_marks']);
                 if(isset($grade_point[0])){
                     $marks['final_grade'] = $grade_point[0];
@@ -166,6 +183,11 @@ class ExamResultsController extends DM_BaseController
                     $marks['grade_point'] = NULL;
                 }
                 $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($row['school_class_section_subject_id'], $marks['grade_point']);
+                //get total marks of all subjects
+                $marks['obtain_total_th_marks'] += $marks['theory_marks'];
+                $marks['obtain_total_pr_marks'] += $marks['practical_marks'];
+                $marks['obtain_total_marks'] += ($marks['theory_marks'] + $marks['practical_marks']);
+                $marks['total_grade_credit_hour'] += $marks['grade_credit_hour'];
             }else {
                 $marks['total_marks'] = NULL;
                 $marks['final_grade'] = NULL;
@@ -173,7 +195,12 @@ class ExamResultsController extends DM_BaseController
                 $marks['grade_credit_hour'] = NULL;
             }
 
-            $old_data =  DB::table('exam_results')->where('session_id', '=', $marks['session_id'])->where('student_id', '=', $marks['student_id'])->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])->first();
+            $old_data =  DB::table('exam_results')
+                            ->where('session_id', '=', $marks['session_id'])
+                            ->where('exam_id', '=',$marks['exam_id'])
+                            ->where('student_id', '=', $marks['student_id'])
+                            ->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])
+                            ->first();
             if(isset($old_data)){
                 DB::table('exam_results')->where('id', '=', $old_data->id)->update([
                     'session_id' => $marks['session_id'],
@@ -214,6 +241,44 @@ class ExamResultsController extends DM_BaseController
             }
 
         }
+        //calculation of the GPA and percentage
+        $marks['gpa'] = $marks['total_grade_credit_hour']/($marks['subjects_no']*4);
+        $marks['percentage'] = ($marks['obtain_total_marks']/$marks['grand_total_marks'])*100;
+
+        $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
+                            ->where('exam_id', '=',$marks['exam_id'])
+                            ->where('student_id', '=', $marks['student_id'])
+                            ->where('school_class_section_id', '=', $marks['school_class_sec_id'])
+                            ->first();
+        if(isset($old_report)) {
+            DB::table('reports')->where('id', '=', $old_report->id)->update([
+                'session_id' => $marks['session_id'],
+                'exam_id' => $marks['exam_id'],
+                'school_class_section_id' => $marks['school_class_sec_id'],
+                'student_id' => $marks['student_id'],
+                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
+                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
+                'obtain_total_marks' => $marks['obtain_total_marks'],
+                'grand_total_marks' => $marks['grand_total_marks'],
+                'percentage' => $marks['percentage'],
+                'gpa' => $marks['gpa'],
+            ]);
+        }
+        else {
+            DB::table('reports')->insert([
+                'session_id' => $marks['session_id'],
+                'exam_id' => $marks['exam_id'],
+                'school_class_section_id' => $marks['school_class_sec_id'],
+                'student_id' => $marks['student_id'],
+                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
+                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
+                'obtain_total_marks' => $marks['obtain_total_marks'],
+                'grand_total_marks' => $marks['grand_total_marks'],
+                'percentage' => $marks['percentage'],
+                'gpa' => $marks['gpa'],
+            ]);
+        }
+
         session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.create');
     }
@@ -258,26 +323,27 @@ class ExamResultsController extends DM_BaseController
      */
     public function update(Request $request){
         $data = $request->data;
-
+        //initiated for report
         $marks['obtain_total_th_marks'] = 0;
         $marks['obtain_total_pr_marks'] = 0;
         $marks['obtain_total_marks'] = 0;
         $marks['grand_total_marks'] = 0;
+        $marks['total_grade_credit_hour'] = 0;
         $marks['subjects_no'] = count($data);
 
-
+        //get id from form
         $marks['session_id'] = $request->session_id;
         $marks['exam_id'] = $request->exam_id;
         $marks['school_class_sec_id'] = $request->school_class_sec_id;
         $marks['student_id'] = $request->student_id;
 
         foreach($data as $row) {
+            //grand total marks of the subjects
             if(isset($row['school_class_section_subject_id'])){
                 $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
                 $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
             }
-
-            //check if the student is absent
+            //check theory attendance
             if(isset($row['th_attendance'])){
                 $marks['theory_marks'] = NULL;
                 $marks['theory_grade'] = NULL;
@@ -296,7 +362,7 @@ class ExamResultsController extends DM_BaseController
                 $marks['theory_grade'] = NULL;
                 $row['th_attendance'] = NULL;
             }
-
+            //check practical attendance
             if(isset($row['pr_attendance'])){
                 $marks['practical_marks'] = NULL;
                 $marks['practical_grade'] = NULL;
@@ -315,9 +381,10 @@ class ExamResultsController extends DM_BaseController
                 $marks['practical_grade'] = NULL;
                 $row['pr_attendance'] = NULL;
             }
-
+            //check theory marks and practical marks
             if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
-                $marks['total_marks'] = $marks['theory_marks'] + $marks['practical_marks'];
+                //get total marks of single subject
+                $marks['total_marks'] = ($marks['theory_marks'] + $marks['practical_marks']);
                 $grade_point = $this->model_g->getFinalGrade($row['school_class_section_subject_id'], $marks['total_marks']);
                 if(isset($grade_point[0])){
                     $marks['final_grade'] = $grade_point[0];
@@ -330,6 +397,11 @@ class ExamResultsController extends DM_BaseController
                     $marks['grade_point'] = NULL;
                 }
                 $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($row['school_class_section_subject_id'], $marks['grade_point']);
+                //get total marks of all subjects
+                $marks['obtain_total_th_marks'] += $marks['theory_marks'];
+                $marks['obtain_total_pr_marks'] += $marks['practical_marks'];
+                $marks['obtain_total_marks'] += ($marks['theory_marks'] + $marks['practical_marks']);
+                $marks['total_grade_credit_hour'] += $marks['grade_credit_hour'];
             }else {
                 $marks['total_marks'] = NULL;
                 $marks['final_grade'] = NULL;
@@ -337,7 +409,12 @@ class ExamResultsController extends DM_BaseController
                 $marks['grade_credit_hour'] = NULL;
             }
 
-            $old_data =  DB::table('exam_results')->where('session_id', '=', $marks['session_id'])->where('student_id', '=', $marks['student_id'])->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])->first();
+            $old_data =  DB::table('exam_results')
+                            ->where('session_id', '=', $marks['session_id'])
+                            ->where('exam_id', '=',$marks['exam_id'])
+                            ->where('student_id', '=', $marks['student_id'])
+                            ->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])
+                            ->first();
             if(isset($old_data)){
                 DB::table('exam_results')->where('id', '=', $old_data->id)->update([
                     'session_id' => $marks['session_id'],
@@ -377,6 +454,44 @@ class ExamResultsController extends DM_BaseController
                 ]);
             }
 
+        }
+
+        //calculation of the GPA and percentage
+        $marks['gpa'] = $marks['total_grade_credit_hour']/($marks['subjects_no']*4);
+        $marks['percentage'] = ($marks['obtain_total_marks']/$marks['grand_total_marks'])*100;
+
+        $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
+                            ->where('exam_id', '=',$marks['exam_id'])
+                            ->where('student_id', '=', $marks['student_id'])
+                            ->where('school_class_section_id', '=', $marks['school_class_sec_id'])
+                            ->first();
+        if(isset($old_report)) {
+            DB::table('reports')->where('id', '=', $old_report->id)->update([
+                'session_id' => $marks['session_id'],
+                'exam_id' => $marks['exam_id'],
+                'school_class_section_id' => $marks['school_class_sec_id'],
+                'student_id' => $marks['student_id'],
+                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
+                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
+                'obtain_total_marks' => $marks['obtain_total_marks'],
+                'grand_total_marks' => $marks['grand_total_marks'],
+                'percentage' => $marks['percentage'],
+                'gpa' => $marks['gpa'],
+            ]);
+        }
+        else {
+            DB::table('reports')->insert([
+                'session_id' => $marks['session_id'],
+                'exam_id' => $marks['exam_id'],
+                'school_class_section_id' => $marks['school_class_sec_id'],
+                'student_id' => $marks['student_id'],
+                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
+                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
+                'obtain_total_marks' => $marks['obtain_total_marks'],
+                'grand_total_marks' => $marks['grand_total_marks'],
+                'percentage' => $marks['percentage'],
+                'gpa' => $marks['gpa'],
+            ]);
         }
         session()->flash('alert-success', $this->panel.' Successfully Store');
         return redirect()->route($this->base_route.'.index');
