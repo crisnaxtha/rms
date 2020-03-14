@@ -344,6 +344,7 @@ class ExamResultsController extends DM_BaseController
         $marks['grand_total_marks'] = 0;
         $marks['total_grade_credit_hour'] = 0;
         $marks['subjects_no'] = count($data);
+        $marks['outcome'] = "PASS";
 
         //get id from form
         $marks['session_id'] = $request->session_id;
