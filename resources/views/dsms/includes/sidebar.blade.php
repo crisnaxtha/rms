@@ -66,6 +66,30 @@
             </li>
 
             <li class="sub-menu">
+                <a href="javascript:;" class="{{ ($_panel == 'Exam' || $_panel == 'Exam Schedule' || $_panel == 'Marks Register' || $_panel == "Marks View" || $_panel == 'Marks Grade' || $_panel == 'Settings') ? 'active' : '' }}">
+                    <i class="fa fa-edit"></i>
+                    <span>{{ __('Examination Report') }}</span>
+                </a>
+                <ul class="sub">
+                    @if(Route::has('dsms.exam.index'))
+                    <li><a class="{{ ($_panel == 'Exam') ? 'active' : '' }}" href="{{ URL::route('dsms.exam.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Exam List')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.marks.create'))
+                    <li><a class="{{ ($_panel == 'Marks Register') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Register')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.marks.index'))
+                    <li><a class="{{ ($_panel == 'Marks View') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks View')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.setting.index'))
+                    <li><a class="{{ ($_panel == 'Settings') ? 'active' : '' }}" href="{{ URL::route('dsms.setting.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Grade Sheet Settings')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.grade.index'))
+                    <li><a class="{{ ($_panel == 'Marks Grade') ? 'active' : '' }}" href="{{ URL::route('dsms.grade.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Grade')}}</span></a></li>
+                    @endif
+                </ul>
+            </li>
+
+            <li class="sub-menu">
                 <a href="javascript:;" class="{{ ($_panel == 'Student Admission' || $_panel == 'Student Details') ? 'active' : '' }}">
                     <i class="fa fa-group"></i>
                     <span>{{ __('Student Information') }}</span>
