@@ -116,6 +116,15 @@ class DM_General extends Model
         return $data;
     }
 
+    public static function getSchoolClassSectionStudentsWithSession($session_id, $school_class_sec_id) {
+        $data = DB::table('students')
+                    ->where('students.school_class_section_id', '=', $school_class_sec_id)
+                    ->where('students.session_id', '=', $session_id)
+                    ->select('students.id', 'students.first_name', 'students.roll_no', 'students.dob_bs')
+                    ->get();
+        return $data;
+    }
+
     public static function joinSchoolClassSectionSubjectStudent($session_id, $school_class_section_id){
         $data = DB::table('students')
                     ->join('school_class_section_subjects', 'students.school_class_section_id', '=', 'school_class_section_subjects.school_class_section_id')

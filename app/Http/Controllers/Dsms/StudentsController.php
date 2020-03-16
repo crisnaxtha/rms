@@ -344,8 +344,10 @@ class StudentsController extends DM_BaseController
 
     public function getSchoolClassSectionStudents(Request $request) {
         if($request->ajax()){
+            $session_id = $request->session_id;
             $school_class_sec_id = $request->school_class_sec_id;
-            $data = $this->model_g::getSchoolClassSectionStudents($school_class_sec_id);
+
+            $data = $this->model_g::getSchoolClassSectionStudentsWithSession($session_id, $school_class_sec_id);
             return $data;
         }
     }

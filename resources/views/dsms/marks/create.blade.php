@@ -94,12 +94,20 @@
         $('#student_id').html("");
         // resetForm();
         var school_class_sec_id = $(this).val();
+        var session_id = $('#session_id').val();
+        if(session_id.length == 0) {
+            alert('First Select Session');
+            exit;
+        }
         var url = '{{ route('dsms.student.getStudents')}}';
         var div_data = '<option value="">Select</option>';
         $.ajax({
             type: "POST",
             url: url,
-            data: {school_class_sec_id: school_class_sec_id},
+            data: {
+                session_id: session_id,
+                school_class_sec_id: school_class_sec_id
+            },
             dataType: "json",
             success: function (data) {
                 console.log(data);
