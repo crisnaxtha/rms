@@ -66,11 +66,14 @@
             </li>
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Marks Ledger' || $_panel == '' || $_panel == "" || $_panel == '' || $_panel == '') ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Marks Ledger' || $_panel == 'Top Three Student' || $_panel == "" || $_panel == '' || $_panel == '') ? 'active' : '' }}">
                     <i class="fa fa-file-o"></i>
                     <span>{{ __('Examination Report') }}</span>
                 </a>
                 <ul class="sub">
+                    @if(Route::has('dsms.report.topThreeStudent'))
+                    <li><a class="{{ ($_panel == 'Top Three Student') ? 'active' : '' }}" href="{{ URL::route('dsms.report.topThreeStudent') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Top Three Student')}}</span></a></li>
+                    @endif
                     @if(Route::has('dsms.report.index'))
                     <li><a class="{{ ($_panel == 'Marks Ledger') ? 'active' : '' }}" href="{{ URL::route('dsms.report.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Ledger')}}</span></a></li>
                     @endif

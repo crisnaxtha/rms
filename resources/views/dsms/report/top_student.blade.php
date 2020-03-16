@@ -34,7 +34,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.index')}}" method="post" enctype="multipart/form-data" id="schedule-form">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.topThreeStudent')}}" method="post" enctype="multipart/form-data" id="schedule-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-2">
@@ -119,6 +119,10 @@
                         <th colspan="3">{{ $row->sub_title }}</th>
                         @endforeach
                         @endif
+                        <th rowspan="3" style="width:20px;"> Total Marks Obtained in theory</th>
+                        <th rowspan="3" style=""> Percentage</th>
+                        <th rowspan="3" style=""> Theory full marks</th>
+                        <th rowspan="3" style=""> Remarks</th>
                     </tr>
                     <tr>
                         @if(isset($data['school_class_section_subjects']))
@@ -170,6 +174,10 @@
                             </td>
                             @endforeach
                             @endif
+                            <td> B+ </td>
+                            <td> 2.4 </td>
+                            <td> B+ </td>
+                            <td> B+ </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -205,6 +213,8 @@ $(document).on('change', '#school_class_sec_id', function (e) {
     $("form#schedule-form").submit();
 });
 </script>
+
+
 <script>
 $(document).on('click', '#all-pdf', function (e) {
     // myText.removeAttribute("hidden");
@@ -218,5 +228,22 @@ $(document).on('click', '#all-pdf', function (e) {
         }
     });
 });
+</script>
+<script>
+$('#print-window').click(function() {
+    var mywindow = window.open('', 'PRINT', 'height=1000,width=900');
+    mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>' + document.title  + '</h1>');
+    mywindow.document.write(document.getElementById('ledger').innerHTML);
+    mywindow.document.write('</body></html>');
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+
+  });
 </script>
 @endsection

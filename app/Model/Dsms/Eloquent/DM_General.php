@@ -149,15 +149,30 @@ class DM_General extends Model
         return $data;
     }
 
-    public static function joinStudentResult($student_id) {
-        $data = DB::table('students')
-                ->leftJoin('exam_results', 'students.id', '=', 'exam_results.student_id')
-                ->where('students.id', '=', $student_id)
-                ->select('exam_results.*', 'students.id as student_id', 'students.first_name')
-                ->first();
-        return $data;
-    }
-//group array base on key
+    //get single report of student based on exam schedule id and student id
+    // public static function getStudentReport($session_id, $exam_id, $student_id, $school_class_section_id) {
+    //     $data = DB::table('reports')
+    //                 ->where('student_id', '=', $student_id)
+    //                 ->where('session_id','=', $session_id)
+    //                 ->where('exam_id','=', $exam_id)
+    //                 ->where('school_class_section_id','=', $school_class_section_id)
+    //                 ->first();
+    //     return $data;
+    // }
+
+    // public static function getStudentResultReport($session_id, $exam_id, $student_id, $school_class_section_id){
+    //     $data = DB::table('students')
+    //                 ->join('exam_results', 'students.id', '=', 'exam_results.student_id')
+    //                 ->join('reports', 'students.id', '=', 'reports.student_id')
+    //                 ->where('students.id', '=', $student_id)
+    //                 ->where('students.school_class_section_id', '=', $school_class_section_id)
+    //                 ->where('exam_results.session_id','=', $session_id)
+    //                 ->where('exam_results.exam_id','=', $exam_id)
+    //                 ->select('students.id as student_id', 'students.first_name','students.last_name', 'exam_results.*', 'reports.*')
+    //                 ->first();
+    //         return $data;
+    // }
+//group array base on key and sorted
     public static function arrayGroupBy($old_arr_1, $based_on) {
         $arr = array();
         $old_arr = json_decode($old_arr_1, true);
@@ -169,6 +184,19 @@ class DM_General extends Model
         ksort($arr, SORT_NUMERIC);
         return $arr;
     }
+
+
+//group array base on key and not sorted
+public static function arrayGroupByNotSorted($old_arr_1, $based_on) {
+    $arr = array();
+    $old_arr = json_decode($old_arr_1, true);
+    foreach($old_arr as $key => $item)
+    {
+        if(array_key_exists($based_on, $item))
+            $arr[$item[$based_on]][$key] = $item;
+    }
+    return $arr;
+}
 //get subject based on exam schedule
     public static function getSubjectFromSchoolClassSec($school_class_section_subject_id){
         $data = DB::table('school_class_section_subjects')

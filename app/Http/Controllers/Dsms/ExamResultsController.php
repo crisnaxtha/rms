@@ -541,6 +541,8 @@ class ExamResultsController extends DM_BaseController
             $data['student_id'] = $student_id;
 
             $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+            $s_report = $this->model_g::getStudentReport($data['session_id'], $data['exam_id'], $data['student_id'], $data['school_class_sec_id']);
+            $this->model_8::destroy($s_report->id);
             foreach($data['school_class_section_subjects'] as $subject) {
                 $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $data['student_id'], $subject->id);
                 if(isset($s_result)){
