@@ -1,5 +1,20 @@
 @extends('dsms.layouts.app')
 @section('css')
+<style>
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    #ledger, #ledger * {
+      visibility: visible;
+    }
+    #ledger {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+}
+</style>
  {{-- Js Placed here because it is mandatory for pdf converter --}}
  <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
@@ -62,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button> --}}
+                    <button class="btn btn-success btn-xs pull-right" id="subject_search" type="submit"><i class="fa fa-search"></i> &nbsp; Search</button>
                 </form>
             </div>
         </section>
@@ -76,22 +91,21 @@
        <section class="panel">
             <header class="panel-heading">
                 {{ $_panel }}
-                <button class="btn btn-info btn-xs" id="all-pdf">
-                    <i class="fa fa-arrow-down"></i>
-                </button>
+               @include($_view_path.'.includes.buttons.print')
 
             </header>
-            <div class="panel-body">
-                <center>
-                    <span class="demo"><button onclick="window.print();return false;"><i class="fa fa-print"></i>&nbsp;&nbsp;Print</button></span>
-                </center>
-                <div class="col-md-8">
+            <div class="panel-body"  style="overflow-y: scroll;" id="ledger">
+                {{-- <div class="col-md-8"> --}}
                     <div class="pull-center">
-                        <h3><b>Thulung Dudhkoshi Rular Municipality</b></h3>
-                        <h6>Basic Level Examination</h6>
-                        <h4 style="text-decoration: underline;;"><b>Mark Ledger</b></h4>
+                        @if(isset($data['ms_setting']))
+                        <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
+                        <h6>{{ $data['ms_setting']->title_2 }}</h6>
+                        <h4 style="text-decoration: underline;;"><b>{{ $_panel }}</b></h4>
+                        @else
+                        <h1 style="color:red">Set Grade Sheet Setting First</h1>
+                        @endif
                     </div>
-                </div>
+                {{-- </div> --}}
 
                 <table class="table table-bordered">
                     <!--     <thead> -->
@@ -206,5 +220,22 @@ $(document).on('click', '#all-pdf', function (e) {
         }
     });
 });
+</script>
+<script>
+$('#print-window').click(function() {
+    var mywindow = window.open('', 'PRINT', 'height=1000,width=900');
+    mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>' + document.title  + '</h1>');
+    mywindow.document.write(document.getElementById('ledger').innerHTML);
+    mywindow.document.write('</body></html>');
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+    mywindow.print();
+    mywindow.close();
+
+    return true;
+
+  });
 </script>
 @endsection

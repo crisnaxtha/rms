@@ -24,8 +24,8 @@ class ReportsController extends DM_BaseController
 
     public function __construct(Request $request, ExamResult $model, MyClass $model_1,Student $model_2, Exam $model_3, School $model_4, Section $model_5,GradeSheetSetting $model_6, Session $model_7, Report $model_8, DM_General $model_g){
         $this->middleware(['auth', 'status']);
-        $this->middleware('permission:mark-register-list', ['only' => ['index']]);
-        $this->middleware('permission:mark-register-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:mark-register-list', ['only' => ['index']]);
+        // $this->middleware('permission:mark-register-create', ['only' => ['create','store']]);
         // $this->middleware('permission:affiliated-edit', ['only' => ['edit','update']]);
         // $this->middleware('permission:mark-register-delete', ['only' => ['destroy']]);
         $this->model = $model;
