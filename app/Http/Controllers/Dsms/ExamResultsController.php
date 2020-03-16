@@ -108,193 +108,198 @@ class ExamResultsController extends DM_BaseController
      */
     public function store(Request $request)
     {
-        $data = $request->data;
-        //initiated for report
-        $marks['obtain_total_th_marks'] = 0;
-        $marks['obtain_total_pr_marks'] = 0;
-        $marks['obtain_total_marks'] = 0;
-        $marks['grand_total_marks'] = 0;
-        $marks['total_grade_credit_hour'] = 0;
-        $marks['subjects_no'] = count($data);
-        $marks['outcome'] = "PASS";
+            if($request->isMethod('POST') || $request->isMethod('PUT')){
+            $data = $request->data;
+            //initiated for report
+            $marks['obtain_total_th_marks'] = 0;
+            $marks['obtain_total_pr_marks'] = 0;
+            $marks['obtain_total_marks'] = 0;
+            $marks['grand_total_marks'] = 0;
+            $marks['total_grade_credit_hour'] = 0;
+            $marks['subjects_no'] = count($data);
+            $marks['outcome'] = "PASS";
 
-        //get id from form
-        $marks['session_id'] = $request->session_id;
-        $marks['exam_id'] = $request->exam_id;
-        $marks['school_class_sec_id'] = $request->school_class_sec_id;
-        $marks['student_id'] = $request->student_id;
+            //get id from form
+            $marks['session_id'] = $request->session_id;
+            $marks['exam_id'] = $request->exam_id;
+            $marks['school_class_sec_id'] = $request->school_class_sec_id;
+            $marks['student_id'] = $request->student_id;
 
 
-        foreach($data as $row) {
-            //grand total marks of the subjects
-            if(isset($row['school_class_section_subject_id'])){
-                $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
-                $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
-            }
-            //check theory attendance
-            if(isset($row['th_attendance'])){
-                $marks['theory_marks'] = NULL;
-                $marks['theory_grade'] = NULL;
-            }elseif(isset($row['theory_marks'])) {
-                $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['school_class_section_subject_id'], $row['theory_marks']);
-                $th_outcome =  $this->model_g::checkTheoryOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
-                if($th_outcome) {
-                    $marks['outcome'] = "FAIL";
+            foreach($data as $row) {
+                //grand total marks of the subjects
+                if(isset($row['school_class_section_subject_id'])){
+                    $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
+                    $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
                 }
-
-                $grade_point = $this->model_g->getTheoryGrade($row['school_class_section_subject_id'], $marks['theory_marks']);
-                if(isset($grade_point[0])){
-                    $marks['theory_grade'] = $grade_point[0];
-                }else {
+                //check theory attendance
+                if(isset($row['th_attendance'])){
+                    $marks['theory_marks'] = NULL;
                     $marks['theory_grade'] = NULL;
-                }
-                $row['th_attendance'] = "Pre";
-            }else {
-                $marks['theory_marks'] = NULL;
-                $marks['theory_grade'] = NULL;
-                $row['th_attendance'] = NULL;
-            }
-            //check practical attendance
-            if(isset($row['pr_attendance'])){
-                $marks['practical_marks'] = NULL;
-                $marks['practical_grade'] = NULL;
-            }elseif(isset($row['practical_marks']))  {
-                $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);
-                $pr_outcome =  $this->model_g::checkPracticalOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
-                if($pr_outcome) {
-                    $marks['outcome'] = "FAIL";
-                }
+                }elseif(isset($row['theory_marks'])) {
+                    $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['school_class_section_subject_id'], $row['theory_marks']);
+                    $th_outcome =  $this->model_g::checkTheoryOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
+                    if($th_outcome) {
+                        $marks['outcome'] = "FAIL";
+                    }
 
-                $grade_point = $this->model_g->getPracticalGrade($row['school_class_section_subject_id'], $marks['practical_marks']);
-                if(isset($grade_point[0])){
-                    $marks['practical_grade'] = $grade_point[0];
+                    $grade_point = $this->model_g->getTheoryGrade($row['school_class_section_subject_id'], $marks['theory_marks']);
+                    if(isset($grade_point[0])){
+                        $marks['theory_grade'] = $grade_point[0];
+                    }else {
+                        $marks['theory_grade'] = NULL;
+                    }
+                    $row['th_attendance'] = "Pre";
                 }else {
+                    $marks['theory_marks'] = NULL;
+                    $marks['theory_grade'] = NULL;
+                    $row['th_attendance'] = NULL;
+                }
+                //check practical attendance
+                if(isset($row['pr_attendance'])){
+                    $marks['practical_marks'] = NULL;
                     $marks['practical_grade'] = NULL;
-                }
-                $row['pr_attendance'] = "Pre";
-            }else {
-                $marks['practical_marks'] = NULL;
-                $marks['practical_grade'] = NULL;
-                $row['pr_attendance'] = NULL;
-            }
-            //check theory marks and practical marks
-            if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
-                //get total marks of single subject
-                $marks['total_marks'] = ($marks['theory_marks'] + $marks['practical_marks']);
-                $grade_point = $this->model_g->getFinalGrade($row['school_class_section_subject_id'], $marks['total_marks']);
-                if(isset($grade_point[0])){
-                    $marks['final_grade'] = $grade_point[0];
-                }else {
-                    $marks['final_grade'] = NULL;
-                }
-                if(isset($grade_point[1])){
-                    $marks['grade_point'] = $grade_point[1];
-                }else {
-                    $marks['grade_point'] = NULL;
-                }
-                $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($row['school_class_section_subject_id'], $marks['grade_point']);
-                //get total marks of all subjects
-                $marks['obtain_total_th_marks'] += $marks['theory_marks'];
-                $marks['obtain_total_pr_marks'] += $marks['practical_marks'];
-                $marks['obtain_total_marks'] += ($marks['theory_marks'] + $marks['practical_marks']);
-                $marks['total_grade_credit_hour'] += $marks['grade_credit_hour'];
-            }else {
-                $marks['total_marks'] = NULL;
-                $marks['final_grade'] = NULL;
-                $marks['grade_point'] = NULL;
-                $marks['grade_credit_hour'] = NULL;
-            }
+                }elseif(isset($row['practical_marks']))  {
+                    $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);
+                    $pr_outcome =  $this->model_g::checkPracticalOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
+                    if($pr_outcome) {
+                        $marks['outcome'] = "FAIL";
+                    }
 
-            $old_data =  DB::table('exam_results')
-                            ->where('session_id', '=', $marks['session_id'])
-                            ->where('exam_id', '=',$marks['exam_id'])
-                            ->where('student_id', '=', $marks['student_id'])
-                            ->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])
-                            ->first();
-            if(isset($old_data)){
-                DB::table('exam_results')->where('id', '=', $old_data->id)->update([
+                    $grade_point = $this->model_g->getPracticalGrade($row['school_class_section_subject_id'], $marks['practical_marks']);
+                    if(isset($grade_point[0])){
+                        $marks['practical_grade'] = $grade_point[0];
+                    }else {
+                        $marks['practical_grade'] = NULL;
+                    }
+                    $row['pr_attendance'] = "Pre";
+                }else {
+                    $marks['practical_marks'] = NULL;
+                    $marks['practical_grade'] = NULL;
+                    $row['pr_attendance'] = NULL;
+                }
+                //check theory marks and practical marks
+                if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
+                    //get total marks of single subject
+                    $marks['total_marks'] = ($marks['theory_marks'] + $marks['practical_marks']);
+                    $grade_point = $this->model_g->getFinalGrade($row['school_class_section_subject_id'], $marks['total_marks']);
+                    if(isset($grade_point[0])){
+                        $marks['final_grade'] = $grade_point[0];
+                    }else {
+                        $marks['final_grade'] = NULL;
+                    }
+                    if(isset($grade_point[1])){
+                        $marks['grade_point'] = $grade_point[1];
+                    }else {
+                        $marks['grade_point'] = NULL;
+                    }
+                    $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($row['school_class_section_subject_id'], $marks['grade_point']);
+                    //get total marks of all subjects
+                    $marks['obtain_total_th_marks'] += $marks['theory_marks'];
+                    $marks['obtain_total_pr_marks'] += $marks['practical_marks'];
+                    $marks['obtain_total_marks'] += ($marks['theory_marks'] + $marks['practical_marks']);
+                    $marks['total_grade_credit_hour'] += $marks['grade_credit_hour'];
+                }else {
+                    $marks['total_marks'] = NULL;
+                    $marks['final_grade'] = NULL;
+                    $marks['grade_point'] = NULL;
+                    $marks['grade_credit_hour'] = NULL;
+                }
+
+                $old_data =  DB::table('exam_results')
+                                ->where('session_id', '=', $marks['session_id'])
+                                ->where('exam_id', '=',$marks['exam_id'])
+                                ->where('student_id', '=', $marks['student_id'])
+                                ->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])
+                                ->first();
+                if(isset($old_data)){
+                    DB::table('exam_results')->where('id', '=', $old_data->id)->update([
+                        'session_id' => $marks['session_id'],
+                        'exam_id' => $marks['exam_id'],
+                        'school_class_section_subject_id' => $row['school_class_section_subject_id'],
+                        'student_id' => $marks['student_id'],
+                        'theory_attendance' => $row['th_attendance'],
+                        'practical_attendance' => $row['pr_attendance'],
+                        'theory_get_marks' => $marks['theory_marks'],
+                        'theory_grade' => $marks['theory_grade'],
+                        'practical_get_marks' => $marks['practical_marks'],
+                        'practical_grade' => $marks['practical_grade'],
+                        'total_marks' => $marks['total_marks'],
+                        'final_grade' => $marks['final_grade'],
+                        'grade_point' => $marks['grade_point'],
+                        'grade_credit_hour' => $marks['grade_credit_hour'],
+                        'description' => $marks['outcome'],
+                        'updated_at' => date('Y-m-d-h-m-s')
+                    ]);
+                }
+                else {
+                    DB::table('exam_results')->insert([
+                        'session_id' => $marks['session_id'],
+                        'exam_id' => $marks['exam_id'],
+                        'school_class_section_subject_id' => $row['school_class_section_subject_id'],
+                        'student_id' => $marks['student_id'],
+                        'theory_attendance' => $row['th_attendance'],
+                        'practical_attendance' => $row['pr_attendance'],
+                        'theory_get_marks' => $marks['theory_marks'],
+                        'theory_grade' => $marks['theory_grade'],
+                        'practical_get_marks' => $marks['practical_marks'],
+                        'practical_grade' => $marks['practical_grade'],
+                        'total_marks' => $marks['total_marks'],
+                        'final_grade' => $marks['final_grade'],
+                        'grade_point' => $marks['grade_point'],
+                        'description' => $marks['outcome'],
+                        'grade_credit_hour' => $marks['grade_credit_hour'],
+                        'created_at' => date('Y-m-d-h-m-s')
+                    ]);
+                }
+
+            }
+            //calculation of the GPA and percentage
+            $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['subjects_no']);
+            $marks['percentage'] = dm_calPercentage($marks['obtain_total_marks'], $marks['grand_total_marks']);
+
+            $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
+                                ->where('exam_id', '=',$marks['exam_id'])
+                                ->where('student_id', '=', $marks['student_id'])
+                                ->where('school_class_section_id', '=', $marks['school_class_sec_id'])
+                                ->first();
+            if(isset($old_report)) {
+                DB::table('reports')->where('id', '=', $old_report->id)->update([
                     'session_id' => $marks['session_id'],
                     'exam_id' => $marks['exam_id'],
-                    'school_class_section_subject_id' => $row['school_class_section_subject_id'],
+                    'school_class_section_id' => $marks['school_class_sec_id'],
                     'student_id' => $marks['student_id'],
-                    'theory_attendance' => $row['th_attendance'],
-                    'practical_attendance' => $row['pr_attendance'],
-                    'theory_get_marks' => $marks['theory_marks'],
-                    'theory_grade' => $marks['theory_grade'],
-                    'practical_get_marks' => $marks['practical_marks'],
-                    'practical_grade' => $marks['practical_grade'],
-                    'total_marks' => $marks['total_marks'],
-                    'final_grade' => $marks['final_grade'],
-                    'grade_point' => $marks['grade_point'],
-                    'grade_credit_hour' => $marks['grade_credit_hour'],
-                    'description' => $marks['outcome'],
-                    'updated_at' => date('Y-m-d-h-m-s')
+                    'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
+                    'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
+                    'obtain_total_marks' => $marks['obtain_total_marks'],
+                    'grand_total_marks' => $marks['grand_total_marks'],
+                    'percentage' => $marks['percentage'],
+                    'gpa' => $marks['gpa'],
+                    'results' => $marks['outcome'],
                 ]);
             }
             else {
-                DB::table('exam_results')->insert([
+                DB::table('reports')->insert([
                     'session_id' => $marks['session_id'],
                     'exam_id' => $marks['exam_id'],
-                    'school_class_section_subject_id' => $row['school_class_section_subject_id'],
+                    'school_class_section_id' => $marks['school_class_sec_id'],
                     'student_id' => $marks['student_id'],
-                    'theory_attendance' => $row['th_attendance'],
-                    'practical_attendance' => $row['pr_attendance'],
-                    'theory_get_marks' => $marks['theory_marks'],
-                    'theory_grade' => $marks['theory_grade'],
-                    'practical_get_marks' => $marks['practical_marks'],
-                    'practical_grade' => $marks['practical_grade'],
-                    'total_marks' => $marks['total_marks'],
-                    'final_grade' => $marks['final_grade'],
-                    'grade_point' => $marks['grade_point'],
-                    'description' => $marks['outcome'],
-                    'grade_credit_hour' => $marks['grade_credit_hour'],
-                    'created_at' => date('Y-m-d-h-m-s')
+                    'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
+                    'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
+                    'obtain_total_marks' => $marks['obtain_total_marks'],
+                    'grand_total_marks' => $marks['grand_total_marks'],
+                    'percentage' => $marks['percentage'],
+                    'gpa' => $marks['gpa'],
+                    'results' => $marks['outcome'],
                 ]);
             }
-
         }
-        //calculation of the GPA and percentage
-        $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['subjects_no']);
-        $marks['percentage'] = dm_calPercentage($marks['obtain_total_marks'], $marks['grand_total_marks']);
-
-        $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
-                            ->where('exam_id', '=',$marks['exam_id'])
-                            ->where('student_id', '=', $marks['student_id'])
-                            ->where('school_class_section_id', '=', $marks['school_class_sec_id'])
-                            ->first();
-        if(isset($old_report)) {
-            DB::table('reports')->where('id', '=', $old_report->id)->update([
-                'session_id' => $marks['session_id'],
-                'exam_id' => $marks['exam_id'],
-                'school_class_section_id' => $marks['school_class_sec_id'],
-                'student_id' => $marks['student_id'],
-                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
-                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
-                'obtain_total_marks' => $marks['obtain_total_marks'],
-                'grand_total_marks' => $marks['grand_total_marks'],
-                'percentage' => $marks['percentage'],
-                'gpa' => $marks['gpa'],
-                'results' => $marks['outcome'],
-            ]);
-        }
-        else {
-            DB::table('reports')->insert([
-                'session_id' => $marks['session_id'],
-                'exam_id' => $marks['exam_id'],
-                'school_class_section_id' => $marks['school_class_sec_id'],
-                'student_id' => $marks['student_id'],
-                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
-                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
-                'obtain_total_marks' => $marks['obtain_total_marks'],
-                'grand_total_marks' => $marks['grand_total_marks'],
-                'percentage' => $marks['percentage'],
-                'gpa' => $marks['gpa'],
-                'results' => $marks['outcome'],
-            ]);
-        }
-
         session()->flash('alert-success', $this->panel.' Successfully Store');
+        if($request->isMethod('POST')){
         return redirect()->route($this->base_route.'.create');
+        }else {
+            return redirect()->route($this->base_route.'.index');
+        }
     }
 
     /**
@@ -327,205 +332,6 @@ class ExamResultsController extends DM_BaseController
         // dd($data['result']);
         return view($this->loadView($this->view_path.'.edit'), compact('data'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request){
-        $data = $request->data;
-        //initiated for report
-        $marks['obtain_total_th_marks'] = 0;
-        $marks['obtain_total_pr_marks'] = 0;
-        $marks['obtain_total_marks'] = 0;
-        $marks['grand_total_marks'] = 0;
-        $marks['total_grade_credit_hour'] = 0;
-        $marks['subjects_no'] = count($data);
-        $marks['outcome'] = "PASS";
-
-        //get id from form
-        $marks['session_id'] = $request->session_id;
-        $marks['exam_id'] = $request->exam_id;
-        $marks['school_class_sec_id'] = $request->school_class_sec_id;
-        $marks['student_id'] = $request->student_id;
-
-        foreach($data as $row) {
-            //grand total marks of the subjects
-            if(isset($row['school_class_section_subject_id'])){
-                $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
-                $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
-            }
-            //check theory attendance
-            if(isset($row['th_attendance'])){
-                $marks['theory_marks'] = NULL;
-                $marks['theory_grade'] = NULL;
-            }elseif(isset($row['theory_marks'])) {
-                //check the theory marks
-                $marks['theory_marks'] = $this->model_g::checkTheoryMarks($row['school_class_section_subject_id'], $row['theory_marks']);
-                $th_outcome =  $this->model_g::checkTheoryOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
-                if($th_outcome) {
-                    $marks['outcome'] = "FAIL";
-                }
-
-                $grade_point = $this->model_g->getTheoryGrade($row['school_class_section_subject_id'], $marks['theory_marks']);
-                if(isset($grade_point[0])){
-                    $marks['theory_grade'] = $grade_point[0];
-                }else {
-                    $marks['theory_grade'] = NULL;
-                }
-                $row['th_attendance'] = "Pre";
-            }else {
-                $marks['theory_marks'] = NULL;
-                $marks['theory_grade'] = NULL;
-                $row['th_attendance'] = NULL;
-            }
-            //check practical attendance
-            if(isset($row['pr_attendance'])){
-                $marks['practical_marks'] = NULL;
-                $marks['practical_grade'] = NULL;
-            }elseif(isset($row['practical_marks']))  {
-                $marks['practical_marks'] = $this->model_g::checkPracticalMarks($row['school_class_section_subject_id'], $row['practical_marks']);
-                $pr_outcome =  $this->model_g::checkPracticalOutcome($row['school_class_section_subject_id'], $row['theory_marks']);
-                if($pr_outcome) {
-                    $marks['outcome'] = "FAIL";
-                }
-
-                $grade_point = $this->model_g->getPracticalGrade($row['school_class_section_subject_id'], $marks['practical_marks']);
-
-                if(isset($grade_point[0])){
-                    $marks['practical_grade'] = $grade_point[0];
-                }else {
-                    $marks['practical_grade'] = NULL;
-                }
-                $row['pr_attendance'] = "Pre";
-            }else {
-                $marks['practical_marks'] = NULL;
-                $marks['practical_grade'] = NULL;
-                $row['pr_attendance'] = NULL;
-            }
-            //check theory marks and practical marks
-            if(isset($marks['theory_marks']) || isset($marks['practical_marks'])){
-                //get total marks of single subject
-                $marks['total_marks'] = ($marks['theory_marks'] + $marks['practical_marks']);
-                $grade_point = $this->model_g->getFinalGrade($row['school_class_section_subject_id'], $marks['total_marks']);
-                if(isset($grade_point[0])){
-                    $marks['final_grade'] = $grade_point[0];
-                }else {
-                    $marks['final_grade'] = NULL;
-                }
-                if(isset($grade_point[1])){
-                    $marks['grade_point'] = $grade_point[1];
-                }else {
-                    $marks['grade_point'] = NULL;
-                }
-                $marks['grade_credit_hour'] = $this->model_g->getGradeCreditHour($row['school_class_section_subject_id'], $marks['grade_point']);
-                //get total marks of all subjects
-                $marks['obtain_total_th_marks'] += $marks['theory_marks'];
-                $marks['obtain_total_pr_marks'] += $marks['practical_marks'];
-                $marks['obtain_total_marks'] += ($marks['theory_marks'] + $marks['practical_marks']);
-                $marks['total_grade_credit_hour'] += $marks['grade_credit_hour'];
-            }else {
-                $marks['total_marks'] = NULL;
-                $marks['final_grade'] = NULL;
-                $marks['grade_point'] = NULL;
-                $marks['grade_credit_hour'] = NULL;
-            }
-
-            $old_data =  DB::table('exam_results')
-                            ->where('session_id', '=', $marks['session_id'])
-                            ->where('exam_id', '=',$marks['exam_id'])
-                            ->where('student_id', '=', $marks['student_id'])
-                            ->where('school_class_section_subject_id', '=', $row['school_class_section_subject_id'])
-                            ->first();
-            if(isset($old_data)){
-                DB::table('exam_results')->where('id', '=', $old_data->id)->update([
-                    'session_id' => $marks['session_id'],
-                    'exam_id' => $marks['exam_id'],
-                    'school_class_section_subject_id' => $row['school_class_section_subject_id'],
-                    'student_id' => $marks['student_id'],
-                    'theory_attendance' => $row['th_attendance'],
-                    'practical_attendance' => $row['pr_attendance'],
-                    'theory_get_marks' => $marks['theory_marks'],
-                    'theory_grade' => $marks['theory_grade'],
-                    'practical_get_marks' => $marks['practical_marks'],
-                    'practical_grade' => $marks['practical_grade'],
-                    'total_marks' => $marks['total_marks'],
-                    'final_grade' => $marks['final_grade'],
-                    'grade_point' => $marks['grade_point'],
-                    'grade_credit_hour' => $marks['grade_credit_hour'],
-                    'description' => $marks['outcome'],
-                    'created_at' => date('Y-m-d-h-m-s')
-                ]);
-            }
-            else {
-                DB::table('exam_results')->insert([
-                    'session_id' => $marks['session_id'],
-                    'exam_id' => $marks['exam_id'],
-                    'school_class_section_subject_id' => $row['school_class_section_subject_id'],
-                    'student_id' => $marks['student_id'],
-                    'theory_attendance' => $row['th_attendance'],
-                    'practical_attendance' => $row['pr_attendance'],
-                    'theory_get_marks' => $marks['theory_marks'],
-                    'theory_grade' => $marks['theory_grade'],
-                    'practical_get_marks' => $marks['practical_marks'],
-                    'practical_grade' => $marks['practical_grade'],
-                    'total_marks' => $marks['total_marks'],
-                    'final_grade' => $marks['final_grade'],
-                    'grade_point' => $marks['grade_point'],
-                    'grade_credit_hour' => $marks['grade_credit_hour'],
-                    'description' => $marks['outcome'],
-                    'created_at' => date('Y-m-d-h-m-s')
-                ]);
-            }
-
-        }
-
-        //calculation of the GPA and percentage
-        $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['subjects_no']);
-        $marks['percentage'] = dm_calPercentage($marks['obtain_total_marks'], $marks['grand_total_marks']);
-
-        $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])
-                            ->where('exam_id', '=',$marks['exam_id'])
-                            ->where('student_id', '=', $marks['student_id'])
-                            ->where('school_class_section_id', '=', $marks['school_class_sec_id'])
-                            ->first();
-        if(isset($old_report)) {
-            DB::table('reports')->where('id', '=', $old_report->id)->update([
-                'session_id' => $marks['session_id'],
-                'exam_id' => $marks['exam_id'],
-                'school_class_section_id' => $marks['school_class_sec_id'],
-                'student_id' => $marks['student_id'],
-                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
-                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
-                'obtain_total_marks' => $marks['obtain_total_marks'],
-                'grand_total_marks' => $marks['grand_total_marks'],
-                'percentage' => $marks['percentage'],
-                'gpa' => $marks['gpa'],
-                'results' => $marks['outcome'],
-            ]);
-        }
-        else {
-            DB::table('reports')->insert([
-                'session_id' => $marks['session_id'],
-                'exam_id' => $marks['exam_id'],
-                'school_class_section_id' => $marks['school_class_sec_id'],
-                'student_id' => $marks['student_id'],
-                'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
-                'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
-                'obtain_total_marks' => $marks['obtain_total_marks'],
-                'grand_total_marks' => $marks['grand_total_marks'],
-                'percentage' => $marks['percentage'],
-                'gpa' => $marks['gpa'],
-                'results' => $marks['outcome'],
-            ]);
-        }
-        session()->flash('alert-success', $this->panel.' Successfully Store');
-        return redirect()->route($this->base_route.'.index');
-    }
-
     /**
      * Remove the specified resource from storage.
      *

@@ -108,7 +108,7 @@ class ReportsController extends DM_BaseController
                                             ->where('exam_id', '=', $data['exam_id'])
                                             ->where('school_class_section_id', '=', $data['school_class_sec_id'])
                                             ->orderBy('obtain_total_marks', 'desc')
-                                            ->take(5)
+                                            ->take(3)
                                             ->get();
 
             // $data['top_report'] = $this->model_g::joinSubjectReport($data['session_id'], $data['exam_id'], $data['school_class_sec_id']);

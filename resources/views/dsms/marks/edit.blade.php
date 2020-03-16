@@ -8,13 +8,14 @@
                 Select Criteria
                 <div class="pull-right">
                     @if(Route::has($_base_route.'.create'))
-                    {{-- <a class="btn btn-success btn-xs" href="{{ route($_base_route.'.create') }}">Add</a> --}}
+                    <a class="btn btn-success btn-xs" href="{{ route($_base_route.'.create') }}">Add</a>
                     @endif
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.update') }}" method="post" enctype="multipart/form-data" id="schedule-form">
-                    @csrf {{method_field('PUT')}}
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.store') }}" method="post" enctype="multipart/form-data" id="schedule-form">
+                    @csrf
+                    {{method_field('PUT')}}
                     <input type="hidden" name="session_id" class="form-control" id="" value="{{ $data['session_id'] }}" readonly>
                     <input type="hidden" name="exam_id" class="form-control" id="" value="{{ $data['exam_id'] }}" readonly>
                     <input type="hidden" name="school_class_sec_id" class="form-control" id="" value="{{ $data['school_class_sec_id'] }}" readonly>

@@ -174,10 +174,10 @@
                             </td>
                             @endforeach
                             @endif
-                            <td> B+ </td>
-                            <td> 2.4 </td>
-                            <td> B+ </td>
-                            <td> B+ </td>
+                            <td>{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->percentage }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->grand_total_marks }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->results }}</td>
                         </tr>
                         @endforeach
                     </tbody>

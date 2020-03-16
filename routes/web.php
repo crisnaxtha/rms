@@ -143,7 +143,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
         Route::group(['as'=> 'marks.', 'prefix' => 'marks'], function(){
             Route::any('',                                      ['as'=>'index',              'uses'=>'ExamResultsController@index']);
             Route::any('create',                                ['as'=>'create',              'uses'=>'ExamResultsController@create']);
-            Route::post('store',                                ['as'=>'store',              'uses'=>'ExamResultsController@store']);
+            Route::any('store',                                ['as'=>'store',              'uses'=>'ExamResultsController@store']);
             Route::get('{id}/show',                             ['as'=>'show',              'uses'=>'ExamResultsController@show']);
 
             Route::get('{session_id}/{exam_id}/{school_class_section_id}/{student_id}/edit',
