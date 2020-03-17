@@ -15,6 +15,12 @@
       top: 0; */
       padding-left:-1000px;
     }
+    table tbody tr td {
+        font-size: 10px;
+    }
+    table tbody th {
+        font-size: 10px;
+    }
 }
 </style>
  {{-- Js Placed here because it is mandatory for pdf converter --}}

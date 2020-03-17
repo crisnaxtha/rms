@@ -13,6 +13,12 @@
       left: 0;
       top: 0;
     }
+    table tbody tr td {
+        font-size: 10px;
+    }
+    table tbody th {
+        font-size: 10px;
+    }
 }
 </style>
  {{-- Js Placed here because it is mandatory for pdf converter --}}
