@@ -66,19 +66,22 @@
             </li>
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Marks Ledger' || $_panel == 'Top Three Student' || $_panel == "" || $_panel == '' || $_panel == '') ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Marks Ledger' || $_panel == 'Top Three Student' || $_panel == "Grade Ledger" || $_panel == 'School Ledger' || $_panel == '') ? 'active' : '' }}">
                     <i class="fa fa-file-o"></i>
                     <span>{{ __('Examination Report') }}</span>
                 </a>
                 <ul class="sub">
+                    @if(Route::has('dsms.report.index'))
+                    <li><a class="{{ ($_panel == 'Marks Ledger') ? 'active' : '' }}" href="{{ URL::route('dsms.report.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Ledger')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.report.grade'))
+                    <li><a class="{{ ($_panel == 'Grade Ledger') ? 'active' : '' }}" href="{{ URL::route('dsms.report.grade') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Grade Ledger')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.report.school'))
+                    <li><a class="{{ ($_panel == 'School Ledger') ? 'active' : '' }}" href="{{ URL::route('dsms.report.school') }}"><i class="fa fa-angle-double-right"></i><span>{{__('School Ledger')}}</span></a></li>
+                    @endif
                     @if(Route::has('dsms.report.topStudent'))
                     <li><a class="{{ ($_panel == 'Top Three Student') ? 'active' : '' }}" href="{{ URL::route('dsms.report.topStudent') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Top Three Student')}}</span></a></li>
-                    @endif
-                    @if(Route::has('dsms.report.index'))
-                    <li><a class="{{ ($_panel == 'Marks Ledger') ? 'active' : '' }}" href="{{ URL::route('dsms.report.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Ledger')}}</span></a></li>
-                    @endif
-                    @if(Route::has('dsms.report.index'))
-                    <li><a class="{{ ($_panel == 'Marks Ledger') ? 'active' : '' }}" href="{{ URL::route('dsms.report.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Ledger')}}</span></a></li>
                     @endif
                 </ul>
             </li>
