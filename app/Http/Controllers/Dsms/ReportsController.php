@@ -87,7 +87,7 @@ class ReportsController extends DM_BaseController
     }
 
     //get Top three student base on School Class section
-    public function topThreeStudent(Request $request) {
+    public function topStudentReport(Request $request) {
         $this->panel = "Top Three Student";
         if ($request->isMethod('post')){
             $data['sessions'] = $this->model_7::all();

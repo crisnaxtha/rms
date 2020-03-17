@@ -34,7 +34,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.topThreeStudent')}}" method="post" enctype="multipart/form-data" id="schedule-form">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.topStudent')}}" method="post" enctype="multipart/form-data" id="schedule-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-2">
