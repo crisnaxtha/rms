@@ -33,8 +33,8 @@ class SubjectsTableSeeder extends Seeder
             'title' =>'Compulsory Mathematics',
             'theory_full_marks'=>'100',
             'theory_pass_marks'=>'40',
-            'practical_full_marks'=>'',
-            'practical_pass_marks'=>'',
+            // 'practical_full_marks'=>'',
+            // 'practical_pass_marks'=>'',
             'credit_hour'=>'4',
         ]);
         Subject::create([
