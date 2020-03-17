@@ -119,6 +119,10 @@
                         <th colspan="3">{{ $row->sub_title }}</th>
                         @endforeach
                         @endif
+                        <th rowspan="3" style="width:20px;"> Total Marks Obtained in theory</th>
+                        <th rowspan="3" style=""> Percentage</th>
+                        <th rowspan="3" style=""> Theory full marks</th>
+                        <th rowspan="3" style=""> Remarks</th>
                     </tr>
                     <tr>
                         @if(isset($data['school_class_section_subjects']))
@@ -170,6 +174,10 @@
                             </td>
                             @endforeach
                             @endif
+                            <td>{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->percentage }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->grand_total_marks }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->results }}</td>
                         </tr>
                         @endforeach
                     </tbody>

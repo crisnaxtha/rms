@@ -62,15 +62,19 @@ class ReportsController extends DM_BaseController
             $data['class_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->class_id;
 
             $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
-            // dd($data['school_class_section_subjects']);
 
-            $data['students'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
-            // dd($data['students']);
+            $data['top_report'] = $this->model_8::where('session_id', '=', $data['session_id'])
+                                            ->where('exam_id', '=', $data['exam_id'])
+                                            ->where('school_class_section_id', '=', $data['school_class_sec_id'])
+                                            ->get();
+
             $data['old_std_result'] = array();
-            foreach($data['students'] as $student) {
-                $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->school_class_section_subject_id);
-                if(isset($s_result)){
-                    array_push($data['old_std_result'], $s_result);
+            foreach($data['school_class_section_subjects'] as $subject){
+                foreach($data['top_report'] as $student) {
+                    $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->student_id, $subject->id);
+                    if(isset($s_result)){
+                        array_push($data['old_std_result'], $s_result);
+                    }
                 }
             }
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
@@ -103,16 +107,12 @@ class ReportsController extends DM_BaseController
 
             $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
 
-
             $data['top_report'] = $this->model_8::where('session_id', '=', $data['session_id'])
                                             ->where('exam_id', '=', $data['exam_id'])
                                             ->where('school_class_section_id', '=', $data['school_class_sec_id'])
                                             ->orderBy('obtain_total_marks', 'desc')
                                             ->take(3)
                                             ->get();
-
-            // $data['top_report'] = $this->model_g::joinSubjectReport($data['session_id'], $data['exam_id'], $data['school_class_sec_id']);
-            // dd($data['top_report']);
 
             $data['old_std_result'] = array();
 
@@ -156,15 +156,18 @@ class ReportsController extends DM_BaseController
             $data['class_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->class_id;
 
             $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
-            // dd($data['school_class_section_subjects']);
+            $data['top_report'] = $this->model_8::where('session_id', '=', $data['session_id'])
+            ->where('exam_id', '=', $data['exam_id'])
+            ->where('school_class_section_id', '=', $data['school_class_sec_id'])
+            ->get();
 
-            $data['students'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
-            // dd($data['students']);
             $data['old_std_result'] = array();
-            foreach($data['students'] as $student) {
-                $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->school_class_section_subject_id);
-                if(isset($s_result)){
-                    array_push($data['old_std_result'], $s_result);
+            foreach($data['school_class_section_subjects'] as $subject){
+                foreach($data['top_report'] as $student) {
+                    $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->student_id, $subject->id);
+                    if(isset($s_result)){
+                        array_push($data['old_std_result'], $s_result);
+                    }
                 }
             }
             $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
