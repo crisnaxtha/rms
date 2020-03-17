@@ -20,7 +20,11 @@ class UsersController extends DM_BaseController
      * Constructor
      */
     public function __construct(User $user, Role $role) {
-        $this->middleware(['auth', 'status', 'super']);
+        $this->middleware(['auth', 'status']);
+        $this->middleware('permission:user-list', ['only' => ['index']]);
+        $this->middleware('permission:user-create', ['only' => ['create','store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-delete', ['only' => ['destroy']]);
         $this->model = $user;
         $this->role = $role;
 

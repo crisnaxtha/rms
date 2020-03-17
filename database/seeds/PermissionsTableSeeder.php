@@ -246,7 +246,57 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'Subject Delete',
                 'slug' => Str::slug('Subject Delete'),
                 'order' => 5,
-            ]
+            ],
+            [
+                'name' => 'User List',
+                'slug' => Str::slug('User List'),
+                'order' => 1,
+            ],
+            [
+                'name' => 'User Create',
+                'slug' => Str::slug('User Create'),
+                'order' => 2,
+            ],
+            [
+                'name' => 'User Edit',
+                'slug' => Str::slug('User Edit'),
+                'order' => 3,
+            ],
+            [
+                'name' => 'User Show',
+                'slug' => Str::slug('User Show'),
+                'order' => 4,
+            ],
+            [
+                'name' => 'User Delete',
+                'slug' => Str::slug('User Delete'),
+                'order' => 5,
+            ],
+            [
+                'name' => 'Role List',
+                'slug' => Str::slug('Role List'),
+                'order' => 1,
+            ],
+            [
+                'name' => 'Role Create',
+                'slug' => Str::slug('Role Create'),
+                'order' => 2,
+            ],
+            [
+                'name' => 'Role Edit',
+                'slug' => Str::slug('Role Edit'),
+                'order' => 3,
+            ],
+            [
+                'name' => 'Role Show',
+                'slug' => Str::slug('Role Show'),
+                'order' => 4,
+            ],
+            [
+                'name' => 'Role Delete',
+                'slug' => Str::slug('Role Delete'),
+                'order' => 5,
+            ],
         ]);
     }
 }
