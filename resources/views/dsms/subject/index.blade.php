@@ -43,7 +43,9 @@
                          <th>Subject Name</th>
                          <th>Subject Credit Hour</th>
                          <th>Subject Theory Full Marks</th>
+                         <th>Subject Theory Pass Marks</th>
                          <th>Subject Practical Full Marks</th>
+                         <th>Subject Practical Pass Marks</th>
                          <th>Action</th>
                       </tr>
                    </thead>
@@ -55,7 +57,9 @@
                            <td>{{ $row->title }}</td>
                            <td>{{ $row->credit_hour }}</td>
                            <td>{{ $row->theory_full_marks }}</td>
+                           <td>{{ $row->theory_pass_marks }}</td>
                            <td>{{ $row->practical_full_marks }}</td>
+                           <td>{{ $row->practical_pass_marks }}</td>
                            <td>
                               @include('dsms.includes.buttons.button-edit')
                               @include('dsms.includes.buttons.button-delete')

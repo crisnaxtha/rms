@@ -161,7 +161,7 @@
                     console.log(data);
                         var response = data;
                         if(response.length == 0){
-                            alert("No Data Found !!");
+                            alert("No Subject Found !!");
                         }
                         else if (response && response.length > 0) {
                             for (i = 0; i < response.length; ++i) {

@@ -75,8 +75,8 @@ class StudentsController extends DM_BaseController
 
             if(isset($data['session_id']) && isset($school_class_section_id) && isset($data['query'])){
             $data['rows'] = $this->model::where('status', '=', 1)
-                                ->orWhere('session_id', '=', $data['session_id'])
-                                ->orWhere('school_class_section_id', '=', $school_class_section_id)
+                                ->Where('session_id', '=', $data['session_id'])
+                                ->Where('school_class_section_id', '=', $school_class_section_id)
                                 ->where('admission_date', 'LIKE', '%'. $data['query'].'%')
                                 ->where('roll_no', 'LIKE', '%'. $data['query'].'%')
                                 ->where('first_name', 'LIKE', '%'. $data['query'].'%')
@@ -88,6 +88,7 @@ class StudentsController extends DM_BaseController
                                 ->get();
             }else if(isset($school_class_section_id) && !isset($data['query']) && isset($data['session_id'])){
                 $data['rows'] = $this->model::where('status', '=', 1)
+                                ->Where('session_id', '=', $data['session_id'])
                                 ->Where('school_class_section_id', '=', $school_class_section_id)
                                 ->get();
             }
