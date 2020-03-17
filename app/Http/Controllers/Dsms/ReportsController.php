@@ -110,6 +110,7 @@ class ReportsController extends DM_BaseController
             $data['top_report'] = $this->model_8::where('session_id', '=', $data['session_id'])
                                             ->where('exam_id', '=', $data['exam_id'])
                                             ->where('school_class_section_id', '=', $data['school_class_sec_id'])
+                                            ->where('results', '=', 'PASS')
                                             ->orderBy('obtain_total_marks', 'desc')
                                             ->take(3)
                                             ->get();

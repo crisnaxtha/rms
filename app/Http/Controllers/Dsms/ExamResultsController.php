@@ -114,6 +114,7 @@ class ExamResultsController extends DM_BaseController
             $marks['obtain_total_th_marks'] = 0;
             $marks['obtain_total_pr_marks'] = 0;
             $marks['obtain_total_marks'] = 0;
+            $marks['grand_total_th_marks'] = 0;
             $marks['grand_total_marks'] = 0;
             $marks['total_grade_credit_hour'] = 0;
             $marks['subjects_no'] = count($data);
@@ -130,6 +131,7 @@ class ExamResultsController extends DM_BaseController
                 //grand total marks of the subjects
                 if(isset($row['school_class_section_subject_id'])){
                     $data['subject'] = $this->model_g::getSubjectFromSchoolClassSec($row['school_class_section_subject_id']);
+                    $marks['grand_total_th_marks'] += $data['subject']->theory_full_marks;
                     $marks['grand_total_marks'] += ($data['subject']->theory_full_marks + $data['subject']->practical_full_marks);
                 }
                 //check theory attendance
@@ -272,6 +274,7 @@ class ExamResultsController extends DM_BaseController
                     'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
                     'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
                     'obtain_total_marks' => $marks['obtain_total_marks'],
+                    'grand_total_th_marks' => $marks['grand_total_th_marks'],
                     'grand_total_marks' => $marks['grand_total_marks'],
                     'percentage' => $marks['percentage'],
                     'gpa' => $marks['gpa'],
@@ -287,6 +290,7 @@ class ExamResultsController extends DM_BaseController
                     'obtain_total_th_marks' => $marks['obtain_total_th_marks'],
                     'obtain_total_pr_marks' => $marks['obtain_total_pr_marks'],
                     'obtain_total_marks' => $marks['obtain_total_marks'],
+                    'grand_total_th_marks' => $marks['grand_total_th_marks'],
                     'grand_total_marks' => $marks['grand_total_marks'],
                     'percentage' => $marks['percentage'],
                     'gpa' => $marks['gpa'],
