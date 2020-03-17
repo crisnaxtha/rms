@@ -116,10 +116,9 @@
                         <th rowspan="3"> Symbol No. </th>
                         <th rowspan="3"> Student Name </th>
                         <th rowspan="3"> School Name </th>
-                        <th rowspan="3"></th>
                         @if(isset($data['school_class_section_subjects']))
                         @foreach($data['school_class_section_subjects'] as $row)
-                        <th colspan="3">{{ $row->sub_title }}</th>
+                        <th colspan="6">{{ $row->sub_title }}</th>
                         @endforeach
                         @endif
                         <th rowspan="3" style="width:20px;"> Total Marks Obtained in theory</th>
@@ -130,92 +129,83 @@
                     <tr>
                         @if(isset($data['school_class_section_subjects']))
                         @foreach($data['school_class_section_subjects'] as $row)
-                        <th colspan="1">TH</th>
-                        <th colspan="1">PR</th>
-                        <th colspan="1">Total</th>
+                        <th colspan="2">TH</th>
+                        <th colspan="2">PR</th>
+                        <th colspan="2">Total</th>
                         @endforeach
                         @endif
                     </tr>
-                    {{-- <tr>
+                    <tr>
                         @if(isset($data['school_class_section_subjects']))
                         @foreach($data['school_class_section_subjects'] as $row)
-                        <th>G</th>
-                        <th>P</th>
-                        <th>G</th>
-                        <th>P</th>
-                        <th>G</th>
-                        <th>P</th>
+                        <th >G</th>
+                        <th >P</th>
+                        <th >G</th>
+                        <th >P</th>
+                        <th >G</th>
+                        <th >P</th>
                         @endforeach
                         @endif
-                    </tr> --}}
+                    </tr>
                     <!--     </thead> -->
                     <tbody>
                         @foreach($data['std_result'] as $key => $rows)
-                            <tr>
-                                <td rowspan="2">{{ $loop->iteration }}</td>
-                                <td rowspan="2">{{ dm_getStudent($key)->roll_no }}</td>
-                                <td rowspan="2">{{ dm_getStudent($key)->first_name }}</td>
-                                <td rowspan="2">@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</td>
-                                <td> M </td>
-                                @if(isset($rows))
-                                @foreach($rows as $row )
-                                <td>
-                                    @if($row['theory_attendance'] == 'ABS')
-                                    <em style="color:red">{{ "Abs" }}</em>
-                                    @else
-                                    {{ $row['theory_get_marks'] }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($row['practical_attendance'] == 'ABS')
-                                    <em style="color:red">{{ "Abs" }}</em>
-                                    @else
-                                    {{ $row['practical_get_marks'] }}
-                                    @endif
-                                </td>
-                                <td>
-                                @if(isset($row['total_marks']))
-                                    {{ $row['total_marks'] }}
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ dm_getStudent($key)->roll_no }}</td>
+                            <td>{{ dm_getStudent($key)->first_name }}</td>
+                            <td>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</td>
+                            @if(isset($rows))
+                            @foreach($rows as $row )
+                            <td>
+                                @if($row['theory_attendance'] == 'ABS')
+                                <em style="color:red">{{ "Abs" }}</em>
                                 @else
-                                {{ ($row['theory_get_marks'] + $row['practical_get_marks']) }}
+                                {{ $row['theory_get_marks'] }}
                                 @endif
-                                </td>
+                            </td>
+                            <td>
+                                @if($row['theory_attendance'] == 'ABS')
+                                <em style="color:red">{{ "Abs" }}</em>
+                                @else
+                                {{ $row['theory_grade'] }}
+                                @endif
+                            </td>
+                            <td>
+                                @if($row['practical_attendance'] == 'ABS')
+                                <em style="color:red">{{ "Abs" }}</em>
+                                @else
+                                {{ $row['practical_get_marks'] }}
+                                @endif
+                            </td>
+                            <td>
+                                @if($row['practical_attendance'] == 'ABS')
+                                <em style="color:red">{{ "Abs" }}</em>
+                                @else
+                                {{ $row['practical_grade'] }}
+                                @endif
+                            </td>
+                            <td>
+                               @if(isset($row['total_marks']))
+                                {{ $row['total_marks'] }}
+                               @else
+                               {{ ($row['theory_get_marks'] + $row['practical_get_marks']) }}
+                               @endif
+                            </td>
+                            <td>
+                                @if(isset($row['final_grade']))
+                                 {{ $row['final_grade'] }}
+                                @else
 
-                                @endforeach
                                 @endif
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->percentage }}</td>
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->grand_total_th_marks }}</td>
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->results }}</td>
-                            </tr>
-                            <tr>
-                                <td>G</td>
-                                @if(isset($rows))
-                                @foreach($rows as $row )
-                                <td>
-                                    @if($row['theory_attendance'] == 'ABS')
-                                    <em style="color:red">{{ "Abs" }}</em>
-                                    @else
-                                    {{ $row['theory_grade'] }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($row['practical_attendance'] == 'ABS')
-                                    <em style="color:red">{{ "Abs" }}</em>
-                                    @else
-                                    {{ $row['practical_grade'] }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(isset($row['final_grade']))
-                                    {{ $row['final_grade'] }}
-                                    @else
-
-                                    @endif
-                                </td>
-                                @endforeach
-                                @endif
-                            </tr>
+                            </td>
+                            @endforeach
+                            @endif
+                            <td>{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->percentage }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->grand_total_th_marks }}</td>
+                            <td>{{ $data['top_report'][$loop->index]->results }}</td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
