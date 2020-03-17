@@ -46,7 +46,7 @@ class ExamResultsController extends DM_BaseController
      */
     public function index(Request $request)
     {
-        $this->panel = "Marks View";
+        $this->panel = "Grade View";
         if ($request->isMethod('post')){
             $data['sessions'] = $this->model_7::all();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
@@ -75,15 +75,13 @@ class ExamResultsController extends DM_BaseController
             // dd($data['old_std_result']);
             // dd($data['std_result']);
             $data['ms_setting'] = $this->model_6::first();
-
-            return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
         else {
             $data['sessions'] = $this->model_7::all();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
             $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
-            return view($this->loadView($this->view_path.'.index'), compact('data'));
         }
+        return view($this->loadView($this->view_path.'.index'), compact('data'));
     }
 
     /**
@@ -300,7 +298,7 @@ class ExamResultsController extends DM_BaseController
         }
         session()->flash('alert-success', $this->panel.' Successfully Store');
         if($request->isMethod('POST')){
-        return redirect()->route($this->base_route.'.create');
+            return redirect()->route($this->base_route.'.create');
         }else {
             return redirect()->route($this->base_route.'.index');
         }
@@ -365,7 +363,7 @@ class ExamResultsController extends DM_BaseController
         }
     }
 
-    public function printMarksheet($session_id, $exam_id, $school_class_section_id, $student_id) {
+    public function printGradesheet($session_id, $exam_id, $school_class_section_id, $student_id) {
         $data['session_id'] = $session_id;
         $data['exam_id'] = $exam_id;
         $data['school_class_sec_id'] = $school_class_section_id;
@@ -387,5 +385,45 @@ class ExamResultsController extends DM_BaseController
 
         // dd($data['result']);
         return view($this->loadView($this->view_path.'.gradesheet'), compact('data'));
+    }
+
+    public function marksView(Request $request) {
+        $this->panel = "Marks View";
+        if ($request->isMethod('post')){
+            $data['sessions'] = $this->model_7::all();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
+
+            $data['session_id'] = $request->session_id;
+            $data['exam_id'] = $request->exam_id;
+            $data['school_class_sec_id'] = $request->school_class_sec_id;
+
+            $data['school_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->school_id;
+            $data['class_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->class_id;
+
+            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+            // dd($data['school_class_section_subjects']);
+
+            $data['students'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
+            // dd($data['students']);
+            $data['old_std_result'] = array();
+            foreach($data['students'] as $student) {
+                $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->school_class_section_subject_id);
+                if(isset($s_result)){
+                    array_push($data['old_std_result'], $s_result);
+                }
+            }
+            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
+            // dd($data['old_std_result']);
+            // dd($data['std_result']);
+            $data['ms_setting'] = $this->model_6::first();
+        }
+        else {
+            $data['sessions'] = $this->model_7::all();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
+        }
+        return view($this->loadView($this->view_path.'.marks'), compact('data'));
+
     }
 }

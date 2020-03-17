@@ -142,6 +142,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
         //marks route
         Route::group(['as'=> 'marks.', 'prefix' => 'marks'], function(){
             Route::any('',                                      ['as'=>'index',              'uses'=>'ExamResultsController@index']);
+            Route::any('view',                                  ['as'=>'marksView',              'uses'=>'ExamResultsController@marksView']);
             Route::any('create',                                ['as'=>'create',              'uses'=>'ExamResultsController@create']);
             Route::any('store',                                ['as'=>'store',              'uses'=>'ExamResultsController@store']);
             Route::get('{id}/show',                             ['as'=>'show',              'uses'=>'ExamResultsController@show']);
@@ -157,7 +158,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
 
 
             Route::get('marksheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
-                ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printMarksheet']);
+                ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printGradesheet']);
         });
         //reports
         Route::group(['as'=> 'report.', 'prefix' => 'report'], function(){

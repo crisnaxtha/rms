@@ -19,7 +19,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.index')}}" method="post" enctype="multipart/form-data" id="schedule-form">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.marksView')}}" method="post" enctype="multipart/form-data" id="schedule-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-2">
@@ -109,15 +109,16 @@
                                 @if($row['theory_attendance'] == 'ABS')
                                 <em style="color:red">{{ "Abs" }}</em>
                                 @else
-                                {{ $row['theory_grade'] }}
+                                {{ $row['theory_get_marks'] }}
                                 @endif
                                 |
                                 @if($row['practical_attendance'] == 'ABS')
                                 <em style="color:red">{{ "Abs" }}</em>
                                 @else
-                                {{ $row['practical_grade'] }}
+                                {{ $row['practical_get_marks'] }}
                                 @endif
                             </td>
+                            {{-- <td>( {{ $row['exam_schedules_id'] }})</td> --}}
                             @endforeach
                             @endif
                             <td>
@@ -140,7 +141,7 @@
 <!--Assign Subject block end-->
 
 <!--print block -->
-@include('dsms.marks.includes.gradesheet')
+@include('dsms.marks.includes.marksheet')
 <!--print block -->
 @endsection
 

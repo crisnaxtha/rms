@@ -42,7 +42,7 @@
             </li>
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Exam' || $_panel == 'Exam Schedule' || $_panel == 'Marks Register' || $_panel == "Marks View" || $_panel == 'Marks Grade' || $_panel == 'Settings') ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Exam' || $_panel == 'Grade View' || $_panel == 'Marks Register' || $_panel == "Marks View" || $_panel == 'Marks Grade' || $_panel == 'Settings') ? 'active' : '' }}">
                     <i class="fa fa-edit"></i>
                     <span>{{ __('Examination') }}</span>
                 </a>
@@ -54,7 +54,10 @@
                     <li><a class="{{ ($_panel == 'Marks Register') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.create') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks Register')}}</span></a></li>
                     @endif
                     @if(Route::has('dsms.marks.index'))
-                    <li><a class="{{ ($_panel == 'Marks View') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks View')}}</span></a></li>
+                    <li><a class="{{ ($_panel == 'Grade View') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Grade View')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.marks.marksView'))
+                    <li><a class="{{ ($_panel == 'Marks View') ? 'active' : '' }}" href="{{ URL::route('dsms.marks.marksView') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Marks View')}}</span></a></li>
                     @endif
                     @if(Route::has('dsms.setting.index'))
                     <li><a class="{{ ($_panel == 'Settings') ? 'active' : '' }}" href="{{ URL::route('dsms.setting.index') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Grade Sheet Settings')}}</span></a></li>
