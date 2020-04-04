@@ -183,7 +183,16 @@
                             <td>{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
                             <td>{{ $data['top_report'][$loop->index]->percentage }}</td>
                             <td>{{ $data['top_report'][$loop->index]->grand_total_th_marks }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->results }}</td>
+                            {{-- <td>{{ $data['top_report'][$loop->index]->results }}</td> --}}
+                            @if($loop->iteration == 1)
+                            <td> First</td>
+                            @elseif( $loop->iteration == 2)
+                            <td> Second</td>
+                            @elseif( $loop->iteration == 3)
+                            <td> Third</td>
+                            @else
+                            <td></td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

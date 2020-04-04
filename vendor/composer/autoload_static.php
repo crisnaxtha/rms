@@ -490,6 +490,7 @@ class ComposerStaticInit207485781bb41f3c36b4979f9df33292
         'App\\Http\\Controllers\\Dsms\\GradeSheetSettingController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/GradeSheetSettingController.php',
         'App\\Http\\Controllers\\Dsms\\GradesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/GradesController.php',
         'App\\Http\\Controllers\\Dsms\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/HomeController.php',
+        'App\\Http\\Controllers\\Dsms\\ReportsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/ReportsController.php',
         'App\\Http\\Controllers\\Dsms\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/RoleController.php',
         'App\\Http\\Controllers\\Dsms\\SchoolsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/SchoolsController.php',
         'App\\Http\\Controllers\\Dsms\\SectionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dsms/SectionsController.php',

@@ -31,6 +31,7 @@ return array(
     'App\\Http\\Controllers\\Dsms\\GradeSheetSettingController' => $baseDir . '/app/Http/Controllers/Dsms/GradeSheetSettingController.php',
     'App\\Http\\Controllers\\Dsms\\GradesController' => $baseDir . '/app/Http/Controllers/Dsms/GradesController.php',
     'App\\Http\\Controllers\\Dsms\\HomeController' => $baseDir . '/app/Http/Controllers/Dsms/HomeController.php',
+    'App\\Http\\Controllers\\Dsms\\ReportsController' => $baseDir . '/app/Http/Controllers/Dsms/ReportsController.php',
     'App\\Http\\Controllers\\Dsms\\RoleController' => $baseDir . '/app/Http/Controllers/Dsms/RoleController.php',
     'App\\Http\\Controllers\\Dsms\\SchoolsController' => $baseDir . '/app/Http/Controllers/Dsms/SchoolsController.php',
     'App\\Http\\Controllers\\Dsms\\SectionsController' => $baseDir . '/app/Http/Controllers/Dsms/SectionsController.php',
