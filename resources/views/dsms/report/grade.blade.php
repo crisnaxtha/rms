@@ -128,9 +128,7 @@
                         <th colspan="3">{{ $row->sub_title }}</th>
                         @endforeach
                         @endif
-                        <th rowspan="3" style="width:20px;"> Total Marks Obtained in theory</th>
-                        <th rowspan="3" style=""> Percentage</th>
-                        <th rowspan="3" style=""> Theory full marks</th>
+                        <th rowspan="3" style="width:20px;"> GPA</th>
                         <th rowspan="3" style=""> Remarks</th>
                     </tr>
                     <tr>
@@ -142,19 +140,6 @@
                         @endforeach
                         @endif
                     </tr>
-                    {{-- <tr>
-                        @if(isset($data['school_class_section_subjects']))
-                        @foreach($data['school_class_section_subjects'] as $row)
-                        <th>G</th>
-                        <th>P</th>
-                        <th>G</th>
-                        <th>P</th>
-                        <th>G</th>
-                        <th>P</th>
-                        @endforeach
-                        @endif
-                    </tr> --}}
-                    <!--     </thead> -->
                     <tbody>
                         @foreach($data['std_result'] as $key => $rows)
                             <tr>
@@ -189,9 +174,7 @@
 
                                 @endforeach
                                 @endif
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->percentage }}</td>
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->grand_total_th_marks }}</td>
+                                <td rowspan="2">{{ $data['top_report'][$loop->index]->gpa }}</td>
                                 <td rowspan="2">{{ $data['top_report'][$loop->index]->results }}</td>
                             </tr>
                             <tr>
