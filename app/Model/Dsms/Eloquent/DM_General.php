@@ -8,6 +8,7 @@ use DB;
 
 class DM_General extends Model
 {
+    //return Class and school Class Id
     public static function joinSchoolClass($class_id) {
         $data = DB::table('school_classes')
                     ->join('my_classes', 'school_classes.class_id', '=', 'my_classes.id')
@@ -22,6 +23,16 @@ class DM_General extends Model
                     ->where('school_classes.class_id', '=', $class_id)
                     ->where('school_classes.school_id', '=', $school_id)
                     ->first();
+        return $data;
+    }
+
+    public static function getSchoolSectionByClassID($class_id) {
+        $data = DB::table('school_classes')
+                    ->join('school_class_sections', 'school_classes.id', '=', 'school_class_sections.school_class_id')
+                    ->where('school_classes.school_id', '=', $class_id)
+                    ->select('school_classes.*', 'school_class_sections.id as school_class_section_id')
+                    ->get();
+
         return $data;
     }
 
@@ -158,29 +169,7 @@ class DM_General extends Model
         return $data;
     }
 
-    //get single report of student based on exam schedule id and student id
-    // public static function getStudentReport($session_id, $exam_id, $student_id, $school_class_section_id) {
-    //     $data = DB::table('reports')
-    //                 ->where('student_id', '=', $student_id)
-    //                 ->where('session_id','=', $session_id)
-    //                 ->where('exam_id','=', $exam_id)
-    //                 ->where('school_class_section_id','=', $school_class_section_id)
-    //                 ->first();
-    //     return $data;
-    // }
 
-    // public static function getStudentResultReport($session_id, $exam_id, $student_id, $school_class_section_id){
-    //     $data = DB::table('students')
-    //                 ->join('exam_results', 'students.id', '=', 'exam_results.student_id')
-    //                 ->join('reports', 'students.id', '=', 'reports.student_id')
-    //                 ->where('students.id', '=', $student_id)
-    //                 ->where('students.school_class_section_id', '=', $school_class_section_id)
-    //                 ->where('exam_results.session_id','=', $session_id)
-    //                 ->where('exam_results.exam_id','=', $exam_id)
-    //                 ->select('students.id as student_id', 'students.first_name','students.last_name', 'exam_results.*', 'reports.*')
-    //                 ->first();
-    //         return $data;
-    // }
 //group array base on key and sorted
     public static function arrayGroupBy($old_arr_1, $based_on) {
         $arr = array();

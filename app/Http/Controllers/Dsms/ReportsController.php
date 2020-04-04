@@ -185,41 +185,44 @@ class ReportsController extends DM_BaseController
     }
 
     public function schoolReport(Request $request) {
-        $this->panel = "Marks Ledger";
+        $this->panel = "School Ledger";
         if ($request->isMethod('post')){
             $data['sessions'] = $this->model_7::all();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
-            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
 
             $data['session_id'] = $request->session_id;
             $data['exam_id'] = $request->exam_id;
-            $data['school_class_sec_id'] = $request->school_class_sec_id;
+            $data['class_id'] = $request->class_id;
 
-            $data['school_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->school_id;
-            $data['class_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->class_id;
+            $data['school_class_section_id'] = $this->model_g::getSchoolSectionByClassID($data['class_id']);
 
-            $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
-            // dd($data['school_class_section_subjects']);
+            $data['schools'] = $this->model_g::arrayGroupBy($data['school_class_section_id'], 'school_id');
 
-            $data['students'] = $this->model_g::joinSchoolClassSectionSubjectStudent($data['session_id'], $data['school_class_sec_id']);
-            // dd($data['students']);
-            $data['old_std_result'] = array();
-            foreach($data['students'] as $student) {
-                $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->id, $student->school_class_section_subject_id);
-                if(isset($s_result)){
-                    array_push($data['old_std_result'], $s_result);
+            $i = 1;
+            foreach($data['schools'] as $key => $rows) {
+                $data['count_fail_'.$i] = 0;
+                $data['count_pass_'.$i] = 0;
+                $data['count_student_'.$i] = 0;
+                foreach($rows as $row) {
+                    // dd($row);
+                    $data['fail'] = DB::table('reports')->where('session_id', '=', $data['session_id'])->where('exam_id', '=', $data['exam_id'])->where('school_class_section_id', '=', $row['school_class_section_id'])->where('results', '=', 'FAIL')->get();
+                    $data['pass'] = DB::table('reports')->where('session_id', '=', $data['session_id'])->where('exam_id', '=', $data['exam_id'])->where('school_class_section_id', '=', $row['school_class_section_id'])->where('results', '=', 'PASS')->get();
+                    $data['student'] = DB::table('reports')->where('session_id', '=', $data['session_id'])->where('exam_id', '=', $data['exam_id'])->where('school_class_section_id', '=', $row['school_class_section_id'])->get();
+                    $data['count_fail_'.$i] += count($data['fail']);
+                    $data['count_pass_'.$i] += count($data['pass']);
+                    $data['count_student_'.$i] += count($data['student']);
                 }
+                $i++;
             }
-            $data['std_result'] = $this->model_g::arrayGroupBy(json_encode(array_filter($data['old_std_result'])), 'student_id');
-            // dd($data['old_std_result']);
-            // dd($data['std_result']);
+
             $data['ms_setting'] = $this->model_6::first();
         }
         else {
             $data['sessions'] = $this->model_7::all();
             $data['exam'] = $this->model_3::where('status', '=', 1)->get();
-            $data['school_class_sec'] = $this->model_g::joinAllSchoolClassSection();
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
         }
-        return view($this->loadView($this->view_path.'.index'), compact('data'));
+        return view($this->loadView($this->view_path.'.school'), compact('data'));
     }
 }

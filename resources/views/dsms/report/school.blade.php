@@ -2,7 +2,6 @@
 @section('css')
 <style>
 @media print {
-    @page {size: landscape}
     body * {
       visibility: hidden;
     }
@@ -11,9 +10,14 @@
     }
     #ledger {
       position: absolute;
-      /* left: 0;
-      top: 0; */
-      padding-left:-1000px;
+      left: 0;
+      top: 0;
+    }
+    table tbody tr td {
+        font-size: 10px;
+    }
+    table tbody th {
+        font-size: 10px;
     }
 }
 </style>
@@ -36,7 +40,7 @@
                 </div>
             </header>
             <div class="panel-body">
-                <form class="assign_teacher_form" action="{{ route($_base_route.'.grade')}}" method="post" enctype="multipart/form-data" id="schedule-form">
+                <form class="assign_teacher_form" action="{{ route($_base_route.'.school')}}" method="post" enctype="multipart/form-data" id="schedule-form">
                     @csrf
                     <div class="row">
                         <div class="col-md-2">
@@ -67,12 +71,12 @@
                         </div>
                         <div class="col-md-7">
                             <div class="form-group">
-                                <label class="">School-Class-Section</label>
-                                <select class="dropdown-school" name="school_class_sec_id" id="school_class_sec_id" required>
+                                <label class="">Class</label>
+                                <select class="dropdown-school" name="class_id" id="class_id" required>
                                     <option value="">Select</option>
-                                    @if(isset($data['school_class_sec']))
-                                    @foreach($data['school_class_sec'] as $row)
-                                        <option value="{{ $row->id }}" @if(isset($data['school_class_sec_id'])) @if($data['school_class_sec_id'] == $row->id) selected @endif @endif >{{ $row->school_title }}-({{ $row->class_title }})-({{ $row->sec_title }})</option>
+                                    @if(isset($data['class']))
+                                    @foreach($data['class'] as $row)
+                                        <option value="{{ $row->id }}" @if(isset($data['class_id'])) @if($data['class_id'] == $row->id) selected @endif @endif >{{ $row->title }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -89,7 +93,7 @@
  <!--Assign Subject block-->
  <div class="row">
     <div class="col-sm-12">
-        @if(isset($data['std_result']))
+        @if(isset($data['schools']))
        <section class="panel">
             <header class="panel-heading">
                 {{ $_panel }}
@@ -110,104 +114,48 @@
                 {{-- </div> --}}
 
                 <table class="table table-bordered">
-                    <!--     <thead> -->
+
                     <tr>
-                        <th rowspan="3">S.N.</th>
-                        <th rowspan="3"> Symbol No. </th>
-                        <th rowspan="3"> Student Name </th>
-                        <th rowspan="3"> School Name </th>
-                        @if(isset($data['school_class_section_subjects']))
-                        @foreach($data['school_class_section_subjects'] as $row)
-                        <th colspan="6">{{ $row->sub_title }}</th>
-                        @endforeach
-                        @endif
-                        <th rowspan="3" style="width:20px;"> Total Marks Obtained in theory</th>
-                        <th rowspan="3" style=""> Percentage</th>
-                        <th rowspan="3" style=""> Theory full marks</th>
-                        <th rowspan="3" style=""> Remarks</th>
+                        <th rowspan="2">S.N.</th>
+                        <th rowspan="2" colspan="6"> School Name </th>
+                        <th style="text-align: center;" colspan="2">Result</th>
+                        <th rowspan="2" colspan="1">Total Number of Students </th>
+                        {{-- <th>Percentage</th> --}}
                     </tr>
+
                     <tr>
-                        @if(isset($data['school_class_section_subjects']))
-                        @foreach($data['school_class_section_subjects'] as $row)
-                        <th colspan="2">TH</th>
-                        <th colspan="2">PR</th>
-                        <th colspan="2">Total</th>
-                        @endforeach
-                        @endif
+                        <th rowspan="1">PASS</th>
+                        <th style="text-align: center;" rowspan="1">Fail</th>
                     </tr>
-                    <tr>
-                        @if(isset($data['school_class_section_subjects']))
-                        @foreach($data['school_class_section_subjects'] as $row)
-                        <th >G</th>
-                        <th >P</th>
-                        <th >G</th>
-                        <th >P</th>
-                        <th >G</th>
-                        <th >P</th>
-                        @endforeach
-                        @endif
-                    </tr>
-                    <!--     </thead> -->
+
                     <tbody>
-                        @foreach($data['std_result'] as $key => $rows)
+                        @foreach($data['schools'] as $key => $rows)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ dm_getStudent($key)->roll_no }}</td>
-                            <td>{{ dm_getStudent($key)->first_name }}</td>
-                            <td>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</td>
-                            @if(isset($rows))
-                            @foreach($rows as $row )
-                            <td>
-                                @if($row['theory_attendance'] == 'ABS')
-                                <em style="color:red">{{ "Abs" }}</em>
-                                @else
-                                {{ $row['theory_get_marks'] }}
-                                @endif
-                            </td>
-                            <td>
-                                @if($row['theory_attendance'] == 'ABS')
-                                <em style="color:red">{{ "Abs" }}</em>
-                                @else
-                                {{ $row['theory_grade'] }}
-                                @endif
-                            </td>
-                            <td>
-                                @if($row['practical_attendance'] == 'ABS')
-                                <em style="color:red">{{ "Abs" }}</em>
-                                @else
-                                {{ $row['practical_get_marks'] }}
-                                @endif
-                            </td>
-                            <td>
-                                @if($row['practical_attendance'] == 'ABS')
-                                <em style="color:red">{{ "Abs" }}</em>
-                                @else
-                                {{ $row['practical_grade'] }}
-                                @endif
-                            </td>
-                            <td>
-                               @if(isset($row['total_marks']))
-                                {{ $row['total_marks'] }}
-                               @else
-                               {{ ($row['theory_get_marks'] + $row['practical_get_marks']) }}
-                               @endif
-                            </td>
-                            <td>
-                                @if(isset($row['final_grade']))
-                                 {{ $row['final_grade'] }}
-                                @else
-
-                                @endif
-                            </td>
-                            @endforeach
-                            @endif
-                            <td>{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->percentage }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->grand_total_th_marks }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->results }}</td>
-                        </tr>
+                            <td colspan="6">{{ dm_getSchool($key)->title }}</td>
+                            <td>{{ $data['count_pass_'.$loop->iteration] }}</td>
+                            <td>{{ $data['count_fail_'.$loop->iteration]}}</td>
+                            <td>{{  $data['count_student_'.$loop->iteration]}}</td>
+                            {{-- <td>2</td> --}}
+                        <tr>
                         @endforeach
+                        {{-- <tr>
+                            <td colspan="7">Total </td>
+                            <td colspan="1">85</td>
+                            <td>85</td>
+                            <td>85</td>
+                            <td>85</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="7">Total %</td>
+                            <td colspan="1">23.88</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr> --}}
                     </tbody>
+
                 </table>
             </div>
        </section>
@@ -236,7 +184,7 @@
     });
 </script>
 <script>
-$(document).on('change', '#school_class_sec_id', function (e) {
+$(document).on('change', '#class_id', function (e) {
     $("form#schedule-form").submit();
 });
 </script>

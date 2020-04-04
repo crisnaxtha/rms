@@ -165,7 +165,7 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::any('',                                      ['as'=>'index',                 'uses'=>'ReportsController@index']);
             Route::any('top_student',                           ['as'=>'topStudent',            'uses'=>'ReportsController@topStudentReport']);
             Route::any('grade',                                 ['as'=>'grade',                 'uses'=>'ReportsController@gradeReport']);
-            // Route::any('school',                                ['as'=>'school',               'uses'=>'ReportsController@schoolReport']);
+            Route::any('school',                                ['as'=>'school',               'uses'=>'ReportsController@schoolReport']);
         });
 
          /**
