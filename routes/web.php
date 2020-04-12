@@ -157,8 +157,11 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             ['as'=>'destroy',              'uses'=>'ExamResultsController@destroy']);
 
 
+            Route::get('gradesheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
+                ['as'=>'print_gradesheet',              'uses'=>'ExamResultsController@printGradesheet']);
+
             Route::get('marksheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
-                ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printGradesheet']);
+                ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printMarksheet']);
         });
         //reports
         Route::group(['as'=> 'report.', 'prefix' => 'report'], function(){
