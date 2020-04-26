@@ -50,111 +50,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            {{-- <div class="para">
-                                <p>The grade secured by <b></b> Date of Birth <b></b> Symbol number <b></b> of<b> </b> in basic education completion examination given below.
-                                </p>
-                            </div> --}}
-
-                            {{-- <table>
-                                <thead>
-                                    <tr>
-                                        <td rowspan="2">S.N.</td>
-                                        <td rowspan="2" colspan="3" style="width:500px;"> Subject </td>
-                                        <td rowspan="2" colspan="0.5"> Credit Hour </td>
-                                        <td colspan="2"> Obtained Grade </td>
-                                        <td rowspan="2"> Final Grade </td>
-                                        <td rowspan="2"> Grade Point</td>
-                                        <td rowspan="2"> Remarks</td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="1">TH</td>
-                                        <td>PR</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="8" class="footer">GPA</td>
-                                        <td colspan="9"><b></b></td>
-                                    </tr>
-                                </tfoot>
-                            </table> --}}
-
-                            </br>
-
-                            {{-- <table>
-                                <thead>
-                                    <tr>
-                                        <td>Interval in percent</td>
-                                        <td> 90 to 100 </td>
-                                        <td> 80 t0 below 90 </td>
-                                        <td> 70 to below 80 </td>
-                                        <td> 60 to below 70 </td>
-                                        <td> 50 to below 60</td>
-                                        <td> 40 to below 50</td>
-                                        <td> 30 to below 40</td>
-                                        <td> 20 to below 30</td>
-                                        <td> 0 to below 20</td>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><b>Grade</b></td>
-                                        <td> A+ </td>
-                                        <td> A</td>
-                                        <td> B+ </td>
-                                        <td> B </td>
-                                        <td> C+</td>
-                                        <td>C </td>
-                                        <td>D+ </td>
-                                        <td>D </td>
-                                        <td>E </td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td><b>Grade Point</b></td>
-                                        <td>4 </td>
-                                        <td> 3.6</td>
-                                        <td> 3.2</td>
-                                        <td>2.8</td>
-                                        <td>2.4 </td>
-                                        <td>2.0 </td>
-                                        <td>1.6</td>
-                                        <td>1.2</td>
-                                        <td>0.8</td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td><b>Description</b></td>
-                                        <td style="font-size: 11px;">Outstanding</td>
-                                        <td style="font-size: 11px;"> Excellent</td>
-                                        <td style="font-size: 11px;"> Very Good</td>
-                                        <td style="font-size: 11px;">Good</td>
-                                        <td style="font-size: 11px;">Satisfactory </tdstyle="font-size: 11px;">
-                                        <td style="font-size: 11px;">Acceptable </td>
-                                        <td style="font-size: 11px;">Partially acceptable</td>
-                                        <td style="font-size: 11px;">Insufficient</td>
-                                        <td style="font-size: 11px;">Very Insufficient</td>
-                                    </tr>
-                                </tbody>
-                            </table> --}}
-                            </br>
-
-                            {{-- <div class="row">
-                                <div class="pull-left" style="margin-left: 30px;">
-                                    <div class="box" style="height:80px;width:100px;border: 1px solid black;">
-                                        <p style="text-align: center; margin-top: 55px;"> School Seal</p>
-                                    </div>
-                                </div>
-                            </div> --}}
                             </br>
 
                             <div class="signature">
@@ -162,7 +57,7 @@
                                     <date>
                                          Date:2067/02/02
                                          <div class="form-group">
-                                            <label for="exampleInputEmail1">Date Of Birth(BS)</label><small class="req"> *</small>
+                                            <label for="exampleInputEmail1">Print Date (BS)</label><small class="req"> *</small>
                                             @if(isset($row->print_date))
                                                 @php $date_bs = get_nepali_data($row->print_date);@endphp
                                             @endif
@@ -171,20 +66,7 @@
                                         </div>
                                     </date>
                                 </div>
-                                {{-- <div class="col-md-2">
-                                    <p>Prepared by</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Checked by</p>
 
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Headmaster</p>
-
-                                </div>
-                                <div class="col-md-2">
-                                    <p>Chairperson</p>
-                                </div> --}}
                             </div>
 
                         </page>

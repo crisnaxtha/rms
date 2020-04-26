@@ -1,0 +1,11 @@
+@media print
+{
+    #ledger-1, header, aside {
+        display: none;
+    }
+
+    #main-content {
+        margin-left: 0px;
+    }
+
+}

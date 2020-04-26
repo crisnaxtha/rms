@@ -1,5 +1,8 @@
 @extends('dsms.layouts.app')
 @section('css')
+<link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/marksheet_style.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/other_setting_style.css')}}">
+
 <style>
 @media print {
     body * {
@@ -28,7 +31,7 @@
 
 @endsection
 @section('content')
-<div class="row">
+<div class="row" id="ledger-1">
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
@@ -106,6 +109,7 @@
                         @if(isset($data['ms_setting']))
                         <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
                         <h6>{{ $data['ms_setting']->title_2 }}</h6>
+                        @if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif
                         <h4 style="text-decoration: underline;;"><b>{{ $_panel }}</b></h4>
                         @else
                         <h1 style="color:red">Set Grade Sheet Setting First</h1>
@@ -119,7 +123,7 @@
                         <th rowspan="3">S.N.</th>
                         <th rowspan="3"> Symbol No. </th>
                         <th rowspan="3"> Student Name </th>
-                        <th rowspan="3"> School Name </th>
+                        {{-- <th rowspan="3"> School Name </th> --}}
                         @if(isset($data['school_class_section_subjects']))
                         @foreach($data['school_class_section_subjects'] as $row)
                         <th colspan="3">{{ $row->sub_title }}</th>
@@ -150,7 +154,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ dm_getStudent($key)->roll_no }}</td>
                             <td>{{ dm_getStudent($key)->first_name }}</td>
-                            <td>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</td>
+                            {{-- <td>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</td> --}}
                             @if(isset($rows))
                             @foreach($rows as $row )
                             <td>
@@ -190,14 +194,9 @@
     </div>
 </div>
  <!-- Latest compiled and minified CSS -->
- <link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/marksheet_style.css')}}">
 
 
 <!--Assign Subject block end-->
-
-<!--print block -->
-@include('dsms.marks.includes.gradesheet')
-<!--print block -->
 @endsection
 
 @section('js')

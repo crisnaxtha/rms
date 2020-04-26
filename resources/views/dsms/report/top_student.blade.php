@@ -1,5 +1,7 @@
 @extends('dsms.layouts.app')
 @section('css')
+<link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/marksheet_style.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/dsms/dm_css/other_setting_style.css')}}">
 <style>
 @media print {
     body * {
@@ -28,7 +30,7 @@
 
 @endsection
 @section('content')
-<div class="row">
+<div class="row" class="ledger-1">
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
