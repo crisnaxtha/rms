@@ -29,7 +29,7 @@ class DM_General extends Model
     public static function getSchoolSectionByClassID($class_id) {
         $data = DB::table('school_classes')
                     ->join('school_class_sections', 'school_classes.id', '=', 'school_class_sections.school_class_id')
-                    ->where('school_classes.school_id', '=', $class_id)
+                    ->where('school_classes.class_id', '=', $class_id)
                     ->select('school_classes.*', 'school_class_sections.id as school_class_section_id')
                     ->get();
 
