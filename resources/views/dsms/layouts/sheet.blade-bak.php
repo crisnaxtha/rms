@@ -34,7 +34,7 @@
                         <h1 style="color:red">Set Grade Sheet Setting First</h1>
                         @endif
                         <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5>
-                        <h4 style="text-decoration: underline;;"><b>GRADE SHEET</b></h4>
+                        <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                     </div>
                 </div>
 
@@ -51,29 +51,40 @@
         </div>
 
         <div class="para">
-            <p>GRADE SECURED BY <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> DATE OF BIRTH <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD)</b> SYMBOL NUMBER <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b>GRADE <b>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif </b> OF<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> DISTRICT <b> SOLUKHUMBU </b> PROVINCE <b> 1 </b> IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW</p>
+            <p>The grade secured by <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> Date of Birth <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD)</b> Symbol number <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b> of<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> in basic education completion examination given below.</p>
         </div>
 
         @yield('content')
 
         <div class="row">
             <div class="pull-left" style="margin-left: 30px;">
-                <p style="text-align: center; margin-top: 55px;"> CHECKED BY</p>
+                <div class="box" style="height:80px;width:100px;border: 1px solid black;">
+                    <p style="text-align: center; margin-top: 55px;"> School Seal</p>
+                </div>
             </div>
         </div>
         </br>
 
         <div class="signature">
-            <div class="col-md-6">
-                <date> DATE OF ISSUE:{{ $data['ms_setting']->print_date }}</date>
+            <div class="col-md-3">
+                <date> Date:{{ $data['ms_setting']->print_date }}</date>
             </div>
-            <div class="col-md-4"></div>
-
             <div class="col-md-2">
-                <p>EDUCATION OFFICER</p>
+                <p>Prepared by</p>
+            </div>
+            <div class="col-md-2">
+                <p>Checked by</p>
+
+            </div>
+            <div class="col-md-2">
+                <p>Headmaster</p>
+
+            </div>
+            <div class="col-md-2">
+                <p>Chairperson</p>
+
             </div>
         </div>
-
 
     </page>
 

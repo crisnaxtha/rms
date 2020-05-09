@@ -5,16 +5,16 @@
             <thead>
                 <tr>
                     <td rowspan="2">S.N.</td>
-                    <td rowspan="2" colspan="3" style="width:500px;"> Subject </td>
-                    <td rowspan="2" colspan="0.5"> Credit Hour </td>
-                    <td colspan="2"> Obtained Grade </td>
-                    <td rowspan="2"> Final Grade </td>
-                    <td rowspan="2"> Grade Point</td>
-                    <td rowspan="2"> Remarks</td>
+                    <td rowspan="2" colspan="3" style="width:500px;"> SUBJECT </td>
+                    <td rowspan="2" colspan="0.5"> CREDIT HOUR </td>
+                    <td colspan="2"> OBTAINED GRADE</td>
+                    <td rowspan="2"> FINAL GRADE </td>
+                    <td rowspan="2"> GRADE POINT</td>
+                    <td rowspan="2"> REMARK</td>
                 </tr>
                 <tr>
                     <td rowspan="1">TH</td>
-                    <td>PR</td>
+                    <td rowspan="1">PR</td>
                 </tr>
             </thead>
             <tbody>
@@ -48,74 +48,18 @@
                 $gpa = $total_grade_credit_hour/($count * 4);
             @endphp
             <tfoot>
-                <tr>
-                    <td colspan="8" class="footer">GPA</td>
+                <tr style="height: 60px;">
+                    <td colspan="8" class="footer"><b> GRADE POINT AVERAGE (GPA) </b></td>
                     <td colspan="9"><b>{{ round($gpa, 2) }}</b></td>
                 </tr>
             </tfoot>
         </table>
 
         </br>
-
-        <table>
-            <thead>
-                <tr>
-                    <td>Interval in percent</td>
-                    <td> 90 to 100 </td>
-                    <td> 80 to below 90 </td>
-                    <td> 70 to below 80 </td>
-                    <td> 60 to below 70 </td>
-                    <td> 50 to below 60</td>
-                    <td> 40 to below 50</td>
-                    <td> 30 to below 40</td>
-                    <td> 20 to below 30</td>
-                    <td> 0 to below 20</td>
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>Grade</b></td>
-                    <td> A+ </td>
-                    <td> A</td>
-                    <td> B+ </td>
-                    <td> B </td>
-                    <td> C+</td>
-                    <td>C </td>
-                    <td>D+ </td>
-                    <td>D </td>
-                    <td>E </td>
-
-                </tr>
-
-                <tr>
-                    <td><b>Grade Point</b></td>
-                    <td>4 </td>
-                    <td> 3.6</td>
-                    <td> 3.2</td>
-                    <td>2.8</td>
-                    <td>2.4 </td>
-                    <td>2.0 </td>
-                    <td>1.6</td>
-                    <td>1.2</td>
-                    <td>0.8</td>
-
-                </tr>
-
-                <tr>
-                    <td><b>Description</b></td>
-                    <td style="font-size: 11px;">Outstanding</td>
-                    <td style="font-size: 11px;"> Excellent</td>
-                    <td style="font-size: 11px;"> Very Good</td>
-                    <td style="font-size: 11px;">Good</td>
-                    <td style="font-size: 11px;">Satisfactory </tdstyle="font-size: 11px;">
-                        <td style="font-size: 11px;">Acceptable </td>
-                        <td style="font-size: 11px;">Partially acceptable</td>
-                        <td style="font-size: 11px;">Insufficient</td>
-                        <td style="font-size: 11px;">Very Insufficient</td>
-
-                </tr>
-            </tbody>
-        </table>
+        <ol>
+            <li>One Credit Hour Equals 32 Clock Hours</li>
+            <li>TH: Theory, PR: Practical</li>
+            <li>Ab *: Absent,<br> T*: Theroy Grade Missing <br> P*: Practical Grade Missing</li>
+        </ol>
         </br>
 @endsection

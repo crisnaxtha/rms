@@ -36,7 +36,7 @@
                                         <h1 style="color:red">Set Grade Sheet Setting First</h1>
                                         @endif
                                         <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5>
-                                        <h4 style="text-decoration: underline;;"><b>GRADE-SHEET</b></h4>
+                                        <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
                                     </div>
                                 </div>
 
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="para">
-                            <p>GRADE SECURED BY <b>{{ dm_getStudent($key)->first_name }}</b> DATE OF BIRTH <b>{{ dm_getStudent($key)->dob_bs }}&nbsp;BS({{ dm_getStudent($key)->dob_ad }}&nbsp;AD)</b> SYMBOL NUMBER <b>{{ dm_getStudent($key)->roll_no }}</b> OF<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> DISTRICT <b> SOLUKHUMBU </b> PROVINCE <b> 1 </b> IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW</p>
+                                    <p>The grade secured by <b>{{ dm_getStudent($key)->first_name }}</b> Date of Birth <b>{{ dm_getStudent($key)->dob_bs }}&nbsp;BS({{ dm_getStudent($key)->dob_ad }}&nbsp;AD)</b> Symbol number <b>{{ dm_getStudent($key)->roll_no }}</b> of<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> in basic education completion examination given below.
                             </p>
                         </div>
 
@@ -61,16 +61,16 @@
                             <thead>
                                 <tr>
                                     <td rowspan="2">S.N.</td>
-                                    <td rowspan="2" colspan="3" style="width:500px;"> SUBJECT </td>
-                                    <td rowspan="2" colspan="0.5"> CREDIT HOUR </td>
-                                    <td colspan="2"> OBTAINED GRADE</td>
-                                    <td rowspan="2"> FINAL GRADE </td>
-                                    <td rowspan="2"> GRADE POINT</td>
-                                    <td rowspan="2"> REMARK</td>
+                                    <td rowspan="2" colspan="3" style="width:500px;"> Subject </td>
+                                    <td rowspan="2" colspan="0.5"> Credit Hour </td>
+                                    <td colspan="2"> Obtained Grade </td>
+                                    <td rowspan="2"> Final Grade </td>
+                                    <td rowspan="2"> Grade Point</td>
+                                    <td rowspan="2"> Remarks</td>
                                 </tr>
                                 <tr>
                                     <td rowspan="1">TH</td>
-                                    <td rowspan="1">PR</td>
+                                    <td>PR</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,37 +105,104 @@
                                 $gpa = $total_grade_credit_hour/($count * 4);
                             @endphp
                             <tfoot>
-                                <tr style="height: 60px;">
-                                    <td colspan="8" class="footer" ><b> GRADE POINT AVERAGE (GPA) </b></td>
+                                <tr>
+                                    <td colspan="8" class="footer">GPA</td>
                                     <td colspan="9"><b>{{ round($gpa, 2) }}</b></td>
                                 </tr>
                             </tfoot>
                         </table>
 
                         </br>
-                        <ol>
-                            <li>One Credit Hour Equals 32 Clock Hours</li>
-                            <li>TH: Theory, PR: Practical</li>
-                            <li>Ab *: Absent,<br> T*: Theroy Grade Missing <br> P*: Practical Grade Missing</li>
-                        </ol>
 
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Interval in percent</td>
+                                    <td> 90 to 100 </td>
+                                    <td> 80 t0 below 90 </td>
+                                    <td> 70 to below 80 </td>
+                                    <td> 60 to below 70 </td>
+                                    <td> 50 to below 60</td>
+                                    <td> 40 to below 50</td>
+                                    <td> 30 to below 40</td>
+                                    <td> 20 to below 30</td>
+                                    <td> 0 to below 20</td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Grade</b></td>
+                                    <td> A+ </td>
+                                    <td> A</td>
+                                    <td> B+ </td>
+                                    <td> B </td>
+                                    <td> C+</td>
+                                    <td>C </td>
+                                    <td>D+ </td>
+                                    <td>D </td>
+                                    <td>E </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td><b>Grade Point</b></td>
+                                    <td>4 </td>
+                                    <td> 3.6</td>
+                                    <td> 3.2</td>
+                                    <td>2.8</td>
+                                    <td>2.4 </td>
+                                    <td>2.0 </td>
+                                    <td>1.6</td>
+                                    <td>1.2</td>
+                                    <td>0.8</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td><b>Description</b></td>
+                                    <td style="font-size: 11px;">Outstanding</td>
+                                    <td style="font-size: 11px;"> Excellent</td>
+                                    <td style="font-size: 11px;"> Very Good</td>
+                                    <td style="font-size: 11px;">Good</td>
+                                    <td style="font-size: 11px;">Satisfactory </tdstyle="font-size: 11px;">
+                                        <td style="font-size: 11px;">Acceptable </td>
+                                        <td style="font-size: 11px;">Partially acceptable</td>
+                                        <td style="font-size: 11px;">Insufficient</td>
+                                        <td style="font-size: 11px;">Very Insufficient</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
                         </br>
 
                         <div class="row">
                             <div class="pull-left" style="margin-left: 30px;">
-                                <p style="text-align: center; margin-top: 55px;"> CHECKED BY</p>
+                                <div class="box" style="height:80px;width:100px;border: 1px solid black;">
+                                    <p style="text-align: center; margin-top: 55px;"> School Seal</p>
+                                </div>
                             </div>
                         </div>
                         </br>
 
                         <div class="signature">
-                            <div class="col-md-6">
-                                <date> DATE OF ISSUE:{{ $data['ms_setting']->print_date }}</date>
+                            <div class="col-md-3">
+                                <date> Date:{{ $data['ms_setting']->print_date }}</date>
                             </div>
-                            <div class="col-md-4"></div>
-
                             <div class="col-md-2">
-                                <p>EDUCATION OFFICER</p>
+                                <p>Prepared by</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p>Checked by</p>
+
+                            </div>
+                            <div class="col-md-2">
+                                <p>Headmaster</p>
+
+                            </div>
+                            <div class="col-md-2">
+                                <p>Chairperson</p>
+
                             </div>
                         </div>
 
