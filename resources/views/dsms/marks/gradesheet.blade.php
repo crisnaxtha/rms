@@ -22,6 +22,7 @@
                 @php
                     $total_grade_credit_hour = 0;
                     $count = count($data['result']);
+                    $total_credit_hour = 0;
                 @endphp
 
                 @if(isset($data['result']))
@@ -29,6 +30,7 @@
                 {{-- grand total  --}}
                     @php
                     $total_grade_credit_hour += $row->grade_credit_hour;
+                    $total_credit_hour += ($row['grade_credit_hour'] / $row['grade_point']);
                     @endphp
                 <tr>
                     <td rowspan="1">{{ $loop->iteration }}</td>
@@ -45,7 +47,8 @@
             </tbody>
             {{-- Logic  --}}
             @php
-                $gpa = $total_grade_credit_hour/($count * 4);
+                // $gpa = $total_grade_credit_hour/($count * 4);
+                $gpa = $total_grade_credit_hour/$total_credit_hour;
             @endphp
             <tfoot>
                 <tr style="height: 60px;">

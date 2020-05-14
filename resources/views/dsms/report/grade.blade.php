@@ -145,7 +145,12 @@
                         @endif
                     </tr>
                     <tbody>
+                        @php
+                            $total_grade_credit_hour = 0;
+                            $total_credit_hour = 0;
+                        @endphp
                         @foreach($data['std_result'] as $key => $rows)
+                            @php $result_status = 'PASS'; @endphp
                             <tr>
                                 <td rowspan="2">{{ $loop->iteration }}</td>
                                 <td rowspan="2">{{ dm_getStudent($key)->roll_no }}</td>
@@ -154,6 +159,13 @@
                                 <td> M </td>
                                 @if(isset($rows))
                                 @foreach($rows as $row )
+                                @php
+                                $total_grade_credit_hour += $row['grade_credit_hour'];
+                                $total_credit_hour += ($row['grade_credit_hour'] / $row['grade_point']);
+                                if($row['description'] == 'FAIL'){
+                                    $result_status = 'FAIL';
+                                }
+                                @endphp
                                 <td>
                                     @if($row['theory_attendance'] == 'ABS')
                                     <em style="color:red">{{ "Abs" }}</em>
@@ -175,11 +187,10 @@
                                 {{ ($row['theory_get_marks'] + $row['practical_get_marks']) }}
                                 @endif
                                 </td>
-
                                 @endforeach
                                 @endif
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->gpa }}</td>
-                                <td rowspan="2">{{ $data['top_report'][$loop->index]->results }}</td>
+                                <td rowspan="2">{{ round(dm_calGPA($total_grade_credit_hour, $total_credit_hour), 2) }}</td>
+                                <td rowspan="2">{{ $result_status }}</td>
                             </tr>
                             <tr>
                                 <td>G</td>

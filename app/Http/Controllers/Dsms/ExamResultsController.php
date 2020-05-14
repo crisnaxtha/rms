@@ -115,6 +115,7 @@ class ExamResultsController extends DM_BaseController
             $marks['grand_total_th_marks'] = 0;
             $marks['grand_total_marks'] = 0;
             $marks['total_grade_credit_hour'] = 0;
+            $marks['total_credit_hour'] = 0;
             $marks['subjects_no'] = count($data);
             $marks['outcome'] = "PASS";
 
@@ -199,6 +200,7 @@ class ExamResultsController extends DM_BaseController
                     $marks['obtain_total_pr_marks'] += $marks['practical_marks'];
                     $marks['obtain_total_marks'] += ($marks['theory_marks'] + $marks['practical_marks']);
                     $marks['total_grade_credit_hour'] += $marks['grade_credit_hour'];
+                    $marks['total_credit_hour'] += ($marks['grade_credit_hour'] / $marks['grade_point']);
                 }else {
                     $marks['total_marks'] = NULL;
                     $marks['final_grade'] = NULL;
@@ -255,7 +257,7 @@ class ExamResultsController extends DM_BaseController
 
             }
             //calculation of the GPA and percentage
-            $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['subjects_no']);
+            $marks['gpa'] = dm_calGPA($marks['total_grade_credit_hour'], $marks['total_credit_hour']);
             $marks['percentage'] = dm_calPercentage($marks['obtain_total_marks'], $marks['grand_total_marks']);
 
             $old_report =  DB::table('reports')->where('session_id', '=', $marks['session_id'])

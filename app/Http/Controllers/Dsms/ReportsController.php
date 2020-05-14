@@ -161,11 +161,12 @@ class ReportsController extends DM_BaseController
             ->where('exam_id', '=', $data['exam_id'])
             ->where('school_class_section_id', '=', $data['school_class_sec_id'])
             ->get();
-
+            // dd($data['top_report']);
             $data['old_std_result'] = array();
             foreach($data['school_class_section_subjects'] as $subject){
                 foreach($data['top_report'] as $student) {
                     $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $student->student_id, $subject->id);
+                    // dd($s_result);
                     if(isset($s_result)){
                         array_push($data['old_std_result'], $s_result);
                     }

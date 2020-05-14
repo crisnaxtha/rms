@@ -73,9 +73,9 @@ if(!function_exists('dm_calPercentage')){
 }
 //return percentage
 if(!function_exists('dm_calGPA')){
-    function dm_calGPA($total_grade_credit_hour , $subjects_no) {
-        if(isset($total_grade_credit_hour) && isset($subjects_no)){
-            $data = $total_grade_credit_hour/($subjects_no*4);
+    function dm_calGPA($total_grade_credit_hour , $total_credit_hour) {
+        if(isset($total_grade_credit_hour) && isset($total_credit_hour)){
+            $data = $total_grade_credit_hour/$total_credit_hour;
             return $data;
         }
     }
