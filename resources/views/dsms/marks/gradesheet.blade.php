@@ -48,7 +48,7 @@
             {{-- Logic  --}}
             @php
                 // $gpa = $total_grade_credit_hour/($count * 4);
-                $gpa = $total_grade_credit_hour/$total_credit_hour;
+                $gpa = dm_calGPA($total_grade_credit_hour, $total_credit_hour);
             @endphp
             <tfoot>
                 <tr style="height: 60px;">
