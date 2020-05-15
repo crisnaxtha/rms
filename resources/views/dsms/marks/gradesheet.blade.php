@@ -30,7 +30,7 @@
                 {{-- grand total  --}}
                     @php
                     $total_grade_credit_hour += $row->grade_credit_hour;
-                    $total_credit_hour += ($row['grade_credit_hour'] / $row['grade_point']);
+                    $total_credit_hour += ($row->grade_credit_hour / $row->grade_point);
                     @endphp
                 <tr>
                     <td rowspan="1">{{ $loop->iteration }}</td>

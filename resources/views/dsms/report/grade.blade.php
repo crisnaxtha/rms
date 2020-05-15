@@ -145,12 +145,12 @@
                         @endif
                     </tr>
                     <tbody>
-                        @php
+                        @foreach($data['std_result'] as $key => $rows)
+                            @php
                             $total_grade_credit_hour = 0;
                             $total_credit_hour = 0;
-                        @endphp
-                        @foreach($data['std_result'] as $key => $rows)
-                            @php $result_status = 'PASS'; @endphp
+                            $result_status = 'PASS';
+                            @endphp
                             <tr>
                                 <td rowspan="2">{{ $loop->iteration }}</td>
                                 <td rowspan="2">{{ dm_getStudent($key)->roll_no }}</td>
