@@ -65,6 +65,9 @@ if(!function_exists('dm_getSubject')){
 //return percentage
 if(!function_exists('dm_calPercentage')){
     function dm_calPercentage($part , $whole) {
+        if($whole == 0 ){
+            return false;
+        }
         if(isset($part) && isset($whole)){
             $data = ($part/$whole)*100;
             return $data;
@@ -74,6 +77,9 @@ if(!function_exists('dm_calPercentage')){
 //return percentage
 if(!function_exists('dm_calGPA')){
     function dm_calGPA($total_grade_credit_hour , $total_credit_hour) {
+        if($total_credit_hour == 0 ){
+            return false;
+        }
         if(isset($total_grade_credit_hour) && isset($total_credit_hour)){
             $data = $total_grade_credit_hour/$total_credit_hour;
             return $data;

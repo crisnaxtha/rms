@@ -30,7 +30,7 @@
 
 @endsection
 @section('content')
-<div class="row" class="ledger-1">
+<div class="row" id="ledger-1">
     <div class="col-md-12">
         <section class="panel">
             <header class="panel-heading">
@@ -103,26 +103,27 @@
 
             </header>
             <div class="panel-body"  style="overflow-y: scroll;" id="ledger">
-                {{-- <div class="col-md-8"> --}}
-                    <div class="pull-center">
-                        @if(isset($data['ms_setting']))
-                        <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
-                        <h6>{{ $data['ms_setting']->title_2 }}</h6>
-                        <h4 style="text-decoration: underline;;"><b>{{ $_panel }}</b></h4>
-                        @else
-                        <h1 style="color:red">Set Grade Sheet Setting First</h1>
-                        @endif
-                    </div>
-                {{-- </div> --}}
-
+                <div class="pull-center">
+                    @if(isset($data['ms_setting']))
+                    <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
+                    <h6>{{ $data['ms_setting']->title_2 }}</h6>
+                    <h4 style="text-decoration: underline;;"><b>{{ $_panel }}</b></h4>
+                    @else
+                    <h1 style="color:red">Set Grade Sheet Setting First</h1>
+                    @endif
+                </div>
+                @php
+                    $total_pass = 0;
+                    $total_fail = 0;
+                    $grand_total = 0;
+                @endphp
                 <table class="table table-bordered">
-
                     <tr>
                         <th rowspan="2">S.N.</th>
                         <th rowspan="2" colspan="6"> School Name </th>
                         <th style="text-align: center;" colspan="2">Result</th>
                         <th rowspan="2" colspan="1">Total Number of Students </th>
-                        {{-- <th>Percentage</th> --}}
+                        <th rowspan="2"> Pass Percentage</th>
                     </tr>
 
                     <tr>
@@ -132,24 +133,31 @@
 
                     <tbody>
                         @foreach($data['schools'] as $key => $rows)
+                        @php
+                            $total_pass += $data['count_pass_'.$loop->iteration];
+                            $total_fail += $data['count_fail_'.$loop->iteration];
+                            $grand_total += $data['count_student_'.$loop->iteration];
+                        @endphp
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td colspan="6">{{ dm_getSchool($key)->title }}</td>
-                            <td>{{ $data['count_pass_'.$loop->iteration] }}</td>
-                            <td>{{ $data['count_fail_'.$loop->iteration]}}</td>
-                            <td>{{  $data['count_student_'.$loop->iteration]}}</td>
-                            {{-- <td>2</td> --}}
+                            <td style="text-align: center">{{ $data['count_pass_'.$loop->iteration] }}</td>
+                            <td style="text-align: center">{{ $data['count_fail_'.$loop->iteration]}}</td>
+                            <td style="text-align: center">{{ $data['count_student_'.$loop->iteration]}}</td>
+                            <td style="text-align: center">
+                                {{  round( dm_calPercentage( $data['count_pass_'.$loop->iteration], $data['count_student_'.$loop->iteration]) , 2) }}
+                            </td>
                         <tr>
                         @endforeach
-                        {{-- <tr>
-                            <td colspan="7">Total </td>
-                            <td colspan="1">85</td>
-                            <td>85</td>
-                            <td>85</td>
-                            <td>85</td>
+                        <tr>
+                            <td colspan="7" style="text-align: center">Total </td>
+                            <td colspan="1" style="text-align: center">{{ $total_pass }}</td>
+                            <td colspan="1" style="text-align: center">{{ $total_fail }}</td>
+                            <td colspan="1" style="text-align: center">{{ $grand_total }}</td>
+                            <td colspan="1" style="text-align: center">{{ round( dm_calPercentage($total_pass, $grand_total), 2 ) }}</td>
                         </tr>
 
-                        <tr>
+                        {{-- <tr>
                             <td colspan="7">Total %</td>
                             <td colspan="1">23.88</td>
                             <td></td>

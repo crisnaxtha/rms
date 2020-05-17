@@ -12,7 +12,7 @@
         <span class="demo"><button onclick="window.print();return false;"><i class="fa fa-print"></i>&nbsp;&nbsp;Print</button></span>
     </center>
     <page size="A4" >
-        <div class="wrapper">
+        <div class="grade-sheet-wrapper">
             <div class="row report-header">
                 <div class="col-md-2">
                     @if(isset($data['ms_setting']->logo_1))

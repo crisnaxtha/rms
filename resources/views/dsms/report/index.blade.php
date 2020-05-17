@@ -180,10 +180,6 @@
                             </td>
                             @endforeach
                             @endif
-                            {{-- <td>{{ $data['top_report'][$loop->index]->obtain_total_th_marks }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->percentage }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->grand_total_th_marks }}</td>
-                            <td>{{ $data['top_report'][$loop->index]->results }}</td> --}}
                         </tr>
                         @endforeach
                     </tbody>
