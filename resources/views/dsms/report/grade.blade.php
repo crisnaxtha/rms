@@ -162,7 +162,7 @@
                                 @php
                                 $total_grade_credit_hour += $row['grade_credit_hour'];
                                 if($row['grade_credit_hour'] == 0 || $row['grade_credit_hour'] == 0){
-                                   dd('here is the problem');
+                                    dd('here is the problem !! 0 divisor encounterd');
                                 }
                                 $total_credit_hour += ($row['grade_credit_hour'] / $row['grade_point']);
                                 if($row['description'] == 'FAIL'){

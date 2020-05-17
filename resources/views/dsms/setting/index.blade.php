@@ -30,13 +30,13 @@
                                     <div class="col-md-8" style="top:-26px;">
                                         <div class="pull-center">
                                             <h3><b>Thulung Dudhkoshi Rular Municipality</b></h3>
-                                            <h3><b>@php dm_hinputUpdate('text','title_1', "Municipality Name", $row->title_1); @endphp</b></h3>
+                                            <h3><b>@php dm_hinputUpdate('text','title_1', "First Title", $row->title_1); @endphp</b></h3>
                                             <h6>Basic Level Examination</h6>
-                                            <h6>@php dm_hinputUpdate('text','title_2', "Exam Level", $row->title_2); @endphp</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_2', "Second Title", $row->title_2); @endphp</h6>
                                             <h6>Mukli, Solikhumbu</h6>
-                                            <h6>@php dm_hinputUpdate('text','title_3', "Address", $row->title_3); @endphp</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_3', "Third Title", $row->title_3); @endphp</h6>
                                             <h4><b>Basic Education Completion Examination</b></h4>
-                                            <h4><b>@php dm_hinputUpdate('text','title_4', "Marksheet Heading", $row->title_4); @endphp</b></h4>
+                                            <h4><b>@php dm_hinputUpdate('text','title_4', "Forth Title", $row->title_4); @endphp</b></h4>
                                             <h5></h5>
                                             {{-- <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4> --}}
                                         </div>

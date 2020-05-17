@@ -5,7 +5,7 @@
             <thead>
                 <tr>
                     <td rowspan="2">S.N.</td>
-                    <td rowspan="2" colspan="3" style="width:500px;"> SUBJECT </td>
+                    <td rowspan="2" colspan="3" style="width:450px;"> SUBJECT </td>
                     <td rowspan="2" colspan="0.5"> CREDIT HOUR </td>
                     <td colspan="2"> OBTAINED GRADE</td>
                     <td rowspan="2"> FINAL GRADE </td>
@@ -30,16 +30,19 @@
                 {{-- grand total  --}}
                     @php
                     $total_grade_credit_hour += $row->grade_credit_hour;
+                    if($row->grade_credit_hour == 0 || $row->grade_point == 0){
+                        dd('here is the problem !! 0 divisor encounterd');
+                    }
                     $total_credit_hour += ($row->grade_credit_hour / $row->grade_point);
                     @endphp
                 <tr>
                     <td rowspan="1">{{ $loop->iteration }}</td>
                     <td rowspan="1" colspan="3">{{ dm_getSubject($row->school_class_section_subject_id)->title }}</td>
-                    <td> {{ dm_getSubject($row->school_class_section_subject_id)->credit_hour }}</td>
-                    <td> {{  $row->theory_grade }}</td>
-                    <td>{{ $row->practical_grade }}</td>
-                    <td>{{ $row->final_grade }}</td>
-                    <td>{{ $row->grade_point }}</td>
+                    <td style="text-align: center">{{ dm_getSubject($row->school_class_section_subject_id)->credit_hour }}</td>
+                    <td style="text-align: center">{{ $row->theory_grade }}</td>
+                    <td style="text-align: center">{{ $row->practical_grade }}</td>
+                    <td style="text-align: center">{{ $row->final_grade }}</td>
+                    <td style="text-align: center">{{ $row->grade_point }}</td>
                     <td> </td>
                 </tr>
                 @endforeach
@@ -53,7 +56,7 @@
             <tfoot>
                 <tr style="height: 60px;">
                     <td colspan="8" class="footer"><b> GRADE POINT AVERAGE (GPA) </b></td>
-                    <td colspan="9"><b>{{ round($gpa, 2) }}</b></td>
+                    <td colspan="9" style="text-align: center"><b>{{ round($gpa, 2) }}</b></td>
                 </tr>
             </tfoot>
         </table>

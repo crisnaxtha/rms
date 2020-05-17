@@ -11,70 +11,68 @@
     <center>
         <span class="demo"><button onclick="window.print();return false;"><i class="fa fa-print"></i>&nbsp;&nbsp;Print</button></span>
     </center>
-    <page size="A4" style="border-style:double; padding:20px;" >
-        <div class="row report-header">
-            <div class="col-md-12 ">
+    <page size="A4" >
+        <div class="wrapper">
+            <div class="row report-header">
                 <div class="col-md-2">
-                    <div class="pull-left">
-                        @if(isset($data['ms_setting']->logo_1))
-                        <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="80" height="80">
-                        @else
-                        <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
-                        @endif
-                    </div>
+                    @if(isset($data['ms_setting']->logo_1))
+                    <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="80" height="80">
+                    @else
+                    <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
+                    @endif
                 </div>
-                <div class="col-md-8" style="top:-26px;">
-                    <div class="pull-center">
-                        @if(isset($data['ms_setting']))
-                        <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
-                        <h6>{{ $data['ms_setting']->title_2 }}</h6>
-                        <h6>{{ $data['ms_setting']->title_3 }}</h6>
-                        <h4><b>{{ $data['ms_setting']->title_4 }}</b></h4>
-                        @else
-                        <h1 style="color:red">Set Grade Sheet Setting First</h1>
-                        @endif
-                        <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5>
-                        <h4 style="text-decoration: underline;;"><b>GRADE SHEET</b></h4>
-                    </div>
+                <div class="col-md-8" style="top:-26px; text-align:center;">
+                    @if(isset($data['ms_setting']))
+                    <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
+                    <h4 style="">{{ $data['ms_setting']->title_2 }}</h4>
+                    <h3 style="text-transform: uppercase; padding: 10px 0;"><b>{{ $data['ms_setting']->title_3 }}</b></h3>
+                    <h3 style="text-transform: uppercase; padding: 10px 0"><b>{{ $data['ms_setting']->title_4 }}</b></h3>
+                    @else
+                    <h1 style="color:red">Set Grade Sheet Setting First</h1>
+                    @endif
+                    {{-- <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5> --}}
+                    {{-- <h4 style="text-decoration: underline;;"><b>GRADE-SHEET</b></h4> --}}
                 </div>
-
-                <div class="col-md-2 logo">
-                    <div class="pull-right">
-                        @if(isset($data['ms_setting']->logo_1))
-                        <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="80" height="80">
-                        @else
-                        <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
-                        @endif
-                    </div>
+                <div class="col-md-2 pull-right">
+                    @if(isset($data['ms_setting']->logo_1))
+                    <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="80" height="80">
+                    @else
+                    <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
+                    @endif
                 </div>
             </div>
-        </div>
 
-        <div class="para">
-            <p>GRADE SECURED BY <b>{{ dm_getStudent($data['student_id'])->first_name }}</b> DATE OF BIRTH <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD)</b> SYMBOL NUMBER <b>{{ dm_getStudent($data['student_id'])->roll_no }}</b>GRADE <b>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif </b> OF<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> DISTRICT <b> SOLUKHUMBU </b> PROVINCE <b> 1 </b> IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW</p>
-        </div>
+            <div class="para">
+                <p>GRADE SECURED BY <b>{{ dm_getStudent($data['student_id'])->first_name }}</b>
+                    DATE OF BIRTH <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;
+                    BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD)</b>
+                        SYMBOL NUMBER <b>{{ dm_getStudent($data['student_id'])->roll_no }}
+                    </b>GRADE <b>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif </b>
+                        OF<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b>
+                        DISTRICT <b> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_5 }} @endif</b>
+                        PROVINCE <b> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_6 }} @endif</b>
+                        IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW</p>
+            </div>
 
-        @yield('content')
 
-        <div class="row">
-            <div class="pull-left" style="margin-left: 30px;">
-                <p style="text-align: center; margin-top: 55px;"> CHECKED BY</p>
+
+            @yield('content')
+
+            <div class="row">
+                <div class="col-md-12">
+                  CHECKED BY:
+                </div>
+            </div>
+            </br>
+            <div class="row">
+                <div class="col-md-6">
+                    DATE OF ISSUE:&nbsp;{{ $data['ms_setting']->print_date }}
+                </div>
+                <div class="col-md-6 pull-right" style="margin-right: 10px; border-top: 1px solid #000">
+                    EDUCATION OFFICER
+                </div>
             </div>
         </div>
-        </br>
-
-        <div class="signature">
-            <div class="col-md-6">
-                <date> DATE OF ISSUE:{{ $data['ms_setting']->print_date }}</date>
-            </div>
-            <div class="col-md-4"></div>
-
-            <div class="col-md-2">
-                <p>EDUCATION OFFICER</p>
-            </div>
-        </div>
-
-
     </page>
 
     <!-- Latest compiled and minified JavaScript -->
