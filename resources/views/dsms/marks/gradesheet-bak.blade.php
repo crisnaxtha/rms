@@ -55,7 +55,7 @@
             </tfoot>
         </table>
 
-        </br>
+        <br />
 
         <table>
             <thead>
@@ -117,5 +117,5 @@
                 </tr>
             </tbody>
         </table>
-        </br>
+        <br />
 @endsection

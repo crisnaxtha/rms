@@ -112,7 +112,7 @@
                             </tfoot>
                         </table>
 
-                        </br>
+                        <br />
 
                         <table>
                             <thead>
@@ -174,7 +174,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        </br>
+                        <br />
 
                         <div class="row">
                             <div class="pull-left" style="margin-left: 30px;">
@@ -183,7 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                        </br>
+                        <br />
 
                         <div class="signature">
                             <div class="col-md-3">
@@ -318,7 +318,7 @@
             </tfoot>
         </table>
 
-        </br>
+        <br />
 
         <table>
             <thead>
@@ -380,7 +380,7 @@
                 </tr>
             </tbody>
         </table>
-        </br>
+        <br />
 
         <div class="row">
             <div class="pull-left" style="margin-left: 30px;">
@@ -389,7 +389,7 @@
                 </div>
             </div>
         </div>
-        </br>
+        <br />
 
         <div class="signature">
             <div class="col-md-3">

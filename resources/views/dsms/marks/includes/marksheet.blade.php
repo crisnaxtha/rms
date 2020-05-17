@@ -140,9 +140,9 @@
                                 </tfoot>
                             </table>
 
-                        </br>
+                        <br />
 
-                        </br>
+                        <br />
 
                         <div class="row">
                             <div class="pull-left" style="margin-left: 30px;">
@@ -151,7 +151,7 @@
                                 </div>
                             </div>
                         </div>
-                        </br>
+                        <br />
 
                         <div class="signature">
                             <div class="col-md-3">

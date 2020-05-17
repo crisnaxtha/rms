@@ -85,7 +85,7 @@
                 </tfoot>
             </table>
 
-        </br>
+        <br />
 
-        </br>
+        <br />
 @endsection

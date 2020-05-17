@@ -63,7 +63,7 @@
                   CHECKED BY:
                 </div>
             </div>
-            </br>
+            <br />
             <div class="row">
                 <div class="col-md-6">
                     DATE OF ISSUE:&nbsp;{{ $data['ms_setting']->print_date }}

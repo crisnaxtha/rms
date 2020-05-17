@@ -29,13 +29,13 @@
                                     </div>
                                     <div class="col-md-8" style="top:-26px;">
                                         <div class="pull-center">
-                                            <h3><b>Thulung Dudhkoshi Rular Municipality</b></h3>
+                                            <h3><b>First Title of Grade-Sheet/ Mark-Sheet</b></h3>
                                             <h3><b>@php dm_hinputUpdate('text','title_1', "First Title", $row->title_1); @endphp</b></h3>
-                                            <h6>Basic Level Examination</h6>
+                                            <h6>Second Title of Grade-Sheet/ Mark-Sheet</h6>
                                             <h6>@php dm_hinputUpdate('text','title_2', "Second Title", $row->title_2); @endphp</h6>
-                                            <h6>Mukli, Solikhumbu</h6>
+                                            <h6>Third Title of Grade-Sheet/ Mark-Sheet</h6>
                                             <h6>@php dm_hinputUpdate('text','title_3', "Third Title", $row->title_3); @endphp</h6>
-                                            <h4><b>Basic Education Completion Examination</b></h4>
+                                            <h4><b>Fourth Title of Grade-Sheet/ Mark-Sheet</b></h4>
                                             <h4><b>@php dm_hinputUpdate('text','title_4', "Forth Title", $row->title_4); @endphp</b></h4>
                                             <h5></h5>
                                             {{-- <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4> --}}
@@ -50,16 +50,16 @@
                                     </div>
                                 </div>
                             </div>
-                            </br>
+                            <br />
                             <div class="row report-header">
                                 <div class="col-md-12 ">
                                     <div class="col-md-2"></div>
                                     <div class="col-md-8" style="top:-26px;">
                                         <div class="pull-center">
 
-                                            <h6>Solukhumbu</h6>
+                                            <h6>District Name</h6>
                                             <h6>@php dm_hinputUpdate('text','title_5', "District", $row->title_5); @endphp</h6>
-                                            <h6>Province 1</h6>
+                                            <h6>Province Name</h6>
                                             <h6>@php dm_hinputUpdate('text','title_6', "Province", $row->title_6); @endphp</h6>
                                         </div>
                                     </div>
@@ -67,7 +67,7 @@
 
                                 </div>
                             </div>
-                            </br>
+                            <br />
                             <div class="signature">
                                 <div class="col-md-3">
                                     <date>
