@@ -50,6 +50,7 @@ class GradeSheetSettingController extends DM_BaseController
         $row->title_3 = $request->title_3;
         $row->title_4 = $request->title_4;
         $row->title_5 = $request->title_5;
+        $row->title_6 = $request->title_6;
         $row->print_date = get_nepali_data($request->print_date);
 
         if($request->hasFile('logo_1')){

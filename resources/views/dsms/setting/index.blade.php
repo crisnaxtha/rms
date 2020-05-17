@@ -51,7 +51,23 @@
                                 </div>
                             </div>
                             </br>
+                            <div class="row report-header">
+                                <div class="col-md-12 ">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8" style="top:-26px;">
+                                        <div class="pull-center">
 
+                                            <h6>Solukhumbu</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_5', "District", $row->title_5); @endphp</h6>
+                                            <h6>Province 1</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_6', "Province", $row->title_6); @endphp</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+
+                                </div>
+                            </div>
+                            </br>
                             <div class="signature">
                                 <div class="col-md-3">
                                     <date>
