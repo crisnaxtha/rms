@@ -103,15 +103,7 @@
 
             </header>
             <div class="panel-body"  style="overflow-y: scroll;" id="ledger">
-                <div class="pull-center">
-                    @if(isset($data['ms_setting']))
-                    <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
-                    <h6>{{ $data['ms_setting']->title_2 }}</h6>
-                    <h4 style="text-decoration: underline;;"><b>{{ $_panel }}</b></h4>
-                    @else
-                    <h1 style="color:red">Set Grade Sheet Setting First</h1>
-                    @endif
-                </div>
+                @include('dsms.report.includes.ledger-header')
                 @php
                     $total_pass = 0;
                     $total_fail = 0;
@@ -119,11 +111,11 @@
                 @endphp
                 <table class="table table-bordered">
                     <tr>
-                        <th rowspan="2">S.N.</th>
-                        <th rowspan="2" colspan="6"> School Name </th>
+                        <th rowspan="2" style="text-align: center;">S.N.</th>
+                        <th rowspan="2" colspan="6" style="text-align: center;"> School Name </th>
                         <th style="text-align: center;" colspan="2">Result</th>
-                        <th rowspan="2" colspan="1">Total Number of Students </th>
-                        <th rowspan="2"> Pass Percentage</th>
+                        <th rowspan="2" colspan="1" style="text-align: center;">Total Number of Students </th>
+                        <th rowspan="2" style="text-align: center;">Pass Percentage</th>
                     </tr>
 
                     <tr>
