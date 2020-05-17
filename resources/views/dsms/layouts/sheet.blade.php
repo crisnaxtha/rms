@@ -34,8 +34,8 @@
                     {{-- <h4 style="text-decoration: underline;;"><b>GRADE-SHEET</b></h4> --}}
                 </div>
                 <div class="col-md-2 pull-right">
-                    @if(isset($data['ms_setting']->logo_1))
-                    <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="80" height="80">
+                    @if(isset($data['ms_setting']->logo_2))
+                    <img src="{{asset($data['ms_setting']->logo_2)}}" alt="logo" width="80" height="80">
                     @else
                     <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
                     @endif

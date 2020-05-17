@@ -334,7 +334,7 @@ public static function arrayGroupByNotSorted($old_arr_1, $based_on) {
         return $data;
     }
 
-    //return 1 report of student
+    //return single report of student
     public static function getStudentReport($session_id, $exam_id, $student_id, $school_class_sec_id){
         $data = DB::table('reports')->where('session_id', '=', $session_id)
                 ->where('exam_id', '=', $exam_id)
