@@ -14,6 +14,7 @@
                 <div class="modal-body">
 
                     <page size="A4" style="border-style:double; padding:20px;" >
+                    <div class="grade-sheet-wrapper">
                         <div class="row report-header">
                             <div class="col-md-2">
                                 <div class="pull-left">
@@ -52,14 +53,14 @@
                         </div>
 
                         <div class="para">
-                            <p>GRADE SECURED BY <b>{{ dm_getStudent($key)->first_name }}</b>
-                                DATE OF BIRTH <b>{{ dm_getStudent($key)->dob_bs }}&nbsp;
-                                BS({{ dm_getStudent($key)->dob_ad }}&nbsp;AD)</b> SYMBOL NUMBER <b>
-                                {{ dm_getStudent($key)->roll_no }}</b> OF<b>
+                            <p>GRADE SECURED BY <b style="text-transform: uppercase;">{{ dm_getStudent($key)->first_name }}</b>
+                                DATE OF BIRTH <b style="text-transform: uppercase;">{{ dm_getStudent($key)->dob_bs }}&nbsp;
+                                BS&nbsp;(&nbsp;{{ dm_getStudent($key)->dob_ad }}&nbsp;AD&nbsp;)</b> SYMBOL NUMBER <b style="text-transform: uppercase;">
+                                {{ dm_getStudent($key)->roll_no }}</b> OF<b style="text-transform: uppercase;">
                                 @if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b>
-                                DISTRICT <b> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_5 }} @endif</b>
-                                PROVINCE <b> @if(isset($data['ms_setting'])) {{ $data['ms_setting']->title_6 }} @endif</b>
-                                IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW</p>
+                                DISTRICT <b style="text-transform: uppercase;"> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_5 }} @endif</b>
+                                PROVINCE <b style="text-transform: uppercase;"> @if(isset($data['ms_setting'])) {{ $data['ms_setting']->title_6 }} @endif</b>
+                                IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW:</p>
                             </p>
                         </div>
 
@@ -164,7 +165,7 @@
                                 EDUCATION OFFICER
                             </div>
                         </div>
-
+                    </div>
                     </page>
 
                 </div>

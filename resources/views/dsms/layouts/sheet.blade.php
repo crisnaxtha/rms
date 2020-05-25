@@ -16,17 +16,17 @@
             <div class="row report-header">
                 <div class="col-md-2">
                     @if(isset($data['ms_setting']->logo_1))
-                    <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="80" height="80">
+                    <img src="{{asset($data['ms_setting']->logo_1)}}" alt="logo" width="100" height="100">
                     @else
-                    <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
+                    <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="100" height="100">
                     @endif
                 </div>
                 <div class="col-md-8" style="top:-26px; text-align:center;">
                     @if(isset($data['ms_setting']))
                     <h3><b>{{ $data['ms_setting']->title_1 }}</b></h3>
                     <h4 style="">{{ $data['ms_setting']->title_2 }}</h4>
-                    <h3 style="text-transform: uppercase; padding: 10px 0;"><b>{{ $data['ms_setting']->title_3 }}</b></h3>
-                    <h3 style="text-transform: uppercase; padding: 10px 0"><b>{{ $data['ms_setting']->title_4 }}</b></h3>
+                    <h2 style="text-transform: uppercase; padding: 10px 0;"><b>{{ $data['ms_setting']->title_3 }}</b></h2>
+                    <h2 style="text-transform: uppercase; padding: 10px 0"><b>{{ $data['ms_setting']->title_4 }}</b></h2>
                     @else
                     <h1 style="color:red">Set Grade Sheet Setting First</h1>
                     @endif
@@ -35,23 +35,23 @@
                 </div>
                 <div class="col-md-2 pull-right">
                     @if(isset($data['ms_setting']->logo_2))
-                    <img src="{{asset($data['ms_setting']->logo_2)}}" alt="logo" width="80" height="80">
+                    <img src="{{asset($data['ms_setting']->logo_2)}}" alt="logo" width="100" height="100">
                     @else
-                    <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="80" height="80">
+                    <img src="{{asset('assets/dsms/img/marksheet/logo.png')}}" alt="logo" width="100" height="100">
                     @endif
                 </div>
             </div>
 
             <div class="para">
-                <p>GRADE SECURED BY <b>{{ dm_getStudent($data['student_id'])->first_name }}</b>
-                    DATE OF BIRTH <b>{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;
-                    BS({{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD)</b>
-                        SYMBOL NUMBER <b>{{ dm_getStudent($data['student_id'])->roll_no }}
-                    </b>GRADE <b>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif </b>
-                        OF<b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b>
-                        DISTRICT <b> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_5 }} @endif</b>
-                        PROVINCE <b> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_6 }} @endif</b>
-                        IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW</p>
+                <p>GRADE SECURED BY <b style="text-transform: uppercase;">{{ dm_getStudent($data['student_id'])->first_name }}</b>
+                    DATE OF BIRTH <b style="text-transform: uppercase;">{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;
+                    BS&nbsp;(&nbsp;{{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD&nbsp;)</b>
+                        SYMBOL NUMBER <b style="text-transform: uppercase;">{{ dm_getStudent($data['student_id'])->roll_no }}
+                    </b>GRADE <b style="text-transform: uppercase;">@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif </b>
+                        OF<b style="text-transform: uppercase;">@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b>
+                        DISTRICT <b style="text-transform: uppercase;"> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_5 }} @endif</b>
+                        PROVINCE <b style="text-transform: uppercase;"> @if(isset($data['ms_setting'])){{ $data['ms_setting']->title_6 }} @endif</b>
+                        IN THE ANNUAL BASIC EDUCATION EXAMINATION ARE GIVEN BELOW:</p>
             </div>
 
 
