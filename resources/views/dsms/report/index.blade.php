@@ -170,6 +170,12 @@
                             @endforeach
                             @endif
                         </tr>
+                        {{-- for print break purpose  --}}
+                        @if($loop->iteration == 10)
+                        <tr><td style="height: 150px"></td></tr>
+                        @elseif($loop->iteration != 12 && $loop->iteration%12 == 0)
+                        <tr><td style="height: 300px"></td></tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>

@@ -108,8 +108,8 @@
             <div class="panel-body"  style="overflow-y: scroll;" id="ledger">
                 @include('dsms.report.includes.ledger-header')
 
-                <table class="table table-bordered">
-                    <!--     <thead> -->
+                <table class="table table-bordered" style=" page-break-inside:auto">
+                {{-- <thead> --}}
                     <tr>
                         <th rowspan="3">S.N.</th>
                         <th rowspan="3"> Symbol No. </th>
@@ -133,6 +133,7 @@
                         @endforeach
                         @endif
                     </tr>
+                {{-- </thead> --}}
                     <tbody>
                         @foreach($data['std_result'] as $key => $rows)
                             @php
@@ -212,6 +213,12 @@
                                 @endforeach
                                 @endif
                             </tr>
+                            {{-- for print break purpose  --}}
+                            @if($loop->iteration == 9)
+                            <tr><td style="height: 150px"></td></tr>
+                            @elseif($loop->iteration != 10 && $loop->iteration%10 == 0)
+                            <tr><td style="height: 300px"></td></tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

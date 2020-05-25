@@ -30,19 +30,36 @@
                 {{-- grand total  --}}
                     @php
                     $total_grade_credit_hour += $row->grade_credit_hour;
-                    if($row->grade_credit_hour == 0 || $row->grade_point == 0){
-                        dd('here is the problem !! 0 divisor encounterd');
-                    }
-                    $total_credit_hour += ($row->grade_credit_hour / $row->grade_point);
+                    $total_credit_hour += dm_getSubject($row->school_class_section_subject_id)->credit_hour;
                     @endphp
                 <tr>
                     <td rowspan="1">{{ $loop->iteration }}</td>
                     <td rowspan="1" colspan="3">{{ dm_getSubject($row->school_class_section_subject_id)->title }}</td>
                     <td style="text-align: center">{{ dm_getSubject($row->school_class_section_subject_id)->credit_hour }}</td>
-                    <td style="text-align: center">{{ $row->theory_grade }}</td>
-                    <td style="text-align: center">{{ $row->practical_grade }}</td>
-                    <td style="text-align: center">{{ $row->final_grade }}</td>
-                    <td style="text-align: center">{{ $row->grade_point }}</td>
+                    <td style="text-align: center">
+                        @if($row->theory_attendance === 'Abs')
+                            Ab*
+                        @elseif($row->theory_get_marks === Null && dm_getSubject($row->school_class_section_subject_id)->theory_full_marks != Null)
+                            T*
+                        @else
+                        {{ $row->theory_grade }}
+                        @endif
+                    </td>
+                    <td style="text-align: center">
+                        @if($row->practical_attendance === 'Abs')
+                            Ab*
+                        @elseif($row->practical_get_marks === Null  && dm_getSubject($row->school_class_section_subject_id)->practical_full_marks != Null)
+                            P*
+                        @else
+                        {{ $row->practical_grade }}
+                        @endif
+                    </td>
+                    <td style="text-align: center">
+                        {{ $row->final_grade }}
+                    </td>
+                    <td style="text-align: center">
+                        {{ $row->grade_point }}
+                    </td>
                     <td> </td>
                 </tr>
                 @endforeach
