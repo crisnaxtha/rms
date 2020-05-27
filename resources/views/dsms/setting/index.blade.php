@@ -29,14 +29,27 @@
                                     </div>
                                     <div class="col-md-8" style="top:-26px;">
                                         <div class="pull-center">
-                                            <h3><b>First Title of Grade-Sheet/ Mark-Sheet</b></h3>
-                                            <h3><b>@php dm_hinputUpdate('text','title_1', "First Title", $row->title_1); @endphp</b></h3>
-                                            <h6>Second Title of Grade-Sheet/ Mark-Sheet</h6>
-                                            <h6>@php dm_hinputUpdate('text','title_2', "Second Title", $row->title_2); @endphp</h6>
-                                            <h6>Third Title of Grade-Sheet/ Mark-Sheet</h6>
-                                            <h6>@php dm_hinputUpdate('text','title_3', "Third Title", $row->title_3); @endphp</h6>
-                                            <h4><b>Fourth Title of Grade-Sheet/ Mark-Sheet</b></h4>
+                                            <h3><b>First Title ( English )</b></h3>
+                                            <h3><b>@php dm_hinputUpdate('text','title_1', "First Title  ( EN )", $row->title_1); @endphp</b></h3>
+
+                                            <h3><b>First Title ( Nepali )</b></h3>
+                                            <h3><b>@php dm_hinputUpdate('text','title_nepali_1', "First Title  ( NP )", $row->title_nepali_1); @endphp</b></h3>
+
+                                            <h6>Second Title ( English )</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_2', "Second Title  ( EN )", $row->title_2); @endphp</h6>
+
+                                            <h6>Second Title ( Nepali )</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_nepali_2', "Second Title  ( NP )", $row->title_nepali_2); @endphp</h6>
+
+                                            <h6>Third Title ( English )</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_3', "Third Title  ( EN )", $row->title_3); @endphp</h6>
+
+                                            <h6>Third Title ( Nepali )</h6>
+                                            <h6>@php dm_hinputUpdate('text','title_nepali_3', "Third Title  ( NP )", $row->title_nepali_3); @endphp</h6>
+
+                                            <h4><b>Fourth Title</b></h4>
                                             <h4><b>@php dm_hinputUpdate('text','title_4', "Forth Title", $row->title_4); @endphp</b></h4>
+
                                             <h5></h5>
                                             {{-- <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4> --}}
                                         </div>
