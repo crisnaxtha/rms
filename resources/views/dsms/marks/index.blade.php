@@ -84,19 +84,20 @@
           <div class="panel-body">
             <div class="adv-table">
                 <table  class="display table table-bordered table-striped" id="dynamic-table">
-                   <thead>
-                      <tr>
-                            <th style="font-size: 11px;">#</th>
-                            <th style="font-size: 11px;">Student</th>
-                            @if(isset($data['school_class_section_subjects']))
-                            @foreach($data['school_class_section_subjects'] as $row)
-                            <th style="font-size: 11px;">{{ $row->sub_title }}</th>
-                            {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
-                            @endforeach
-                            @endif
-                            <th style="font-size: 11px;">View Grade-Sheet</th>
-                      </tr>
-                   </thead>
+                    <thead>
+                        <tr>
+                                <th style="font-size: 11px;">#</th>
+                                <th style="font-size: 11px;">Student</th>
+                                @if(isset($data['school_class_section_subjects']))
+                                @foreach($data['school_class_section_subjects'] as $row)
+                                <th style="font-size: 11px;">{{ $row->sub_title }}</th>
+                                {{-- <th>( {{ $row->exam_sch_id }})</th> --}}
+                                @endforeach
+                                @endif
+                                <th style="font-size: 11px;">View Grade-Sheet</th>
+                                <th style="font-size: 11px;">View Certificate</th>
+                        </tr>
+                    </thead>
                    <tbody>
                         @foreach($data['std_result'] as $key => $rows)
                         {{-- @php dd($rows) @endphp --}}
@@ -126,6 +127,9 @@
                                 @include('dsms.marks.includes.buttons.print')
                                 @include('dsms.marks.includes.buttons.edit')
                                 @include('dsms.marks.includes.buttons.delete')
+                            </td>
+                            <td>
+                                @include('dsms.marks.includes.buttons.print-certificate')
                             </td>
                         </tr>
                         @endforeach

@@ -160,6 +160,9 @@ Route::group(['as'=> 'dsms.', 'namespace'=>'Dsms', 'middleware'=>['auth', 'statu
             Route::get('gradesheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
                 ['as'=>'print_gradesheet',              'uses'=>'ExamResultsController@printGradesheet']);
 
+            Route::get('certificate/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
+                ['as'=>'print_certificate',              'uses'=>'ExamResultsController@printCertificate']);
+
             Route::get('marksheet/{session_id}/{exam_id}/{school_class_section_id}/{student_id}',
                 ['as'=>'print_marksheet',              'uses'=>'ExamResultsController@printMarksheet']);
         });

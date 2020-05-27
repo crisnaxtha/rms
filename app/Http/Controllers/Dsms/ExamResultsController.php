@@ -366,6 +366,7 @@ class ExamResultsController extends DM_BaseController
         }
     }
 
+    // Print Grade Sheet
     public function printGradesheet($session_id, $exam_id, $school_class_section_id, $student_id) {
         $data['session_id'] = $session_id;
         $data['exam_id'] = $exam_id;
@@ -388,6 +389,31 @@ class ExamResultsController extends DM_BaseController
 
         // dd($data['result']);
         return view($this->loadView($this->view_path.'.gradesheet'), compact('data'));
+    }
+
+    // Print Certificate
+    public function printCertificate($session_id, $exam_id, $school_class_section_id, $student_id) {
+        $data['session_id'] = $session_id;
+        $data['exam_id'] = $exam_id;
+        $data['school_class_sec_id'] = $school_class_section_id;
+        $data['student_id'] = $student_id;
+
+        $data['school_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->school_id;
+        $data['class_id'] = $this->model_g::getSchoolClassAndSection($data['school_class_sec_id'])->class_id;
+
+        $data['school_class_section_subjects'] = $this->model_g::getSchoolClassSectionSubjects($data['school_class_sec_id']);
+
+        $data['result'] = array();
+        foreach($data['school_class_section_subjects'] as $subject) {
+            $s_result = $this->model_g::getStudentResult($data['session_id'], $data['exam_id'], $data['student_id'], $subject->id);
+            if(isset($s_result)){
+                array_push($data['result'], $s_result);
+            }
+        }
+        $data['ms_setting'] = $this->model_6::first();
+
+        // dd($data['result']);
+        return view($this->loadView($this->view_path.'.certificate'), compact('data'));
     }
 
 
