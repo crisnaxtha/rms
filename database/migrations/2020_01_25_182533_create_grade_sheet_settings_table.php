@@ -21,9 +21,18 @@ class CreateGradeSheetSettingsTable extends Migration
             $table->string('title_4')->nullable();
             $table->string('title_5')->nullable();
             $table->string('title_6')->nullable();
+            $table->string('title_nepali_1')->nullable();
+            $table->string('title_nepali_2')->nullable();
+            $table->string('title_nepali_3')->nullable();
+            $table->string('title_nepali_4')->nullable();
+            $table->string('title_nepali_5')->nullable();
+            $table->string('title_nepali_6')->nullable();
+            $table->text('description_1')->nullable();
+            $table->text('description_2')->nullable();
             $table->text('logo_1')->nullable();
             $table->text('logo_2')->nullable();
             $table->string('print_date')->nullable();
+            $table->string('activation_key')->nullable();
             $table->timestamps();
         });
     }

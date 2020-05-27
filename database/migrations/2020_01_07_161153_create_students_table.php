@@ -22,6 +22,7 @@ class CreateStudentsTable extends Migration
             $table->date('admission_date')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('name_nepali')->nullable();
             $table->text('image')->nullable();
             $table->string('mobile_no')->nullable();
             $table->string('email')->nullable();

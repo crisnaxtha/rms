@@ -16,6 +16,7 @@ class CreateSessionsTable extends Migration
         Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('session')->nullable();
+            $table->string('session_nepali')->nullable();
             $table->boolean('status')->default(1)->nullable();
             $table->timestamps();
         });
