@@ -61,6 +61,7 @@ class SessionsController extends DM_BaseController
         ]);
         $row = $this->model;
         $row->session = $request->session;
+        $row->session_nepali = $request->session_nepali;
         $row->save();
 
         if($row->save()){
@@ -112,6 +113,7 @@ class SessionsController extends DM_BaseController
         ]);
         $row = $this->model::findOrFail($id);
         $row->session = $request->session;
+        $row->session_nepali = $request->session_nepali;
         $row->save();
 
         if($row->save()){
