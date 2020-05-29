@@ -65,6 +65,7 @@ class SchoolsController extends DM_BaseController
         ]);
         $row = $this->model;
         $row->title = $request->title;
+        $row->title_nepali = $request->title_nepali;
         $row->code = $request->code;
         $row->established = $request->established;
         $row->description = $request->description;
@@ -119,6 +120,7 @@ class SchoolsController extends DM_BaseController
         ]);
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
+        $row->title_nepali = $request->title_nepali;
         $row->code = $request->code;
         $row->established = $request->established;
         $row->description = $request->description;
