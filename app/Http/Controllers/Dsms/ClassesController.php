@@ -62,6 +62,7 @@ class ClassesController extends DM_BaseController
         ]);
         $row = $this->model;
         $row->title = $request->title;
+        $row->title_nepali = $request->title_nepali;
         $row->save();
 
         if($row->save()){
@@ -114,6 +115,7 @@ class ClassesController extends DM_BaseController
 
         $row = $this->model::findOrFail($id);
         $row->title = $request->title;
+        $row->title_nepali = $request->title_nepali;
         $row->save();
 
         if($row->save()){

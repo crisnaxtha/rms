@@ -17,6 +17,7 @@ class CreateMyClassesTable extends Migration
             $table->increments('id');
             // $table->unsignedInteger('school_id')->nullable();
             $table->string('title')->nullable();
+            $table->string('title_nepali')->nullable();
             $table->boolean('status')->default(1)->nullable();
             $table->timestamps();
         });
