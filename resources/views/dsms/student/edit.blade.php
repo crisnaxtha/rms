@@ -77,13 +77,6 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Symbol Number</label>
-                                        <input autofocus="" id="roll_no" name="roll_no" placeholder="" type="text" class="form-control" value="{{ $data['row']->roll_no }}" />
-                                        <span class="text-danger"></span>
-                                    </div>
-                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Student Name</label><small class="req"> *</small>
@@ -91,6 +84,23 @@
                                         <span class="text-danger"></span>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Student Name( Nepali )</label>
+                                        <input id="name_nepali" name="name_nepali" placeholder="" type="text" class="form-control" value="{{ $data['row']->name_nepali }}" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Symbol Number</label>
+                                        <input autofocus="" id="roll_no" name="roll_no" placeholder="" type="text" class="form-control" value="{{ $data['row']->roll_no }}" />
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Date Of Birth(BS)</label><small class="req"> *</small>

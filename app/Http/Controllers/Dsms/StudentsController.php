@@ -172,6 +172,7 @@ class StudentsController extends DM_BaseController
         $row->roll_no = $request->roll_no;
         $row->first_name = $request->firstname;
         // $row->last_name = $request->lastname;
+        $row->name_nepali = $request->name_nepali;
         $row->gender = $request->gender;
         $row->dob_bs = get_nepali_data($request->dob_bs);
         $row->dob_ad = $this->bsToAd($request->dob_bs);
@@ -260,6 +261,7 @@ class StudentsController extends DM_BaseController
         $row->roll_no = $request->roll_no;
         $row->first_name = $request->firstname;
         // $row->last_name = $request->lastname;
+        $row->name_nepali = $request->name_nepali;
         $row->gender = $request->gender;
         $row->dob_bs = get_nepali_data($request->dob_bs);
         $row->dob_ad = $this->bsToAd($request->dob_bs);
