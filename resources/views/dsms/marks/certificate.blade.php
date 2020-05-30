@@ -56,15 +56,31 @@
                 <div style="float:right; border: 2px solid #000; height: 100px; width: 100px;margin: -80px 70px 50px 0"></div>
             </div>
             <br/>
+            {{-- Logic for GPA  --}}
+            @php
+            $total_grade_credit_hour = 0;
+            $total_credit_hour = 0;
+            @endphp
+            @if(isset($data['result']))
+            @foreach($data['result'] as $row)
+                @php
+                $total_grade_credit_hour += $row->grade_credit_hour;
+                $total_credit_hour += dm_getSubject($row->school_class_section_subject_id)->credit_hour;
+                @endphp
+            @endforeach
+            @endif
+            @php
+                $gpa = dm_calGPA($total_grade_credit_hour, $total_credit_hour);
+            @endphp
             <div class="para" style="text-align:center">
-                <p>श्री .................................................................. ले
-                ................................... बाट विक्रम सम्बत................ को परिक्षा समितिद्धारा
-                सञ्चालित आधारभुत तह (कक्षा ८) को परिक्षामा सहभागी भई .......................
+                <p>श्री &nbsp;<b>{{ dm_getStudent($data['student_id'])->name_nepali }}</b> ले
+                <b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title_nepali }} @endif</b> बाट विक्रम सम्बत {{ get_nepali_data(dm_getSession($data['session_id'])->session) }} को परिक्षा समितिद्धारा
+                सञ्चालित आधारभुत तह (कक्षा <b>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif </b>) को परिक्षामा सहभागी भई {{  get_nepali_data(round($gpa, 2)) }}
                 ‌औसत स्तरीकृत अंक प्राप्‍त गरेको प्रमाणित गरिन्छ ।</p>
                 <br/>
                 <p>This is to certify that Mr./Ms.&nbsp;<b>{{ dm_getStudent($data['student_id'])->first_name }}</b> of <b>@if(isset( $data['school_id'])) {{ dm_getSchool($data['school_id'])->title }} @endif</b> has
                 completed Basic Level Examination (Grade <b>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif )</b> conducted by Examination
-                Committee in the year …………. A.D. with ……………… Grade Point
+                Committee in the year {{ dm_getSession($data['session_id'])->session_ad }}. A.D. with {{ round($gpa, 2) }} Grade Point
                 Average (GPA).</p>
             </div>
             <br>

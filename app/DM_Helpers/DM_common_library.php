@@ -65,6 +65,7 @@ if(!function_exists('convertNos')){
             case "8": $n = "८"; break;
             case "9": $n = "९"; break;
             case "-": $n = "-"; break;
+            case ".": $n = "."; break;
         }
         return $n;
     }
