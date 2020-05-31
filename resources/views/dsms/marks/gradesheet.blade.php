@@ -37,7 +37,7 @@
                     <td rowspan="1" colspan="3">{{ dm_getSubject($row->school_class_section_subject_id)->title }}</td>
                     <td style="text-align: center">{{ dm_getSubject($row->school_class_section_subject_id)->credit_hour }}</td>
                     <td style="text-align: center">
-                        @if($row->theory_attendance === 'Abs')
+                        @if($row->theory_attendance === 'ABS')
                             Ab*
                         @elseif($row->theory_get_marks === Null && dm_getSubject($row->school_class_section_subject_id)->theory_full_marks != Null)
                             T*
@@ -46,7 +46,7 @@
                         @endif
                     </td>
                     <td style="text-align: center">
-                        @if($row->practical_attendance === 'Abs')
+                        @if($row->practical_attendance === 'ABS')
                             Ab*
                         @elseif($row->practical_get_marks === Null  && dm_getSubject($row->school_class_section_subject_id)->practical_full_marks != Null)
                             P*

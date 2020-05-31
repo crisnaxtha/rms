@@ -52,7 +52,7 @@
                             </div>
                         </div>
 
-                        <div class="para">
+                        <div class="para" style="text-align: justify">
                             <p>GRADE SECURED BY <b style="text-transform: uppercase;">{{ dm_getStudent($key)->first_name }}</b>
                                 DATE OF BIRTH <b style="text-transform: uppercase;">{{ dm_getStudent($key)->dob_bs }}&nbsp;
                                 BS&nbsp;(&nbsp;{{ dm_getStudent($key)->dob_ad }}&nbsp;AD&nbsp;)</b> SYMBOL NUMBER <b style="text-transform: uppercase;">
@@ -101,7 +101,7 @@
                                     <td rowspan="1" colspan="3">{{ dm_getSubject($row['school_class_section_subject_id'])->title }}</td>
                                     <td style="text-align: center">{{ dm_getSubject($row['school_class_section_subject_id'])->credit_hour }}</td>
                                     <td style="text-align: center">
-                                        @if($row['theory_attendance'] === 'Abs')
+                                        @if($row['theory_attendance'] === 'ABS')
                                             Ab*
                                         @elseif($row['theory_get_marks'] === Null && dm_getSubject($row['school_class_section_subject_id'])->theory_full_marks != Null)
                                             T*
@@ -110,7 +110,7 @@
                                         @endif
                                     </td>
                                     <td style="text-align: center">
-                                        @if($row['practical_attendance'] === 'Abs')
+                                        @if($row['practical_attendance'] === 'ABS')
                                         Ab*
                                         @elseif($row['practical_get_marks'] === Null  && dm_getSubject($row['school_class_section_subject_id'])->practical_full_marks != Null)
                                         P*

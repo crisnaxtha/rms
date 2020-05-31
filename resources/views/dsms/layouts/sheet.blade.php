@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="para">
+            <div class="para" style="text-align: justify">
                 <p>GRADE SECURED BY <b style="text-transform: uppercase;">{{ dm_getStudent($data['student_id'])->first_name }}</b>
                     DATE OF BIRTH <b style="text-transform: uppercase;">{{ dm_getStudent($data['student_id'])->dob_bs }}&nbsp;
                     BS&nbsp;(&nbsp;{{ dm_getStudent($data['student_id'])->dob_ad }}&nbsp;AD&nbsp;)</b>

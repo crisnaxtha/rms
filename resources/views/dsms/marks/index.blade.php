@@ -87,6 +87,7 @@
                     <thead>
                         <tr>
                                 <th style="font-size: 11px;">#</th>
+                                <th style="font-size: 11px;">Symbole No</th>
                                 <th style="font-size: 11px;">Student</th>
                                 @if(isset($data['school_class_section_subjects']))
                                 @foreach($data['school_class_section_subjects'] as $row)
@@ -103,6 +104,7 @@
                         {{-- @php dd($rows) @endphp --}}
                         <tr class="gradeX" id="">
                             <td>{{ $loop->iteration }}</td>
+                            <td>{{ dm_getStudent($key)->roll_no }}</td>
                             <td>{{ dm_getStudent($key)->first_name }}</td>
                             @if(isset($rows))
                             @foreach($rows as $row )
