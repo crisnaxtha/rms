@@ -69,7 +69,7 @@
             </li>
 
             <li class="sub-menu">
-                <a href="javascript:;" class="{{ ($_panel == 'Marks Ledger' || $_panel == 'Top Three Student' || $_panel == "Grade Ledger" || $_panel == 'School Ledger' || $_panel == '') ? 'active' : '' }}">
+                <a href="javascript:;" class="{{ ($_panel == 'Marks Ledger' || $_panel == 'Top Three Student' || $_panel == "Grade Ledger" || $_panel == 'School Ledger' || $_panel == 'Top Student Based On Class') ? 'active' : '' }}">
                     <i class="fa fa-file-o"></i>
                     <span>{{ __('Examination Report') }}</span>
                 </a>
@@ -85,6 +85,9 @@
                     @endif
                     @if(Route::has('dsms.report.topStudent'))
                     <li><a class="{{ ($_panel == 'Top Three Student') ? 'active' : '' }}" href="{{ URL::route('dsms.report.topStudent') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Top Three Student')}}</span></a></li>
+                    @endif
+                    @if(Route::has('dsms.report.topStudentBasedOnClass'))
+                    <li><a class="{{ ($_panel == 'Top Student Based On Class') ? 'active' : '' }}" href="{{ URL::route('dsms.report.topStudentBasedOnClass') }}"><i class="fa fa-angle-double-right"></i><span>{{__('Top Std Based On Class')}}</span></a></li>
                     @endif
                 </ul>
             </li>

@@ -111,7 +111,8 @@ class ReportsController extends DM_BaseController
                                             ->where('exam_id', '=', $data['exam_id'])
                                             ->where('school_class_section_id', '=', $data['school_class_sec_id'])
                                             ->where('results', '=', 'PASS')
-                                            ->orderBy('obtain_total_marks', 'desc')
+                                            // ->orderBy('obtain_total_marks', 'desc')
+                                            ->orderBy('obtain_total_th_marks', 'desc')
                                             ->take(3)
                                             ->get();
 
@@ -140,9 +141,50 @@ class ReportsController extends DM_BaseController
         return view($this->loadView($this->view_path.'.top_student'), compact('data'));
     }
 
+      //get Top three student base on School Class section
+      public function topStudentBasedOnClass(Request $request) {
+        $this->panel = "Top Student Based On Class";
+        if ($request->isMethod('post')){
+            $data['sessions'] = $this->model_7::all();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+
+            $data['session_id'] = $request->session_id;
+            $data['exam_id'] = $request->exam_id;
+            $data['class_id'] = $request->class_id;
+
+
+            $data['all_school_class_sec_id'] = $this->model_g::getSchoolSectionByClassID($data['class_id']);
+            $data['school_class_sec_id'] = [];
+            foreach($data['all_school_class_sec_id'] as $row) {
+                array_push( $data['school_class_sec_id'], $row->school_class_section_id);
+            }
+
+            // dd($data['school_class_sec_id']);
+
+            $data['top_report'] = $this->model_8::where('session_id', '=', $data['session_id'])
+                                            ->where('exam_id', '=', $data['exam_id'])
+                                            ->whereIn('school_class_section_id', $data['school_class_sec_id'])
+                                            ->where('results', '=', 'PASS')
+                                            // ->orderBy('obtain_total_marks', 'desc')
+                                            ->orderBy('obtain_total_th_marks', 'desc')
+                                            ->take(5)
+                                            ->get();
+
+            $data['ms_setting'] = $this->model_6::first();
+
+
+        }
+        else {
+            $data['sessions'] = $this->model_7::all();
+            $data['exam'] = $this->model_3::where('status', '=', 1)->get();
+            $data['class'] = $this->model_1::where('status', '=', 1)->get();
+        }
+        return view($this->loadView($this->view_path.'.top_student_based_on_class'), compact('data'));
+    }
+
     //grade report
     public function gradeReport(Request $request) {
-        // dd('Hello');
         $this->panel = "Grade Ledger";
         if ($request->isMethod('post')){
             $data['sessions'] = $this->model_7::all();
