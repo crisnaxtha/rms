@@ -9,7 +9,7 @@
                    <h3>{{ $_panel }}</h3>
                 </header>
                 <div class="panel-body">
-                        @include('dcms.includes.flash-message')                    
+                        @include('dsms.includes.flash-message')
                     <div class=" form">
                         <?php
                         dm_hpostform(URL::route($_base_route.'.update', ['id'=> $data['row']->id]), 'PUT');

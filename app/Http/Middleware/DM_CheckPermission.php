@@ -20,7 +20,7 @@ class DM_CheckPermission
             throw DM_UnauthorizedException::notLoggedIn();
         }
 
-        if(Auth::user()->role_super == 1){
+        if(Auth::user()->role_super === 1){
             return $next($request);
         }
 

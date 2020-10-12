@@ -35,21 +35,21 @@
                                 <div class="form-group">
                                     <label name="role" for="inputSuccess">{{__('dsms_lang.register.role') }}</label>
                                         <select name="role_id" class="form-control m-bot15">
-                                            @if($row->role_id)
-                                            <option value="{{ $row->role_id }}">{{ $row->Role->name   }}</option>
-                                            @endif
+                                           <option value="">Select Role</option>
                                            @foreach($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}" @if($role->id === $row->role_id) selected @endif>{{ $role->name }}</option>
                                             @endforeach
                                         </select>
                                 </div>
                                 @endif
+                                @if(Auth::user()->role_super ===1)
                                 <div class="checkbox">
                                     <label>
                                         <input type="hidden" name="role_super" value=0>
                                         <input type="checkbox" name="role_super" value=1 @if($row->role_super){{ "checked" }} @endif>{{ "Super Admin" }}
                                     </label>
                                 </div>
+                                @endif
                                 <div class="checkbox">
                                     <label>
                                         <input type="hidden" name="status" value=0>

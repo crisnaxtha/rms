@@ -97,7 +97,7 @@ class UsersController extends DM_BaseController
         $row = $this->model::findOrFail($id);
         $row->name = $request->name;
         $row->role_super = $request->role_super;
-        $row->role_id = $request->role;
+        $row->role_id = $request->role_id;
         $row->status = $request->status;
         if($row->save()) {
             session()->flash('alert-success', $this->panel.' Successfully updated');
