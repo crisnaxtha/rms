@@ -1,4 +1,4 @@
-@extends('dsms.layouts.sheet')
+@extends('dsms.layouts.sheet_1')
 
 @section('content')
 
@@ -86,6 +86,10 @@
             </table>
 
         <br />
-
+        {{-- <ol>
+            <li>One Credit Hour Equals 32 Clock Hours</li>
+            <li>TH: Theory, PR: Practical</li>
+            <li>Ab *: Absent,<br> T*: Theroy Grade Missing <br> P*: Practical Grade Missing</li>
+        </ol> --}}
         <br />
 @endsection

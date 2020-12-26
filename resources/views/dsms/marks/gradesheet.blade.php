@@ -1,4 +1,4 @@
-@extends('dsms.layouts.sheet')
+@extends('dsms.layouts.sheet_1')
 
 @section('content')
         <table>
