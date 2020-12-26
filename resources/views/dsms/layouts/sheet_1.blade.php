@@ -33,7 +33,7 @@
                         <h1 style="color:red">Set Grade Sheet Setting First</h1>
                         @endif
                         <h5>@if(isset( $data['class_id'])) {{ dm_getClass($data['class_id'])->title }} @endif</h5>
-                        <h4 style="text-decoration: underline;;"><b>Grade-Sheet</b></h4>
+                        <h4 style="text-decoration: underline;;"><b>{{ $data['panel'] }}</b></h4>
                     </div>
                     <div class="col-md-2 pull-right">
                         @if(isset($data['ms_setting']->logo_1))

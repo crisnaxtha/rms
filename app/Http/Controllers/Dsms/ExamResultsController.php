@@ -368,6 +368,7 @@ class ExamResultsController extends DM_BaseController
 
     // Print Grade Sheet
     public function printGradesheet($session_id, $exam_id, $school_class_section_id, $student_id) {
+        $data['panel'] = 'Grade Sheet';
         $data['session_id'] = $session_id;
         $data['exam_id'] = $exam_id;
         $data['school_class_sec_id'] = $school_class_section_id;
@@ -459,6 +460,7 @@ class ExamResultsController extends DM_BaseController
     }
 
     public function printMarksheet($session_id, $exam_id, $school_class_section_id, $student_id) {
+        $data['panel'] = 'Mark Sheet';
         $data['session_id'] = $session_id;
         $data['exam_id'] = $exam_id;
         $data['school_class_sec_id'] = $school_class_section_id;
